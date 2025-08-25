@@ -11,8 +11,9 @@ import router from './routes/route';
 function App() {
 
   return (
+
     <div>
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
     </div>
   )
 }
