@@ -9,3 +9,5 @@ This project is built with:
 - React Router DOM  
 - Google Fonts
 - React Helmet Async
+- Firebase Setup
+
