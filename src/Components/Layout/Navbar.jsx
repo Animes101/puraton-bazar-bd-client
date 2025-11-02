@@ -5,11 +5,11 @@ const Navbar = () => {
   // Active link style setup
   const linkClasses = ({ isActive }) =>
     isActive
-      ? "text-violet-600 font-semibold border-b-2 border-violet-600"
-      : "hover:text-violet-600 hover:border-b-2 hover:border-violet-600";
+      ? "text-textColor font-semibold text-xl  font-bold  border-b-2 border-textColor"
+      : "hover:text-textColor text-xl  font-bold  hover:border-b-2 hover:border-textColor";
 
   return (
-    <div className="bg-base-100 shadow-sm sticky top-0 z-50">
+    <div className="shadow-sm sticky top-0 z-50 bg-gradient-to-r from-bgGradient1 from-10% via-bgGradinet3 via-50% to-bgGradient2 to-60% ">
       <div className="navbar container mx-auto">
         {/* Left Section */}
         <div className="navbar-start">
@@ -71,8 +71,8 @@ const Navbar = () => {
           </div>
 
           {/* Logo */}
-          <NavLink to="/" className="btn btn-ghost normal-case text-xl">
-            <h2 className="font-bold text-violet-700">Puraton<span className="text-black" >Bazar</span>.com</h2>
+          <NavLink to="/" className="normal-case text-2xl font-bold">
+            <h2 className="font-bold text-textColor">Puraton<span className="text-black" >Bazar</span>.com</h2>
           </NavLink>
         </div>
 

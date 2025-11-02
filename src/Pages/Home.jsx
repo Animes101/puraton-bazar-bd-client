@@ -4,7 +4,7 @@ import Banner from '../Components/Banner'
 
 const Home = () => {
   return (
-    <div className='flex  flex-col justify-center items-center'>
+    <div className=''>
       <ReactHelmet pageName={'Home Page'} />
       
       <Banner />

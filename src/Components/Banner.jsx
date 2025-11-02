@@ -14,7 +14,8 @@ import b4 from '../assets/b4.png'
 
 const Banner = () => {
   return (
-    <div className="w-full container mx-auto h-[800px]">
+    <div className="bg-gradient-to-r from-bgGradient1 from-100% via-bgGradinet3 via-50% to-bgGradient2 to-60%">
+      <div className="container mx-auto h-[800px]">
       <Swiper
         direction={"vertical"}
         pagination={{ clickable: true }}
@@ -35,6 +36,7 @@ const Banner = () => {
             <img src={b4} alt="slide" className="w-full h-full" />
           </SwiperSlide>
       </Swiper>
+    </div>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import Cart from "../Pages/Cart";
 import NotFound404 from "../Pages/NotFound404";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import Details from "../Pages/Details";
 
 const router = createBrowserRouter([
   {
@@ -19,9 +20,18 @@ const router = createBrowserRouter([
       { path: "/contact", element: <Contact /> },
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/cart", element: <Cart /> },
-      {path:'/login' , element:<Login />},
-      {path:'/register', element:<Register />}
+      {path:'/category/:id', element:<Details />}
     ],
+    
+  },
+  {
+    path:'/login',
+    element: <Login />
+  },
+  {
+    path:'/register',
+    element:<Register />
+
   },
   {
     path: "*",

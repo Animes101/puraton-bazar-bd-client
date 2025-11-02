@@ -1,332 +1,290 @@
-[
-  {
-    "name": "iPhone 15 Pro",
-    "category": "Mobile",
-    "brand": "Apple",
-    "price": 150000,
-    "stock": 5,
-    "rating": 4.9,
-    "image": "https://example.com/iphone15.jpg",
-    "warranty": "1 Year",
-    "description": "Latest iPhone with A17 Pro chip and titanium body"
-  },
-  {
-    "name": "Samsung Galaxy S24 Ultra",
-    "category": "Mobile",
-    "brand": "Samsung",
-    "price": 135000,
-    "stock": 8,
-    "rating": 4.8,
-    "image": "https://example.com/s24ultra.jpg",
-    "warranty": "1 Year",
-    "description": "Flagship phone with 200MP camera and S-Pen"
-  },
-  {
-    "name": "Xiaomi Redmi Note 13 Pro",
-    "category": "Mobile",
-    "brand": "Xiaomi",
-    "price": 28000,
-    "stock": 15,
-    "rating": 4.5,
-    "image": "https://example.com/redmi13pro.jpg",
-    "warranty": "1 Year",
-    "description": "Affordable phone with AMOLED display and 120Hz refresh rate"
-  },
-  {
-    "name": "HP Pavilion 15",
-    "category": "Laptop",
-    "brand": "HP",
-    "price": 75000,
-    "stock": 10,
-    "rating": 4.6,
-    "image": "https://example.com/hp15.jpg",
-    "warranty": "2 Years",
-    "description": "Powerful laptop with Intel i5 12th Gen and 8GB RAM"
-  },
-  {
-    "name": "MacBook Air M3",
-    "category": "Laptop",
-    "brand": "Apple",
-    "price": 165000,
-    "stock": 3,
-    "rating": 4.9,
-    "image": "https://example.com/macbookm3.jpg",
-    "warranty": "1 Year",
-    "description": "Lightweight laptop with Apple M3 chip and 18-hour battery"
-  },
-  {
-    "name": "ASUS ROG Strix G16",
-    "category": "Laptop",
-    "brand": "ASUS",
-    "price": 145000,
-    "stock": 6,
-    "rating": 4.7,
-    "image": "https://example.com/asusrog.jpg",
-    "warranty": "2 Years",
-    "description": "Gaming laptop with RTX 4070 GPU and 165Hz display"
-  },
-  {
-    "name": "Canon EOS 90D",
-    "category": "DSLR",
-    "brand": "Canon",
-    "price": 120000,
-    "stock": 4,
-    "rating": 4.8,
-    "image": "https://example.com/canon90d.jpg",
-    "warranty": "1 Year",
-    "description": "DSLR camera with 32.5MP APS-C sensor and 4K video"
-  },
-  {
-    "name": "Nikon D7500",
-    "category": "DSLR",
-    "brand": "Nikon",
-    "price": 95000,
-    "stock": 5,
-    "rating": 4.7,
-    "image": "https://example.com/nikond7500.jpg",
-    "warranty": "1 Year",
-    "description": "20.9MP camera with great autofocus and dynamic range"
-  },
-  {
-    "name": "Sony Alpha A7 III",
-    "category": "DSLR",
-    "brand": "Sony",
-    "price": 180000,
-    "stock": 2,
-    "rating": 4.9,
-    "image": "https://example.com/sonya7iii.jpg",
-    "warranty": "1 Year",
-    "description": "Full-frame mirrorless camera with exceptional low-light performance"
-  },
-  {
-    "name": "Tripod Stand 3110",
-    "category": "Ext",
-    "brand": "Yunteng",
-    "price": 1500,
-    "stock": 25,
-    "rating": 4.3,
-    "image": "https://example.com/tripod3110.jpg",
-    "warranty": "6 Months",
-    "description": "Lightweight aluminum tripod for DSLR and smartphones"
-  },
-  {
-    "name": "Laptop Cooling Pad",
-    "category": "Ext",
-    "brand": "Havit",
-    "price": 1200,
-    "stock": 30,
-    "rating": 4.4,
-    "image": "https://example.com/coolingpad.jpg",
-    "warranty": "6 Months",
-    "description": "Cooling pad with 4 high-speed fans and RGB lights"
-  },
-  {
-    "name": "Logitech MX Master 3S",
-    "category": "Ext",
-    "brand": "Logitech",
-    "price": 9500,
-    "stock": 10,
-    "rating": 4.9,
-    "image": "https://example.com/mxmaster3s.jpg",
-    "warranty": "1 Year",
-    "description": "Premium wireless mouse for productivity and design work"
-  },
-  {
-    "name": "Lenovo IdeaPad 3",
-    "category": "Laptop",
-    "brand": "Lenovo",
-    "price": 58000,
-    "stock": 9,
-    "rating": 4.5,
-    "image": "https://example.com/ideapad3.jpg",
-    "warranty": "2 Years",
-    "description": "Budget laptop with Ryzen 5 and SSD storage"
-  },
-  {
-    "name": "Realme 12 Pro",
-    "category": "Mobile",
-    "brand": "Realme",
-    "price": 32000,
-    "stock": 12,
-    "rating": 4.4,
-    "image": "https://example.com/realme12pro.jpg",
-    "warranty": "1 Year",
-    "description": "Midrange phone with 120Hz display and Sony sensor"
-  },
-  {
-    "name": "Dell XPS 13",
-    "category": "Laptop",
-    "brand": "Dell",
-    "price": 135000,
-    "stock": 5,
-    "rating": 4.8,
-    "image": "https://example.com/dellxps13.jpg",
-    "warranty": "2 Years",
-    "description": "Ultra-thin laptop with i7 processor and OLED display"
-  },
-  {
-    "name": "Acer Aspire 7",
-    "category": "Laptop",
-    "brand": "Acer",
-    "price": 70000,
-    "stock": 7,
-    "rating": 4.6,
-    "image": "https://example.com/aspire7.jpg",
-    "warranty": "1 Year",
-    "description": "Gaming laptop with Ryzen 5 and GTX 1650 GPU"
-  },
-  {
-    "name": "iPad Pro 12.9",
-    "category": "Mobile",
-    "brand": "Apple",
-    "price": 145000,
-    "stock": 4,
-    "rating": 4.9,
-    "image": "https://example.com/ipadpro.jpg",
-    "warranty": "1 Year",
-    "description": "Tablet with M2 chip and 120Hz Liquid Retina XDR display"
-  },
-  {
-    "name": "Sony WH-1000XM5",
-    "category": "Ext",
-    "brand": "Sony",
-    "price": 38000,
-    "stock": 8,
-    "rating": 4.9,
-    "image": "https://example.com/sonyxm5.jpg",
-    "warranty": "1 Year",
-    "description": "Industry-leading noise-cancelling wireless headphones"
-  },
-  {
-    "name": "Canon EOS R7",
-    "category": "DSLR",
-    "brand": "Canon",
-    "price": 160000,
-    "stock": 3,
-    "rating": 4.8,
-    "image": "https://example.com/canonr7.jpg",
-    "warranty": "1 Year",
-    "description": "APS-C mirrorless camera with 4K 60fps video"
-  },
-  {
-    "name": "Apple Watch Series 9",
-    "category": "Ext",
-    "brand": "Apple",
-    "price": 60000,
-    "stock": 5,
-    "rating": 4.8,
-    "image": "https://example.com/applewatch9.jpg",
-    "warranty": "1 Year",
-    "description": "Smartwatch with advanced health tracking and OLED display"
-  },
-  {
-    "name": "Samsung Galaxy Tab S9",
-    "category": "Mobile",
-    "brand": "Samsung",
-    "price": 95000,
-    "stock": 6,
-    "rating": 4.7,
-    "image": "https://example.com/tabs9.jpg",
-    "warranty": "1 Year",
-    "description": "Premium Android tablet with AMOLED 120Hz screen"
-  },
-  {
-    "name": "GoPro Hero 12",
-    "category": "DSLR",
-    "brand": "GoPro",
-    "price": 52000,
-    "stock": 10,
-    "rating": 4.6,
-    "image": "https://example.com/gopro12.jpg",
-    "warranty": "1 Year",
-    "description": "Action camera with 5.3K video and stabilization"
-  },
-  {
-    "name": "External SSD 1TB",
-    "category": "Ext",
-    "brand": "Samsung",
-    "price": 12500,
-    "stock": 15,
-    "rating": 4.8,
-    "image": "https://example.com/ssd1tb.jpg",
-    "warranty": "3 Years",
-    "description": "Portable 1TB SSD with USB-C and 1050MB/s speed"
-  },
-  {
-    "name": "Dell Inspiron 14",
-    "category": "Laptop",
-    "brand": "Dell",
-    "price": 82000,
-    "stock": 8,
-    "rating": 4.5,
-    "image": "https://example.com/inspiron14.jpg",
-    "warranty": "2 Years",
-    "description": "Compact laptop for office and study with Intel i5"
-  },
-  {
-    "name": "Sony ZV-E10",
-    "category": "DSLR",
-    "brand": "Sony",
-    "price": 85000,
-    "stock": 6,
-    "rating": 4.7,
-    "image": "https://example.com/sonyzve10.jpg",
-    "warranty": "1 Year",
-    "description": "Compact vlogging camera with 4K video support"
-  },
-  {
-    "name": "Asus TUF Gaming F15",
-    "category": "Laptop",
-    "brand": "Asus",
-    "price": 118000,
-    "stock": 5,
-    "rating": 4.6,
-    "image": "https://example.com/asustuff15.jpg",
-    "warranty": "2 Years",
-    "description": "Durable gaming laptop with RTX 3060 GPU"
-  },
-  {
-    "name": "Wireless Keyboard Combo",
-    "category": "Ext",
-    "brand": "Logitech",
-    "price": 3500,
-    "stock": 20,
-    "rating": 4.5,
-    "image": "https://example.com/kbcombo.jpg",
-    "warranty": "1 Year",
-    "description": "Wireless keyboard and mouse combo with silent keys"
-  },
-  {
-    "name": "Vivo V30",
-    "category": "Mobile",
-    "brand": "Vivo",
-    "price": 42000,
-    "stock": 9,
-    "rating": 4.4,
-    "image": "https://example.com/vivov30.jpg",
-    "warranty": "1 Year",
-    "description": "Stylish phone with curved AMOLED and 50MP camera"
-  },
-  {
-    "name": "Nikon Z50",
-    "category": "DSLR",
-    "brand": "Nikon",
-    "price": 98000,
-    "stock": 4,
-    "rating": 4.7,
-    "image": "https://example.com/nikonz50.jpg",
-    "warranty": "1 Year",
-    "description": "Mirrorless camera with 20.9MP and compact design"
-  },
-  {
-    "name": "Bluetooth Speaker JBL Go 3",
-    "category": "Ext",
-    "brand": "JBL",
-    "price": 3900,
-    "stock": 18,
-    "rating": 4.6,
-    "image": "https://example.com/jblgo3.jpg",
-    "warranty": "1 Year",
-    "description": "Portable Bluetooth speaker with waterproof design"
-  }
-]
+{
+  "products": [
+    {
+      "id": 1,
+      "category": "Mobile",
+      "name": "iPhone 11",
+      "brand": "Apple",
+      "price": 42000,
+      "condition": "Used - Good",
+      "description": "Used iPhone 11 64GB. Battery health 85%, smooth performance.",
+      "images": [
+        "https://example.com/images/iphone11-1.jpg",
+        "https://example.com/images/iphone11-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 2,
+      "category": "Mobile",
+      "name": "Samsung Galaxy S20",
+      "brand": "Samsung",
+      "price": 38000,
+      "condition": "Used - Excellent",
+      "description": "8GB RAM, 128GB storage. No scratches, fully functional.",
+      "images": [
+        "https://example.com/images/s20-1.jpg",
+        "https://example.com/images/s20-2.jpg",
+        "https://example.com/images/s20-3.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 3,
+      "category": "Mobile",
+      "name": "Xiaomi Redmi Note 10 Pro",
+      "brand": "Xiaomi",
+      "price": 19000,
+      "condition": "Used - Fair",
+      "description": "AMOLED display, 6GB RAM. Minor back scratch.",
+      "images": [
+        "https://example.com/images/redmi10pro-1.jpg",
+        "https://example.com/images/redmi10pro-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 4,
+      "category": "Mobile",
+      "name": "Realme 8",
+      "brand": "Realme",
+      "price": 16000,
+      "condition": "Used - Good",
+      "description": "Super AMOLED, 8GB RAM. Lightly used for 6 months.",
+      "images": [
+        "https://example.com/images/realme8-1.jpg",
+        "https://example.com/images/realme8-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 5,
+      "category": "Mobile",
+      "name": "OnePlus Nord",
+      "brand": "OnePlus",
+      "price": 25000,
+      "condition": "Used - Excellent",
+      "description": "Fluid AMOLED, 90Hz display, great camera performance.",
+      "images": [
+        "https://example.com/images/oneplus-nord-1.jpg",
+        "https://example.com/images/oneplus-nord-2.jpg",
+        "https://example.com/images/oneplus-nord-3.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 6,
+      "category": "Laptop",
+      "name": "Dell Inspiron 15 3000",
+      "brand": "Dell",
+      "price": 35000,
+      "condition": "Used - Very Good",
+      "description": "Core i5 8th Gen, 8GB RAM, 256GB SSD.",
+      "images": [
+        "https://example.com/images/dell-inspiron-1.jpg",
+        "https://example.com/images/dell-inspiron-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 7,
+      "category": "Laptop",
+      "name": "HP Pavilion x360",
+      "brand": "HP",
+      "price": 39000,
+      "condition": "Used - Excellent",
+      "description": "Touch screen convertible, Core i5 10th Gen.",
+      "images": [
+        "https://example.com/images/hp-pavilion-1.jpg",
+        "https://example.com/images/hp-pavilion-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 8,
+      "category": "Laptop",
+      "name": "Lenovo ThinkPad T480",
+      "brand": "Lenovo",
+      "price": 33000,
+      "condition": "Used - Good",
+      "description": "Durable business laptop, i5 8th Gen, 16GB RAM.",
+      "images": [
+        "https://example.com/images/thinkpad-t480-1.jpg",
+        "https://example.com/images/thinkpad-t480-2.jpg",
+        "https://example.com/images/thinkpad-t480-3.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 9,
+      "category": "Laptop",
+      "name": "Asus VivoBook 14",
+      "brand": "Asus",
+      "price": 32000,
+      "condition": "Used - Fair",
+      "description": "Lightweight and stylish. Minor keyboard issue fixed.",
+      "images": [
+        "https://example.com/images/vivobook14-1.jpg",
+        "https://example.com/images/vivobook14-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 10,
+      "category": "Laptop",
+      "name": "Acer Aspire 5",
+      "brand": "Acer",
+      "price": 30000,
+      "condition": "Used - Good",
+      "description": "Ryzen 5, 8GB RAM, 512GB SSD. Well maintained.",
+      "images": [
+        "https://example.com/images/aspire5-1.jpg",
+        "https://example.com/images/aspire5-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 11,
+      "category": "DSLR",
+      "name": "Canon EOS 700D",
+      "brand": "Canon",
+      "price": 28000,
+      "condition": "Used - Excellent",
+      "description": "With 18-55mm lens. Shutter count 15k.",
+      "images": [
+        "https://example.com/images/canon-700d-1.jpg",
+        "https://example.com/images/canon-700d-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 12,
+      "category": "DSLR",
+      "name": "Nikon D5300",
+      "brand": "Nikon",
+      "price": 26000,
+      "condition": "Used - Good",
+      "description": "24.2MP, Wi-Fi supported, great for beginners.",
+      "images": [
+        "https://example.com/images/nikon-d5300-1.jpg",
+        "https://example.com/images/nikon-d5300-2.jpg",
+        "https://example.com/images/nikon-d5300-3.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 13,
+      "category": "DSLR",
+      "name": "Sony Alpha a6000",
+      "brand": "Sony",
+      "price": 35000,
+      "condition": "Used - Excellent",
+      "description": "Mirrorless camera with fast autofocus.",
+      "images": [
+        "https://example.com/images/sony-a6000-1.jpg",
+        "https://example.com/images/sony-a6000-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 14,
+      "category": "DSLR",
+      "name": "Canon 80D",
+      "brand": "Canon",
+      "price": 48000,
+      "condition": "Used - Very Good",
+      "description": "Semi-professional DSLR. Shutter count 25k.",
+      "images": [
+        "https://example.com/images/canon-80d-1.jpg",
+        "https://example.com/images/canon-80d-2.jpg",
+        "https://example.com/images/canon-80d-3.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 15,
+      "category": "DSLR",
+      "name": "Nikon D7500",
+      "brand": "Nikon",
+      "price": 52000,
+      "condition": "Used - Excellent",
+      "description": "20.9MP APS-C sensor, great video quality.",
+      "images": [
+        "https://example.com/images/nikon-d7500-1.jpg",
+        "https://example.com/images/nikon-d7500-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 16,
+      "category": "PC",
+      "name": "Custom Gaming PC",
+      "brand": "Assembled",
+      "price": 55000,
+      "condition": "Used - Very Good",
+      "description": "Ryzen 5 3600, GTX 1660 Super, 16GB RAM, 500GB SSD.",
+      "images": [
+        "https://example.com/images/gaming-pc-1.jpg",
+        "https://example.com/images/gaming-pc-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 17,
+      "category": "PC",
+      "name": "Office PC Build",
+      "brand": "Custom",
+      "price": 25000,
+      "condition": "Used - Good",
+      "description": "Core i3 9100, 8GB RAM, 240GB SSD. Perfect for office work.",
+      "images": [
+        "https://example.com/images/office-pc-1.jpg",
+        "https://example.com/images/office-pc-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 18,
+      "category": "PC",
+      "name": "Editing PC",
+      "brand": "Custom",
+      "price": 60000,
+      "condition": "Used - Excellent",
+      "description": "Ryzen 7, 32GB RAM, RTX 2060, 1TB SSD. Used for video editing.",
+      "images": [
+        "https://example.com/images/editing-pc-1.jpg",
+        "https://example.com/images/editing-pc-2.jpg",
+        "https://example.com/images/editing-pc-3.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 19,
+      "category": "PC",
+      "name": "Basic Home PC",
+      "brand": "Custom",
+      "price": 18000,
+      "condition": "Used - Fair",
+      "description": "Pentium G4560, 4GB RAM, 500GB HDD.",
+      "images": [
+        "https://example.com/images/basic-pc-1.jpg",
+        "https://example.com/images/basic-pc-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    },
+    {
+      "id": 20,
+      "category": "PC",
+      "name": "Streaming PC",
+      "brand": "Assembled",
+      "price": 65000,
+      "condition": "Used - Excellent",
+      "description": "Intel i7, RTX 3060, 16GB RAM, 1TB SSD. Ideal for gaming/streaming.",
+      "images": [
+        "https://example.com/images/streaming-pc-1.jpg",
+        "https://example.com/images/streaming-pc-2.jpg"
+      ],
+      "postedAt": "2025-11-02"
+    }
+  ]
+}
