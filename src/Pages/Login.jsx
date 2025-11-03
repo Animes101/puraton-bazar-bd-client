@@ -1,7 +1,17 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
 
 const Login = () => {
+  const {googleLogin, loginUser}=useContext(AuthContext)
+
+
+  const navigate=useNavigate();
+
+  const location=useLocation()
+
+  console.log(location)
+
   // 🔹 Controlled form state
   const [formData, setFormData] = useState({
     email: "",
@@ -23,16 +33,21 @@ const Login = () => {
       return;
     }
 
-    console.log("✅ Login Data:", formData);
-    alert(`✅ Logged in as ${formData.email}`);
-    // এখান থেকে তুমি backend API call / Firebase login করতে পারবে
+    loginUser(formData.email, formData.password)
+    .then(result=> {
+      navigate(location.state ? location.state : '/')
+    })
   };
 
   // 🔹 handle Google login
   const handleGoogleLogin = () => {
     console.log("Google login clicked!");
-    alert("🌐 Google login clicked!");
-    // এখানে Firebase বা OAuth login function বসাতে পারো
+    googleLogin()
+    .then((result)=>{
+      navigate(location.state ? location.state : '/')
+    })
+    
+  
   };
 
   return (

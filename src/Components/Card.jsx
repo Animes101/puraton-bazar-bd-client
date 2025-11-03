@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Card = ({ data }) => {
-  console.log(data);
   return (
     <div>
       <div className="card shadow-sm bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2 border border-textColor">

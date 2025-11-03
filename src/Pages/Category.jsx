@@ -12,8 +12,8 @@ const Category = () => {
   },[])
 
   return (
-   <div className='bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2'>
-     <div className='flex my-10'>
+   <div className='bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2 my-10'>
+     <div className='flex '>
       <div className='w-[20%]'>
         catagry
       </div>

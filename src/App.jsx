@@ -3,13 +3,16 @@ import './App.css'
 
 
 import router from './routes/route';
+import AuthProvider from './context/AuthProvider';
 
 function App() {
 
   return (
 
     <div>    
-          <RouterProvider router={router} />  
+      <AuthProvider>
+        <RouterProvider router={router} /> 
+      </AuthProvider> 
     </div>
   )
 }

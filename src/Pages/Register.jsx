@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
 
 const Register = () => {
+  const {createUser}=useContext(AuthContext);
   // controlled state
   const [formData, setFormData] = useState({
     name: "",
@@ -26,8 +28,12 @@ const Register = () => {
       alert("❌ Password and Confirm Password do not match!");
       return; // form submit বন্ধ হবে
     }
-    console.log("Register Data:", formData);
-    // এখানে তুমি backend API call করতে পারো
+
+    createUser(formData.email, formData.password)
+    .then(result=>{
+      console.log(result)
+    })
+    
   };
 
   // handle Google login

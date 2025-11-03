@@ -9,6 +9,7 @@ import NotFound404 from "../Pages/NotFound404";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Details from "../Pages/Details";
+import Privet from "../Pages/Privet";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
       { path: "/category", element: <Category /> },
       { path: "/contact", element: <Contact /> },
       { path: "/dashboard", element: <Dashboard /> },
-      { path: "/cart", element: <Cart /> },
+      { path: "/cart", element: <Privet><Cart /> </Privet>},
       {path:'/category/:id', element:<Details />}
     ],
     

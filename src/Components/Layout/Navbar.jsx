@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
+import { AuthContext } from "../../context/AuthProvider";
 const Navbar = () => {
+  const {logout, user}=useContext(AuthContext);
   // Active link style setup
   const linkClasses = ({ isActive }) =>
     isActive
       ? "text-textColor font-semibold text-xl  font-bold  border-b-2 border-textColor"
       : "hover:text-textColor text-xl  font-bold  hover:border-b-2 hover:border-textColor";
+
+
+      //handle logout 
+
+      const handleLogout=()=>{
+
+        logout()
+        .then(result=> console.log(result))
+              }
+
+
+              
 
   return (
     <div className="shadow-sm sticky top-0 z-50 bg-gradient-to-r from-bgGradient1 from-10% via-bgGradinet3 via-50% to-bgGradient2 to-60% ">
@@ -112,12 +126,12 @@ const Navbar = () => {
           <div className="avatar">
             <div className="w-10 rounded-full ring ring-violet-500 ring-offset-base-100 ring-offset-2">
               <img
-                src="https://img.daisyui.com/images/profile/demo/gordon@192.webp"
+                src={user && user.photoURL}
                 alt="User Avatar"
               />
             </div>
           </div>
-          <Link to={'/login'}><button className="pl-5">Login</button></Link>
+          {user  ?  <button onClick={handleLogout} className="pl-5">Logout</button> :<Link to={'/login'}><button className="pl-5">Login</button></Link> }
         </div>
       </div>
     </div>
