@@ -1,5 +1,4 @@
-{
-  "products": [
+[
     {
       "id": 1,
       "category": "Mobile",
@@ -287,4 +286,3 @@
       "postedAt": "2025-11-02"
     }
   ]
-}
