@@ -77,7 +77,10 @@ const Navbar = () => {
               </li>
               <li>
                 <NavLink to="/cart" className={linkClasses}>
-                   <FaCartPlus />
+                  
+                   <button className="btn">
+   <FaCartPlus /> <div className="badge badge-sm">+99</div>
+</button>
 
                 </NavLink>
               </li>
@@ -115,7 +118,10 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink to="/cart" className={linkClasses}>
-                Cart <FaCartPlus />
+                      <button className="btn">
+   <FaCartPlus /> <div className="badge badge-sm bg-bgGradient2">+99</div>
+</button>
+
               </NavLink>
             </li>
           </ul>
