@@ -1,9 +1,14 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
+import Swal from 'sweetalert2'
+import { Toaster, toast } from "react-hot-toast";
+
 
 const Register = () => {
   const {createUser}=useContext(AuthContext);
+
+  const navigate=useNavigate();
   // controlled state
   const [formData, setFormData] = useState({
     name: "",
@@ -25,13 +30,24 @@ const Register = () => {
 
       // password match check
     if (formData.password !== formData.confirmPassword) {
-      alert("❌ Password and Confirm Password do not match!");
+      toast.error("❌ Password and Confirm Password do not match!")
       return; // form submit বন্ধ হবে
     }
 
     createUser(formData.email, formData.password)
     .then(result=>{
-      console.log(result)
+      Swal.fire({
+              position: "center",
+              icon: "success",
+              title:`${result?.user.email}`,
+              showConfirmButton: false,
+              timer: 1500
+            });
+            navigate(location.state ? location.state : '/')
+    })
+    .catch((err)=>{
+    
+      toast.error(`${err?.message}`)
     })
     
   };
@@ -44,6 +60,7 @@ const Register = () => {
 
   return (
     <div>
+      <Toaster position="top-center" />
       <div className="hero min-h-screen bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2">
         <div className="card border border-textColor w-[30%] bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2 shrink-0 shadow-2xl">
           <div className="card-body">

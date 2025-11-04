@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
+import Swal from 'sweetalert2'
 
 const Login = () => {
   const {googleLogin, loginUser}=useContext(AuthContext)
@@ -35,6 +36,14 @@ const Login = () => {
 
     loginUser(formData.email, formData.password)
     .then(result=> {
+      
+            Swal.fire({
+        position: "center",
+        icon: "success",
+        title:`${result?.user.email}`,
+        showConfirmButton: false,
+        timer: 1500
+      });
       navigate(location.state ? location.state : '/')
     })
   };
@@ -44,6 +53,13 @@ const Login = () => {
     console.log("Google login clicked!");
     googleLogin()
     .then((result)=>{
+            Swal.fire({
+        position: "center",
+        icon: "success",
+        title:`${result?.user.email}`,
+        showConfirmButton: false,
+        timer: 1500
+      });
       navigate(location.state ? location.state : '/')
     })
     
