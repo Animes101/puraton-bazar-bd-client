@@ -19,9 +19,9 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/category", element: <Category /> },
       { path: "/contact", element: <Contact /> },
-      { path: "/dashboard", element: <Dashboard /> },
+      { path: "/dashboard", element: <Privet><Dashboard /></Privet> },
       { path: "/cart", element: <Privet><Cart /> </Privet>},
-      {path:'/category/:id', element:<Details />}
+      {path:'/category/:id', element:<Privet><Details /></Privet>}
     ],
     
   },
