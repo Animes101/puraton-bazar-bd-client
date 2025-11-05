@@ -1,20 +1,32 @@
 import { useParams } from "react-router-dom";
-import useItem from "../hooks/useItem";
 import Swal from "sweetalert2";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import axios, { Axios } from "axios";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 
 const Details = () => {
-  const { product } = useItem();
+ 
   const { id } = useParams();
   const { user } = useContext(AuthContext);
 
   const axiosSecure=useAxiosSecure();
 
-  const singleData = product?.find((item) => item.id === parseInt(id));
+   const { data, isLoading } = useQuery({
+    queryKey: ["cart"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/products/${id}`);
+      return res.data.data;
+    },
+  });
+
+  console.log(data);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
 
   const handleAddToCart = (item) => {
     Swal.fire({
@@ -44,6 +56,7 @@ const Details = () => {
 
 
         axiosSecure.post('/cart', cart)
+
         .then(result=> console.log(result))
 
         
@@ -54,18 +67,18 @@ const Details = () => {
   return (
     <div className="container mx-auto">
       <div className="card lg:card-side bg-base-100 shadow-sm">
-        <figure>
-          <img src={singleData?.images[0]} alt="Album" />
-        </figure>
+        {/* <figure>
+          <img src={data?.images[0]} alt="Album" />
+        </figure> */}
         <div className="card-body">
-          <h2 className="card-title">{singleData?.name}</h2>
-          <h2 className="card-title">{singleData?.brand}</h2>
-          <h2 className="card-title">{singleData?.condition}</h2>
-          <p>{singleData?.description}</p>
-          <p>price: {singleData?.price}৳</p>
+          <h2 className="card-title">{data?.name}</h2>
+          <h2 className="card-title">{data?.brand}</h2>
+          <h2 className="card-title">{data?.condition}</h2>
+          <p>{data?.description}</p>
+          <p>price: {data?.price}৳</p>
           <div className="card-actions justify-end">
             <button
-              onClick={() => handleAddToCart(singleData)}
+              onClick={() => handleAddToCart(data)}
               className="btn bg-buttonBg text-textWhite p-2"
             >
               Add to Cart

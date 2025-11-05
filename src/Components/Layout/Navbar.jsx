@@ -2,8 +2,14 @@ import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthProvider";
+import useCart from "../../hooks/useCart";
 const Navbar = () => {
   const {logout, user}=useContext(AuthContext);
+  const {data}=useCart();
+
+  console.log(data)
+
+
   // Active link style setup
   const linkClasses = ({ isActive }) =>
     isActive
@@ -119,7 +125,7 @@ const Navbar = () => {
             <li>
               <NavLink to="/cart" className={linkClasses}>
                       <button className="btn">
-   <FaCartPlus /> <div className="badge badge-sm bg-bgGradient2">+99</div>
+   <FaCartPlus /> <div className="badge badge-sm bg-bgGradient2">{data?.length}</div>
 </button>
 
               </NavLink>

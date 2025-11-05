@@ -1,11 +1,13 @@
+import { useEffect, useState } from 'react'
 import Card from '../Components/Card'
-import useItem from '../hooks/useItem'
+import useItem from '../hooks/useItem';
 
 const Category = () => {
 
-  const {product}=useItem()
+  const {data}=useItem();
 
-  console.log(product)
+
+
 
 
   return (
@@ -15,7 +17,7 @@ const Category = () => {
         catagry
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-[80%]'>
-        {product?.map((item)=><Card key={item.id} data={item} />)}
+        {data?.map((item)=><Card key={item.id} data={item} />)}
       </div>
     </div>
    </div>

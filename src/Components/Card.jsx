@@ -20,7 +20,7 @@ const Card = ({ data }) => {
             <button className="btn btn-primary">{data.price}</button>
           </div>
           <div className="card-actions justify-end">
-            <Link to={`/category/${data.id}`} state={`/category/${data.id}`} className="btn btn-primary">View Details</Link>
+            <Link to={`/category/${data._id}`} state={`/category/${data.id}`} className="btn btn-primary">View Details</Link>
           </div>
         </div>
       </div>
