@@ -10,6 +10,7 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Details from "../Pages/Details";
 import Privet from "../Pages/Privet";
+import UserHome from "../Pages/UserHome";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,14 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/category", element: <Category /> },
       { path: "/contact", element: <Contact /> },
-      { path: "/dashboard", element: <Privet><Dashboard /></Privet> },
+      { 
+        path: "/dashboard",
+        element: <Privet><Dashboard /></Privet>,
+        children:[
+          { path: "/dashboard/home", element: <UserHome /> },
+        ]
+      
+      },
       { path: "/cart", element: <Privet><Cart /> </Privet>},
       {path:'/category/:id', element:<Privet><Details /></Privet>}
     ],

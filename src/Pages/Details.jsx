@@ -4,12 +4,15 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import useCart from "../hooks/useCart";
 
 
 const Details = () => {
  
   const { id } = useParams();
   const { user } = useContext(AuthContext);
+
+  const {refetch}=useCart()
 
   const axiosSecure=useAxiosSecure();
 
@@ -57,7 +60,10 @@ const Details = () => {
 
         axiosSecure.post('/cart', cart)
 
-        .then(result=> console.log(result))
+        .then(result=> {
+          
+          refetch();
+        })
 
         
       }
