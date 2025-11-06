@@ -2,12 +2,12 @@ import { Link, Outlet } from 'react-router-dom'
 
 const Dashboard = () => {
 
-  const isAdmin=true;
+  const isAdmin=false;
 
   return (
-    <div className='grid grid-cols-2 gap-4'>
+    <div className='grid grid-cols-4 gap-4'>
 
-      <div className=''>
+      <div className='col-span-1'>
       {isAdmin ?   <ul>
           <li>
             <Link to='/dashboard/home'>Admin Home</Link>
@@ -40,7 +40,7 @@ const Dashboard = () => {
         }
 
       </div>
-      <div>
+      <div className='col-span-3'>
         <Outlet />
 
       </div>

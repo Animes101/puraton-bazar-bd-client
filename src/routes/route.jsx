@@ -11,6 +11,7 @@ import Register from "../Pages/Register";
 import Details from "../Pages/Details";
 import Privet from "../Pages/Privet";
 import UserHome from "../Pages/UserHome";
+import Payment from "../Pages/Payment";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <Privet><Dashboard /></Privet>,
         children:[
+          { path: "/dashboard/home", element: <UserHome /> },
+          { path: "/dashboard/payment", element: <Payment /> },
+          { path: "/dashboard/profile", element: <UserHome /> },
+          { path: "/dashboard/home", element: <UserHome /> },
           { path: "/dashboard/home", element: <UserHome /> },
         ]
       
