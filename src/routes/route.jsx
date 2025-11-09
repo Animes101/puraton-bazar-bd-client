@@ -12,6 +12,8 @@ import Details from "../Pages/Details";
 import Privet from "../Pages/Privet";
 import UserHome from "../Pages/UserHome";
 import Payment from "../Pages/Payment";
+import AdminAllUsers from "../Pages/AdminAllUsers";
+import AllProducts from "../Pages/AllProducts";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,8 @@ const router = createBrowserRouter([
           { path: "/dashboard/profile", element: <UserHome /> },
           { path: "/dashboard/home", element: <UserHome /> },
           { path: "/dashboard/home", element: <UserHome /> },
+          { path: "/dashboard/all-users", element: <AdminAllUsers /> },
+          {path: "/dashboard/products", element:<AllProducts />}
         ]
       
       },

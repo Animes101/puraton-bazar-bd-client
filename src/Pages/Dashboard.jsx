@@ -1,19 +1,23 @@
+
 import { Link, Outlet } from 'react-router-dom'
+
 
 const Dashboard = () => {
 
-  const isAdmin=false;
+
+  const isAdmin=true;
+
 
   return (
     <div className='grid grid-cols-4 gap-4'>
 
-      <div className='col-span-1'>
-      {isAdmin ?   <ul>
+      <div className='col-span-1 bg-bgGradient2  h-screen '>
+      {isAdmin ?   <ul className='flex flex-col justify-around h-[400px] text-textColor font-bold  items-center '>
           <li>
             <Link to='/dashboard/home'>Admin Home</Link>
           </li>
           <li>
-            <Link to='/dashboard/Payment'>All Users</Link>
+            <Link to='/dashboard/all-users'>All Users</Link>
           </li>
           <li>
             <Link to='/dashboard/profile'>Admin Profile</Link>

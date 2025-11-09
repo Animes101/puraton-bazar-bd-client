@@ -66,8 +66,38 @@ const Register = () => {
   const handleGoogleLogin = () => {
      googleLogin()
      .then(result=> {
+
+      const userInfo={
+        name:result.user.displayName,
+        email:result.user.email,
+      }
+
+      axiosPublic.post('/users', userInfo)
+      .then(res=>{
+        console.log(res);
+
+        if(res.data.data.insertedId){
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title:`${result?.user.email}`,
+            showConfirmButton: false,
+            timer: 1500
+          });
+          navigate(location.state ? location.state : '/')
+        }
+
+        if(res.data.status == 'no'){
       
-      console.log(result)
+
+
+          toast.error("❌ User already exists! please Login");
+          
+        }
+
+      
+      })
+    
      })
     .catch(err => {
       toast.error(`${err?.message}`);
