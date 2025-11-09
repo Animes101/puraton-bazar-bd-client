@@ -8,8 +8,6 @@ const Privet = ({ children }) => {
 
   const location=useLocation();
 
-  console.log(location);
-
   if (loading) {
     return <div>Loading...</div>;
   }

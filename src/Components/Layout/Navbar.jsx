@@ -7,8 +7,6 @@ const Navbar = () => {
   const {logout, user}=useContext(AuthContext);
   const {data}=useCart();
 
-  console.log(data)
-
 
   // Active link style setup
   const linkClasses = ({ isActive }) =>
