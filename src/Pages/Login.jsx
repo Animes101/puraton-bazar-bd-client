@@ -50,7 +50,6 @@ const Login = () => {
 
   // 🔹 handle Google login
   const handleGoogleLogin = () => {
-    console.log("Google login clicked!");
     googleLogin()
     .then((result)=>{
             Swal.fire({

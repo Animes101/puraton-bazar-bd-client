@@ -28,7 +28,7 @@ const Cart = () => {
       if (result.isConfirmed) {
         axiosSecure
           .delete(`/cart/${id}`)
-          .then((data) => {                                           
+          .then((data) => {                                 
 
             if(data.data.data.deletedCount>0){{
               refetch();

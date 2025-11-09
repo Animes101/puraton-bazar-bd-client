@@ -1,22 +1,22 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
-
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const Register = () => {
-  const {createUser}=useContext(AuthContext);
+  const { createUser, googleLogin } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   // controlled state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
-
 
   // handle input change
   const handleChange = (e) => {
@@ -28,35 +28,53 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-      // password match check
+    // password match check
     if (formData.password !== formData.confirmPassword) {
-      toast.error("❌ Password and Confirm Password do not match!")
+      toast.error("❌ Password and Confirm Password do not match!");
       return; // form submit বন্ধ হবে
     }
 
     createUser(formData.email, formData.password)
-    .then(result=>{
-      Swal.fire({
-              position: "center",
-              icon: "success",
-              title:`${result?.user.email}`,
-              showConfirmButton: false,
-              timer: 1500
-            });
-            navigate(location.state ? location.state : '/')
-    })
-    .catch((err)=>{
-    
-      toast.error(`${err?.message}`)
-    })
-    
+      .then((result) => {
+        const userInfo = {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        };
+        axiosPublic
+          .post("/users", userInfo)
+          .then((res) => {
+            if (res.data.data.insertedId) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: `${result?.user.email}`,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate(location.state ? location.state : "/");
+            }
+          })
+          .catch((err) => console.error(err));
+      })
+      .catch((err) => {
+        toast.error(`${err?.message}`);
+      });
   };
 
   // handle Google login
   const handleGoogleLogin = () => {
-    console.log("Google login clicked!");
-    // এখানে তুমি Firebase / OAuth Google login code দেবে
-  };
+     googleLogin()
+     .then(result=> {
+      
+      console.log(result)
+     })
+    .catch(err => {
+      toast.error(`${err?.message}`);
+    });
+    
+    
+  }
 
   return (
     <div>
@@ -168,7 +186,9 @@ const Register = () => {
                   className="link link-hover text-xl text-textColor"
                 >
                   Already have an account?{" "}
-                  <span className="text-blue-400 font-semibold">Login here</span>
+                  <span className="text-blue-400 font-semibold">
+                    Login here
+                  </span>
                 </Link>
               </div>
             </form>
