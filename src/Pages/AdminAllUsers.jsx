@@ -16,6 +16,21 @@ const AdminAllUsers = () => {
 
   console.log(data);
 
+  const handleUpdate=id=>{
+
+
+    axiosSecure.patch(`/users/${id}`)
+    .then(res=>{
+      console.log(res);
+        if(res.data.data.modifiedCount>0){
+            Swal.fire("Success!", "User role has been updated.", "success");
+            refetch();
+        }
+      })
+
+    
+  }
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -67,8 +82,14 @@ const AdminAllUsers = () => {
                     <td>{user.email}</td>
                     <td>{user.password}</td>
                     <button
-                      onClick={() => handleDelete(user._id)}
+                      onClick={() => handleUpdate(user._id)}
                       className="bg-bgGradinet3 btn p-2"
+                    >
+                      {user.role === "admin" ? "Admin" : "Make Admin"}
+                    </button>
+                    <button
+                      onClick={() => handleDelete(user._id)}
+                      className="bg-bgGradinet3 btn p-2 ml-3"
                     >
                       Delete
                     </button>

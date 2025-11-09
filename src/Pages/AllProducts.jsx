@@ -13,6 +13,10 @@ const AllProducts = () => {
     },
   });
 
+  if(data?.data?.length<0){
+    return <h1 className="text-3xl font-bold text-center mt-10">No Products Available</h1>
+  }
+
   return (
     <div>
       <div className="overflow-x-auto">

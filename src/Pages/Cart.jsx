@@ -12,6 +12,10 @@ const Cart = () => {
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error: {error.message}</div>;
 
+  if(data?.length === 0){
+    return <h1 className="text-3xl font-bold text-center mt-10">No Products Available ............!</h1>
+  }
+
   const totalPrice = data?.reduce((sum, item) => sum + item.price, 0) || 0;
 
   const handleRemoveCart = (id) => {
