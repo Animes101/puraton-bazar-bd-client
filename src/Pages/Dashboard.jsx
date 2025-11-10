@@ -1,18 +1,20 @@
 
 import { Link, Outlet } from 'react-router-dom'
+import useAdmin from '../hooks/useAdmin';
 
 
 const Dashboard = () => {
 
-
-  const isAdmin=true;
+  const isAdmin=useAdmin();
+  
+  const admin=isAdmin;
 
 
   return (
     <div className='grid grid-cols-4 gap-4'>
 
       <div className='col-span-1 bg-bgGradient2  h-screen '>
-      {isAdmin ?   <ul className='flex flex-col justify-around h-[400px] text-textColor font-bold  items-center '>
+      {admin ?   <ul className='flex flex-col justify-around h-[400px] text-textColor font-bold  items-center '>
           <li>
             <Link to='/dashboard/home'>Admin Home</Link>
           </li>

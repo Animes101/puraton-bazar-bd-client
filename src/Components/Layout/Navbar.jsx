@@ -3,10 +3,10 @@ import { Link, NavLink } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthProvider";
 import useCart from "../../hooks/useCart";
+import useAdmin from "../../hooks/useAdmin";
 const Navbar = () => {
   const {logout, user}=useContext(AuthContext);
   const {data}=useCart();
-
 
   // Active link style setup
   const linkClasses = ({ isActive }) =>
