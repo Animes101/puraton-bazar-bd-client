@@ -17,6 +17,11 @@ const AllProducts = () => {
     return <h1 className="text-3xl font-bold text-center mt-10">No Products Available</h1>
   }
 
+  const handleDelete=(id)=>{
+    alert(id);
+
+  }
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -69,8 +74,8 @@ const AllProducts = () => {
               </td>
               <td>Purple</td>
               <th>
-                <button className="btn bg-bgGradient2 p-2 btn-xs">delete</button>
-                <button className="btn bg-bgGradient2 p-2 ml-3 btn-xs">Update</button>
+                <button onClick={()=>handleDelete(product._id)} className="btn bg-bgGradient2 p-2 btn-xs">delete</button>
+                <button  className="btn bg-bgGradient2 p-2 ml-3 btn-xs">Update</button>
               </th>
             </tr>
                 )

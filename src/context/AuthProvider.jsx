@@ -7,6 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
  export const AuthContext = createContext(null);
@@ -14,6 +15,8 @@ import { auth } from "../firebase/firebase";
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const axiosPublic =useAxiosPublic();
 
   const provider = new GoogleAuthProvider();
   //create user
@@ -50,9 +53,24 @@ const AuthProvider = ({ children }) => {
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/auth.user
 
-          setLoading(false);
+         
           setUser(user);
-          const email=user.email
+           setLoading(false);
+          const email={email:user.email}
+
+          axiosPublic.post('/jwt', email)
+          .then(res=>{
+
+            if(res.data.token){
+
+              localStorage.setItem('ac-token', res.data.token)
+
+            }
+
+            
+
+           
+          })
 
           
           // ...
