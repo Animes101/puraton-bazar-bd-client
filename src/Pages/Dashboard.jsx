@@ -6,6 +6,8 @@ import useAdmin from '../hooks/useAdmin';
 const Dashboard = () => {
 
   const isAdmin=useAdmin();
+
+  console.log(isAdmin);
   
   const admin=isAdmin;
 
