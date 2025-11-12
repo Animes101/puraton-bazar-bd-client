@@ -16,6 +16,7 @@ import AdminAllUsers from "../Pages/AdminAllUsers";
 import AllProducts from "../Pages/AllProducts";
 import AdminRoute from "../Pages/AdminRoute";
 import AdminAddItem from "../Pages/AdminAddItem";
+import AdminUpdateProduct from "../Pages/AdminUpdateProduct";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,8 @@ const router = createBrowserRouter([
           { path: "/dashboard/home", element: <UserHome /> },
           { path: "/dashboard/all-users", element: <AdminRoute><AdminAllUsers /></AdminRoute> },
           {path: "/dashboard/products", element:<AdminRoute><AllProducts /></AdminRoute>},
-           {path: "/dashboard/addItem", element:<AdminRoute><AdminAddItem /></AdminRoute>}
+           {path: "/dashboard/addItem", element:<AdminRoute><AdminAddItem /></AdminRoute>},
+           {path: "/dashboard/updateItem", element:<AdminRoute><AdminUpdateProduct /></AdminRoute>}
         ]
       
       },
