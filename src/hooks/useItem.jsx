@@ -6,7 +6,7 @@ const useItem = () => {
 
   const  axiosSecure  = useAxiosSecure();
 
-  const { data, error } = useQuery({
+  const { data, error, isLoading } = useQuery({
     
     queryKey: ['products'],
     queryFn: async () => {
@@ -16,7 +16,7 @@ const useItem = () => {
     }
   })
 
-  return { data, error }
+  return { data, error, isLoading }
  
 }
 

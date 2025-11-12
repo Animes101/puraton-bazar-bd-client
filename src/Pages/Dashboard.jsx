@@ -5,7 +5,7 @@ import useAdmin from '../hooks/useAdmin';
 
 const Dashboard = () => {
 
-  const isAdmin=useAdmin();
+  const {isAdmin}=useAdmin();
 
   console.log(isAdmin);
   
@@ -24,7 +24,7 @@ const Dashboard = () => {
             <Link to='/dashboard/all-users'>All Users</Link>
           </li>
           <li>
-            <Link to='/dashboard/profile'>Admin Profile</Link>
+            <Link to='/dashboard/addItem'>Add Items</Link>
           </li>
           <li>
             <Link to='/dashboard/products'>All Products</Link>

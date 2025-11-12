@@ -66,9 +66,6 @@ const AuthProvider = ({ children }) => {
               localStorage.setItem('ac-token', res.data.token)
 
             }
-
-            
-
            
           })
 

@@ -1,10 +1,15 @@
-import { useEffect, useState } from 'react'
 import Card from '../Components/Card'
 import useItem from '../hooks/useItem';
 
 const Category = () => {
 
-  const {data}=useItem();
+  const {data, isLoading}=useItem();
+
+  if(isLoading){
+    return <h1>loading..................</h1>
+  }
+
+
 
 
 
