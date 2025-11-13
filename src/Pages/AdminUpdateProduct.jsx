@@ -1,51 +1,159 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
+const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
+const imgHostingApi = `https://api.imgbb.com/1/upload?key=${img_hosting_Key}`;
 
 const AdminUpdateProduct = () => {
-    const [formData, setFormData] = useState({
-        category: "",
-        name: "",
-        brand: "",
-        price: "",
-        condition: "",
-        description: "",
-        date: "",
-        images: [], // all images from both file inputs will be stored here
-      });
+  const { id } = useParams();
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
-      // Input change handler
+  // ✅ Hooks must always be on top
+  const [imgUploadLoading, setImageUploadLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    category: "",
+    name: "",
+    brand: "",
+    price: "",
+    condition: "",
+    description: "",
+    date: "",
+    image1: null,
+    image2: null,
+  });
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["cart", id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/products/${id}`);
+      return res.data.data;
+    },
+  });
+
+  // ✅ when data loaded, set default form values
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        category: data.category || "",
+        name: data.name || "",
+        brand: data.brand || "",
+        price: data.price || "",
+        condition: data.condition || "",
+        description: data.description || "",
+        date: data.postedAt || "",
+        image1: null,
+        image2: null,
+      });
+    }
+  }, [data]);
+
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
 
     if (type === "file") {
-      // multiple file input হলে সব ফাইল merge করে array তে রাখবো
-      const fileArray = Array.from(files);
-
-      setFormData((prevData) => ({
-        ...prevData,
-        images: [...prevData.images, ...fileArray], // merge both input's images
-      }));
+      const file = files[0];
+      if (name === "img1") {
+        setFormData((prev) => ({ ...prev, image1: file }));
+      } else if (name === "img2") {
+        setFormData((prev) => ({ ...prev, image2: file }));
+      }
     } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  // Form submit handler
-  const handleSubmit = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
 
-    console.log("Form Data:", formData);
+    try {
+      setImageUploadLoading(true);
 
+      const image1 = { image: formData.image1 };
+      const image2 = { image: formData.image2 };
+
+      const res1 = await axiosPublic.post(imgHostingApi, image1, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (res1.data.success) {
+        setImageUploadLoading(false);
+
+        const res2 = await axiosPublic.post(imgHostingApi, image2, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        if (res2.data.success) {
+          setImageUploadLoading(false);
+
+          const newItem = {
+            category: formData.category,
+            name: formData.name,
+            brand: formData.brand,
+            price: formData.price,
+            condition: formData.condition,
+            description: formData.description,
+            images: [res1.data.data.display_url, res2.data.data.display_url],
+            postedAt: formData.date,
+          };
+
+
+          const result = await axiosSecure.patch(`/products/${id}`, newItem);
+
+          console.log(result)
+
+          if (result.data.data.modifiedCount>0) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Update Success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+
+            setFormData({
+              category: "",
+              name: "",
+              brand: "",
+              price: "",
+              condition: "",
+              description: "",
+              date: "",
+              image1: null,
+              image2: null,
+            });
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      setImageUploadLoading(false);
+    }
   };
+
+  if (isLoading || imgUploadLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-3xl font-bold text-blue-600 animate-pulse">
+          Loading...
+        </h1>
+        <p className="mt-2 text-gray-500">
+          Please wait, it may take a few seconds.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
-        <div>
-      <h1 className="text-center font-bold text-3xl mb-6">Update Item</h1>
+      <h1 className="text-center font-bold text-3xl mb-6">Update Product</h1>
+
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleUpdate}
         className="border flex flex-col gap-3 bg-bgGradient1 p-10 rounded-2xl"
       >
         {/* CATEGORY */}
@@ -67,7 +175,6 @@ const AdminUpdateProduct = () => {
         <input
           type="text"
           name="name"
-          id="name"
           value={formData.name}
           onChange={handleChange}
           className="p-2 rounded"
@@ -78,7 +185,6 @@ const AdminUpdateProduct = () => {
         <input
           type="text"
           name="brand"
-          id="brand"
           value={formData.brand}
           onChange={handleChange}
           className="p-2 rounded"
@@ -89,7 +195,6 @@ const AdminUpdateProduct = () => {
         <input
           type="text"
           name="price"
-          id="price"
           value={formData.price}
           onChange={handleChange}
           className="p-2 rounded"
@@ -100,7 +205,6 @@ const AdminUpdateProduct = () => {
         <input
           type="text"
           name="condition"
-          id="condition"
           value={formData.condition}
           onChange={handleChange}
           className="p-2 rounded"
@@ -111,7 +215,6 @@ const AdminUpdateProduct = () => {
         <input
           type="text"
           name="description"
-          id="description"
           value={formData.description}
           onChange={handleChange}
           className="p-2 rounded"
@@ -122,30 +225,31 @@ const AdminUpdateProduct = () => {
         <input
           type="date"
           name="date"
-          id="date"
           value={formData.date}
           onChange={handleChange}
           className="p-2 rounded"
         />
 
-        {/* IMAGES INPUTS */}
-        <label>Images (you can select multiple in both)</label>
+        {/* IMAGE INPUTS */}
+        <label htmlFor="img1">Image 1</label>
         <input
           type="file"
-          name="images1"
-          multiple
-          onChange={handleChange}
-          className="p-2"
-        />
-        <input
-          type="file"
-          name="images2"
-          multiple
+          name="img1"
+          accept="image/*"
           onChange={handleChange}
           className="p-2"
         />
 
-        {/* Submit Button */}
+        <label htmlFor="img2">Image 2</label>
+        <input
+          type="file"
+          name="img2"
+          accept="image/*"
+          onChange={handleChange}
+          className="p-2"
+        />
+
+        {/* Submit */}
         <button
           type="submit"
           className="bg-blue-600 text-white py-2 mt-4 rounded hover:bg-blue-700"
@@ -153,23 +257,26 @@ const AdminUpdateProduct = () => {
           Add Item
         </button>
 
-        {/* Preview Selected Images */}
-        {formData.images.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-3">
-            {formData.images.map((img, i) => (
-              <img
-                key={i}
-                src={URL.createObjectURL(img)}
-                alt="preview"
-                className="w-24 h-24 object-cover rounded"
-              />
-            ))}
-          </div>
-        )}
+        {/* ✅ Preview Selected Images */}
+        <div className="mt-4 flex gap-3">
+          {formData.image1 && (
+            <img
+              src={URL.createObjectURL(formData.image1)}
+              alt="Preview 1"
+              className="w-24 h-24 object-cover rounded"
+            />
+          )}
+          {formData.image2 && (
+            <img
+              src={URL.createObjectURL(formData.image2)}
+              alt="Preview 2"
+              className="w-24 h-24 object-cover rounded"
+            />
+          )}
+        </div>
       </form>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default AdminUpdateProduct
+export default AdminUpdateProduct;

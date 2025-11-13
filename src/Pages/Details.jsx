@@ -24,7 +24,6 @@ const Details = () => {
     },
   });
 
-  console.log(data);
 
   if (isLoading) {
     return <div>Loading...</div>;

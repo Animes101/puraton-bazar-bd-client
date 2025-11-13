@@ -78,7 +78,7 @@ const AdminAddItem = () => {
 
           if (result.data.data.insertedId) {
             Swal.fire({
-              position: "top-end",
+              position: "center-end",
               icon: "success",
               title: "Your work has been saved",
               showConfirmButton: false,

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const AllProducts = () => {
   const axiosSecure = useAxiosSecure();
@@ -73,7 +74,7 @@ const AllProducts = () => {
               <td>{product.price}</td>
               <th>
                 <button onClick={()=>handleDelete(product._id)} className="btn bg-bgGradient2 p-2 btn-xs">delete</button>
-                <button  className="btn bg-bgGradient2 p-2 ml-3 btn-xs">Update</button>
+                <Link to={`/dashboard/updateItem/${product._id}`}  className="btn bg-bgGradient2 p-2 ml-3 btn-xs">Update</Link>
               </th>
             </tr>
                 )
