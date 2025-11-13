@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${img_hosting_Key}`;
 
 const AdminAddItem = () => {
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
+  const [imgUploadLoading, setImageUploadLoading] = useState(false);
   const [formData, setFormData] = useState({
     category: "",
     name: "",
@@ -25,9 +29,6 @@ const AdminAddItem = () => {
 
     if (type === "file") {
       const file = files[0];
-
-      // ✅ যদি input এর name হয় img1 → image1 set হবে
-      // ✅ যদি input এর name হয় img2 → image2 set হবে
       if (name === "img1") {
         setFormData((prev) => ({ ...prev, image1: file }));
       } else if (name === "img2") {
@@ -42,35 +43,81 @@ const AdminAddItem = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const image1={image:formData.image1};
-    const image2={image:formData.image2};
-    
+    try {
+      setImageUploadLoading(true);
 
-    const res1=await axiosPublic.post(imgHostingApi,image1, {
-      headers:{
-      'Content-Type':'multipart/form-data'
-      }
-    } )
-     const res2=await axiosPublic.post(imgHostingApi,image2, {
-      headers:{
-      'Content-Type':'multipart/form-data'
-      }
-    } )
+      const image1 = { image: formData.image1 };
+      const image2 = { image: formData.image2 };
 
-    const newItem={
-      category:formData.category,
-      name:formData.name,
-      brand:formData.brand,
-      price:formData.price,
-      condition:formData.condition,
-      description:formData.description,
-      date:formData.date,
-      images:[res1.data.data.display_url,res2.data.data.display_url]
+      const res1 = await axiosPublic.post(imgHostingApi, image1, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (res1.data.success) {
+        setImageUploadLoading(false);
+
+        const res2 = await axiosPublic.post(imgHostingApi, image2, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+
+        if (res2.data.success) {
+          setImageUploadLoading(false);
+
+          const newItem = {
+            category: formData.category,
+            name: formData.name,
+            brand: formData.brand,
+            price: formData.price,
+            condition: formData.condition,
+            description: formData.description,
+            images: [res1.data.data.display_url, res2.data.data.display_url],
+            postedAt: formData.date,
+          };
+
+          const result = await axiosSecure.post("/products", newItem);
+
+          if (result.data.data.insertedId) {
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Your work has been saved",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            
+            setFormData({
+    category: "",
+    name: "",
+    brand: "",
+    price: "",
+    condition: "",
+    description: "",
+    date: "",
+    image1: null,
+    image2: null,
+  })
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      setImageUploadLoading(false);
     }
-
-    console.log("New Item:", newItem);
-    
   };
+
+  // ✅ Loading Screen
+  if (imgUploadLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-3xl font-bold text-blue-600 animate-pulse">
+          Uploading Images...
+        </h1>
+        <p className="mt-2 text-gray-500">
+          Please wait, it may take a few seconds.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -154,7 +201,7 @@ const AdminAddItem = () => {
           className="p-2 rounded"
         />
 
-        {/* ✅ IMAGE INPUTS */}
+        {/* IMAGE INPUTS */}
         <label htmlFor="img1">Image 1</label>
         <input
           type="file"
