@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import useAxiosPublic from "../hooks/useAxiosPublic";
+
+const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
+const imgHostingApi = `https://api.imgbb.com/1/upload?key=${img_hosting_Key}`;
 
 const AdminAddItem = () => {
+  const axiosPublic = useAxiosPublic();
+
   const [formData, setFormData] = useState({
     category: "",
     name: "",
@@ -9,53 +15,67 @@ const AdminAddItem = () => {
     condition: "",
     description: "",
     date: "",
-    images: [], // all images from both file inputs will be stored here
+    image1: null,
+    image2: null,
   });
 
-  // Input change handler
+  // ✅ Handle input change
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
 
     if (type === "file") {
-      // multiple file input হলে সব ফাইল merge করে array তে রাখবো
-      const fileArray = Array.from(files);
+      const file = files[0];
 
-      setFormData((prevData) => ({
-        ...prevData,
-        images: [...prevData.images, ...fileArray], // merge both input's images
-      }));
+      // ✅ যদি input এর name হয় img1 → image1 set হবে
+      // ✅ যদি input এর name হয় img2 → image2 set হবে
+      if (name === "img1") {
+        setFormData((prev) => ({ ...prev, image1: file }));
+      } else if (name === "img2") {
+        setFormData((prev) => ({ ...prev, image2: file }));
+      }
     } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  // Form submit handler
-  const handleSubmit = (e) => {
+  // ✅ Handle form submit
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Form Data:", formData);
+    const image1={image:formData.image1};
+    const image2={image:formData.image2};
+    
 
-    // Example FormData for backend upload
-    // const formDataToSend = new FormData();
-    // Object.keys(formData).forEach((key) => {
-    //   if (key === "images") {
-    //     formData.images.forEach((img) => formDataToSend.append("images", img));
-    //   } else {
-    //     formDataToSend.append(key, formData[key]);
-    //   }
-    // });
+    const res1=await axiosPublic.post(imgHostingApi,image1, {
+      headers:{
+      'Content-Type':'multipart/form-data'
+      }
+    } )
+     const res2=await axiosPublic.post(imgHostingApi,image2, {
+      headers:{
+      'Content-Type':'multipart/form-data'
+      }
+    } )
 
-    // axios.post("/api/items", formDataToSend, {
-    //   headers: { "Content-Type": "multipart/form-data" },
-    // });
+    const newItem={
+      category:formData.category,
+      name:formData.name,
+      brand:formData.brand,
+      price:formData.price,
+      condition:formData.condition,
+      description:formData.description,
+      date:formData.date,
+      images:[res1.data.data.display_url,res2.data.data.display_url]
+    }
+
+    console.log("New Item:", newItem);
+    
   };
 
   return (
     <div>
       <h1 className="text-center font-bold text-3xl mb-6">Add New Item</h1>
+
       <form
         onSubmit={handleSubmit}
         className="border flex flex-col gap-3 bg-bgGradient1 p-10 rounded-2xl"
@@ -79,7 +99,6 @@ const AdminAddItem = () => {
         <input
           type="text"
           name="name"
-          id="name"
           value={formData.name}
           onChange={handleChange}
           className="p-2 rounded"
@@ -90,7 +109,6 @@ const AdminAddItem = () => {
         <input
           type="text"
           name="brand"
-          id="brand"
           value={formData.brand}
           onChange={handleChange}
           className="p-2 rounded"
@@ -101,7 +119,6 @@ const AdminAddItem = () => {
         <input
           type="text"
           name="price"
-          id="price"
           value={formData.price}
           onChange={handleChange}
           className="p-2 rounded"
@@ -112,7 +129,6 @@ const AdminAddItem = () => {
         <input
           type="text"
           name="condition"
-          id="condition"
           value={formData.condition}
           onChange={handleChange}
           className="p-2 rounded"
@@ -123,7 +139,6 @@ const AdminAddItem = () => {
         <input
           type="text"
           name="description"
-          id="description"
           value={formData.description}
           onChange={handleChange}
           className="p-2 rounded"
@@ -134,30 +149,31 @@ const AdminAddItem = () => {
         <input
           type="date"
           name="date"
-          id="date"
           value={formData.date}
           onChange={handleChange}
           className="p-2 rounded"
         />
 
-        {/* IMAGES INPUTS */}
-        <label>Images (you can select multiple in both)</label>
+        {/* ✅ IMAGE INPUTS */}
+        <label htmlFor="img1">Image 1</label>
         <input
           type="file"
-          name="images1"
-          multiple
-          onChange={handleChange}
-          className="p-2"
-        />
-        <input
-          type="file"
-          name="images2"
-          multiple
+          name="img1"
+          accept="image/*"
           onChange={handleChange}
           className="p-2"
         />
 
-        {/* Submit Button */}
+        <label htmlFor="img2">Image 2</label>
+        <input
+          type="file"
+          name="img2"
+          accept="image/*"
+          onChange={handleChange}
+          className="p-2"
+        />
+
+        {/* Submit */}
         <button
           type="submit"
           className="bg-blue-600 text-white py-2 mt-4 rounded hover:bg-blue-700"
@@ -165,19 +181,23 @@ const AdminAddItem = () => {
           Add Item
         </button>
 
-        {/* Preview Selected Images */}
-        {formData.images.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-3">
-            {formData.images.map((img, i) => (
-              <img
-                key={i}
-                src={URL.createObjectURL(img)}
-                alt="preview"
-                className="w-24 h-24 object-cover rounded"
-              />
-            ))}
-          </div>
-        )}
+        {/* ✅ Preview Selected Images */}
+        <div className="mt-4 flex gap-3">
+          {formData.image1 && (
+            <img
+              src={URL.createObjectURL(formData.image1)}
+              alt="Preview 1"
+              className="w-24 h-24 object-cover rounded"
+            />
+          )}
+          {formData.image2 && (
+            <img
+              src={URL.createObjectURL(formData.image2)}
+              alt="Preview 2"
+              className="w-24 h-24 object-cover rounded"
+            />
+          )}
+        </div>
       </form>
     </div>
   );
