@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
 import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const { data, isLoading, isError, error, refetch } = useCart();
@@ -50,7 +51,7 @@ const Cart = () => {
       <div className="flex justify-between">
         <h1>Total Cart Items: {data?.length}</h1>
         <h1>Total Price: {totalPrice}</h1>
-        <button className="btn btn-primary">Checkout</button>
+        <Link to={'/dashboard/paymentSSl'} state={{totalPrice,data }} className="btn btn-primary">Checkout</Link>
       </div>
 
       <div className="overflow-x-auto">

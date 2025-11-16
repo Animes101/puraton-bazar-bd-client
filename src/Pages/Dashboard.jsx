@@ -34,7 +34,7 @@ const Dashboard = () => {
           </li>
         </ul> : 
         
-          <ul>
+          <ul className='flex flex-col justify-around h-[400px] text-textColor font-bold  items-center'>
           <li>
             <Link to='/dashboard/home'>User Home</Link>
           </li>
