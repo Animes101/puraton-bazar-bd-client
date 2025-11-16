@@ -35,9 +35,6 @@ const PaymentSSL = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Form Submitted:", formData);
-    console.log("Order Items:", orderItem);
-
     // এখানে SSLCommerz payment এর API কল যাবে
 
     const order={
@@ -53,7 +50,12 @@ const PaymentSSL = () => {
     }
 
     axiosSecure.post('/order', order)
-    .then(data=> console.log(data))
+    .then(data=> {
+      
+      window.location.replace(data.data.url
+
+      )
+    } )
 
     
   };
