@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const AllProducts = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data } = useQuery({
+  const { data, isLoading , refetch} = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const res = await axiosSecure("/products");
@@ -18,8 +18,28 @@ const AllProducts = () => {
     return <h1 className="text-3xl font-bold text-center mt-10">No Products Available</h1>
   }
 
+  if(isLoading){
+     return <h1>Loaing..............</h1>
+  }
+
   const handleDelete=(id)=>{
-    alert(id);
+    axiosSecure.delete(`/products/${id}`)
+    .then(result=> {
+
+      console.log(result)
+
+      if(result.data.data.deletedCount>0 ){
+
+         Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: `Delete ${id}`,
+  showConfirmButton: false,
+  timer: 1500
+});
+refetch()
+      }
+    })
 
   }
 
