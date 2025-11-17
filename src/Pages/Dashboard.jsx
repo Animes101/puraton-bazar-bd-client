@@ -18,7 +18,7 @@ const Dashboard = () => {
       <div className='col-span-1 bg-bgGradient2  h-screen '>
       {admin ?   <ul className='flex flex-col justify-around h-[400px] text-textColor font-bold  items-center '>
           <li>
-            <Link to='/dashboard/home'>Admin Home</Link>
+            <Link to='/dashboard/adminHome'>Admin Home</Link>
           </li>
           <li>
             <Link to='/dashboard/all-users'>All Users</Link>

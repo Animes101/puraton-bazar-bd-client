@@ -19,6 +19,7 @@ import AdminAddItem from "../Pages/AdminAddItem";
 import AdminUpdateProduct from "../Pages/AdminUpdateProduct";
 import PaymentSSL from "../Pages/paymentSSl";
 import UserProfile from "../Pages/UserProfile";
+import AdminHome from "../Pages/AdminHome";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,8 @@ const router = createBrowserRouter([
           {path: "/dashboard/products", element:<AdminRoute><AllProducts /></AdminRoute>},
            {path: "/dashboard/addItem", element:<AdminRoute><AdminAddItem /></AdminRoute>},
            {path: "/dashboard/updateItem/:id", element:<AdminRoute><AdminUpdateProduct /></AdminRoute>},
-           {path:"/dashboard/paymentSSl", element:<Privet><PaymentSSL /></Privet>}
+           {path:"/dashboard/paymentSSl", element:<Privet><PaymentSSL /></Privet>},
+           {path:'/dashboard/adminHome', element:<AdminRoute> <AdminHome /></AdminRoute>}
         ]
       
       },
