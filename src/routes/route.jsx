@@ -18,6 +18,7 @@ import AdminRoute from "../Pages/AdminRoute";
 import AdminAddItem from "../Pages/AdminAddItem";
 import AdminUpdateProduct from "../Pages/AdminUpdateProduct";
 import PaymentSSL from "../Pages/paymentSSl";
+import UserProfile from "../Pages/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -33,9 +34,8 @@ const router = createBrowserRouter([
         children:[
           { path: "/dashboard/home", element: <UserHome /> },
           { path: "/dashboard/payment", element: <Payment /> },
-          { path: "/dashboard/profile", element: <UserHome /> },
           { path: "/dashboard/home", element: <UserHome /> },
-          { path: "/dashboard/home", element: <UserHome /> },
+          { path: "/dashboard/profile", element: <UserProfile /> },
           { path: "/dashboard/all-users", element: <AdminRoute><AdminAllUsers /></AdminRoute> },
           {path: "/dashboard/products", element:<AdminRoute><AllProducts /></AdminRoute>},
            {path: "/dashboard/addItem", element:<AdminRoute><AdminAddItem /></AdminRoute>},
