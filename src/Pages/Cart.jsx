@@ -17,7 +17,8 @@ const Cart = () => {
     return <h1 className="text-3xl font-bold text-center mt-10">No Products Available ............!</h1>
   }
 
-  const totalPrice = data?.reduce((sum, item) => sum + item.price, 0) || 0;
+  const totalPrice = data?.reduce((sum, item) => sum + Number(item.price), 0) || 0;
+
 
   const handleRemoveCart = (id) => {
     // Logic to remove item from cart
