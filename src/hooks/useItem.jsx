@@ -11,7 +11,7 @@ const useItem = () => {
     queryKey: ['products'],
     queryFn: async () => {
       const res = await axiosSecure.get('/products')
-      return res.data.data;
+      return res.data;
 
     }
   })
