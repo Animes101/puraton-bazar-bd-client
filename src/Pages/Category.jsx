@@ -4,9 +4,10 @@ import useItem from '../hooks/useItem';
 
 const Category = () => {
 
-  const {data, isLoading}=useItem();
+  
   const [itemPerPage, setItemPerPage]=useState(10)
-  const [currentPage, setCurrentPage]=useState(1)
+  const [currentPage, setCurrentPage]=useState(0)
+  const {data, isLoading}=useItem(currentPage, itemPerPage);
 
   if(isLoading){
     return <h1>loading..................</h1>
@@ -19,7 +20,7 @@ const Category = () => {
   const pages=[]
 
 
-    for(let i=1; i <= numberOfPage; i++){
+    for(let i=0; i <= numberOfPage; i++){
 
       pages.push(i)
 
@@ -30,7 +31,25 @@ const Category = () => {
       const value=parseInt(e.target.value)
 
       setItemPerPage(value);
-      setCurrentPage(1)
+      setCurrentPage(0)
+
+    }
+
+    const handlePrev=()=>{
+
+      if(currentPage > 0){
+
+        setCurrentPage(currentPage -1)
+      }
+
+    }
+
+    const handleNext=()=>{
+
+      if(currentPage < pages.length){
+
+        setCurrentPage(currentPage +1)
+      }
 
     }
 
@@ -50,7 +69,7 @@ console.log(currentPage)
     </div>
     <div className='flex justify-center items-center'>
       <div>
-        <button>prev</button>
+        <button onClick={handlePrev}>prev</button>
  {
   pages?.map((page, index) => (
     <button
@@ -65,7 +84,7 @@ console.log(currentPage)
   ))
 }
 
-<button>next</button>
+<button onClick={handleNext}>next</button>
         <select onChange={handleChange} value={itemPerPage} name="" id="">
           <option value="5">5</option>
           <option value="10">10</option>
