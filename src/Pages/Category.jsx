@@ -1,23 +1,29 @@
-import { useEffect, useState } from 'react';
-import Card from '../Components/Card';
-import useItem from '../hooks/useItem';
-import { useLocation } from 'react-router-dom';
-import SearchBar from '../Components/SearchBar';
+import { useEffect, useState } from "react";
+import Card from "../Components/Card";
+import useItem from "../hooks/useItem";
+import { useLocation } from "react-router-dom";
+import SearchBar from "../Components/SearchBar";
+const priceList = [0,5000, 10000, 15000, 20000,25000,30000,35000,40000];
 
 const Category = () => {
   const [itemPerPage, setItemPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState('ALL'); // Single category
-  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("ALL"); 
+  const [selectedPrice, setSelectedPrice] = useState("");// Single category
+  const [search, setSearch] = useState(null);
 
-  const { data, isLoading } = useItem(currentPage, itemPerPage, selectedCategory); // Pass array to hook
+  const { data, isLoading } = useItem(
+    currentPage,
+    itemPerPage,
+    selectedCategory,
+    selectedPrice
+  ); // Pass array to hook
 
   const location = useLocation();
   const { categorie } = location.state || {};
 
-  console.log(categorie);
 
- // 🟢 Initial category set here
+  // 🟢 Initial category set here
   useEffect(() => {
     if (categorie) {
       setSelectedCategory(categorie);
@@ -61,28 +67,32 @@ const Category = () => {
     setCurrentPage(0); // Reset page when category changes
   };
 
-  const categoriesList = ['ALL', 'Laptop', 'PC', 'Mobile', 'DSLR'];
+  const handlePriceChange = (e) => {
+  setSelectedPrice(Number(e.target.value));
 
-   // 🔥 Handler — reusable
+};
+
+console.log(selectedPrice)
+  const categoriesList = ["ALL", "Laptop", "PC", "Mobile", "DSLR"];
+
+  // 🔥 Handler — reusable
   const handleSearch = (text) => {
     setSearch(text);
 
-    console.log(search)
-    // এখানে তুমি চাইলে filter করতে পারো বা backend call করতে পারো
-    // example: setCurrentPage(0)
-    // example: refetch()
+    console.log(search);
+    
   };
 
   return (
     <div className="bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2 my-10 container mx-auto">
-      <SearchBar value={search}       // controlled value
-        onChange={handleSearch}  // reusable handler
-        placeholder="Search product...">
-        
-
-      </SearchBar>
+      <SearchBar
+        value={search} // controlled value
+        onChange={handleSearch} // reusable handler
+        placeholder="Search product..."
+      ></SearchBar>
       <div className="flex">
         <div className="w-[20%] p-5 bg-white rounded shadow">
+
           <h1 className="font-bold mb-4">Categories</h1>
           <ul className="pl-5">
             {categoriesList.map((cat) => (
@@ -100,11 +110,34 @@ const Category = () => {
               </li>
             ))}
           </ul>
+
+          {/* Price Range */}
+  <h1 className="font-bold mb-4">Price Range</h1>
+  <ul className="pl-5">
+    {priceList.map((price) => (
+      <li key={price} className="mb-2">
+        <label className="flex items-center gap-2">
+          <input
+            type="radio"
+            name="price"
+            value={price}
+            checked={selectedPrice === price}
+            onChange={handlePriceChange}
+          />
+          ৳{price}
+        </label>
+      </li>
+    ))}
+  </ul>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-[80%] p-5">
+        <div>
+          {data?.data?.length === 0 && <h1>No Data Found</h1>}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-[80%] p-5">
           {data?.data?.map((item) => (
             <Card key={item.id} data={item} />
           ))}
+        </div>
         </div>
       </div>
 
@@ -121,7 +154,7 @@ const Category = () => {
             key={index}
             onClick={() => setCurrentPage(page)}
             className={`px-5 py-1 rounded-full ${
-              currentPage === page ? 'bg-green-600 text-white' : 'bg-green-300'
+              currentPage === page ? "bg-green-600 text-white" : "bg-green-300"
             }`}
           >
             {page + 1}
@@ -151,8 +184,3 @@ const Category = () => {
 };
 
 export default Category;
-
-
-
-
-
