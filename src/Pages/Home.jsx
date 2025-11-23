@@ -8,6 +8,7 @@ import { FaTruckFast } from "react-icons/fa6";
 import { FaMedal } from "react-icons/fa";
 import { BiSupport } from "react-icons/bi";
 import { MdPhoneIphone, MdLaptopMac, MdCameraAlt, MdPayment, MdShoppingBag } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const categories = [
   {
@@ -15,16 +16,16 @@ const categories = [
     icon: <MdPhoneIphone size={45} />,
   },
   {
-    name: "Laptop / PC",
+    name: "Laptop",
     icon: <MdLaptopMac size={45} />,
   },
   {
-    name: "DSLR Camera",
+    name: "DSLR",
     icon: <MdCameraAlt size={45} />,
   },
   {
-    name: "Fashion",
-    icon: <MdShoppingBag size={45} />,
+    name: "PC",
+   icon: <MdLaptopMac size={45} />,
   },
 ];
 
@@ -70,15 +71,15 @@ const Home = () => {
         <div className="my-14">
           <h1 className="text-2xl font-bold mb-6 text-center">Categories</h1>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+          <div  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
             {categories.map((cat, index) => (
-              <div
+              <Link state={{categorie:cat.name}} to={`/category`}
                 key={index}
                 className="p-6 bg-white rounded-xl shadow hover:shadow-xl flex flex-col items-center justify-center transition cursor-pointer"
               >
                 <div className="text-blue-600 mb-3">{cat.icon}</div>
                 <h2 className="text-lg font-semibold">{cat.name}</h2>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
