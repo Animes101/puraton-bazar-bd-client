@@ -44,7 +44,7 @@ const PaymentSSL = () => {
         email:user.email,
         price:totalPrice,
         address:formData.address,
-        name:user.displayName,
+        name:user.displayName || formData.name ,
         
         
     }

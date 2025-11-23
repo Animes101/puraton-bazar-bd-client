@@ -6,7 +6,7 @@ const Card = ({ data }) => {
     <div>
       <div className="card shadow-sm bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2 border border-textColor">
         <figure>
-          <img
+          <img className="h-[300px] w-full"
             src={data.images[0]}
             alt={data.brand}
           />
