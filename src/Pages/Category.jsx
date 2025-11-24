@@ -31,9 +31,6 @@ const Category = () => {
     }
   }, [categorie]);
 
-  if (isLoading) {
-    return <h1>Loading..................</h1>;
-  }
 
   const totalProduct = data?.total_product;
   const numberOfPage = Math.ceil(totalProduct / itemPerPage);
@@ -132,6 +129,7 @@ console.log(selectedPrice)
         </div>
         <div>
           {data?.data?.length === 0 && <h1>No Data Found</h1>}
+          { isLoading && <p>Loading .........?</p>}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-[80%] p-5">
           {data?.data?.map((item) => (

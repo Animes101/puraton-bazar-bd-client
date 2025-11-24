@@ -24,6 +24,8 @@ const Details = () => {
     },
   });
 
+  console.log(data)
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -81,6 +83,7 @@ const Details = () => {
           <h2 className="card-title">{data?.condition}</h2>
           <p>{data?.description}</p>
           <p>price: {data?.price}৳</p>
+          <p>postedAt:{data?.postedAt}</p>
           <div className="card-actions justify-end">
             <button
               onClick={() => handleAddToCart(data)}

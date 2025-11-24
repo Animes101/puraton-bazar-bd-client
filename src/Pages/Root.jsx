@@ -5,10 +5,10 @@ import Footer from "../Components/Layout/Footer";
 const Root = () => {
 
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className=''>
         <Navbar />
         {/* Main content */}
-      <main className="flex-1">
+      <main className="">
         <Outlet /> {/* এখানে Home, About page render হবে */}
       </main>
         <Footer />
