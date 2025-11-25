@@ -101,7 +101,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="container mx-auto py-5">
+      <div className="container mx-auto py-10">
         <div className="divider divider-neutral  text-lg font-bold">Why Choose Us</div>
         
         <Marquee speed={80} pauseOnHover={true} gradient={false}>
@@ -109,11 +109,11 @@ const Home = () => {
     {infoData.map((card) => (
       <div
         key={card.id}
-        className="bg-bg hadow-md p-6 rounded-xl flex flex-col items-center text-center hover:shadow-xl transition min-w-[220px]"
+        className="bg-bg4 cursor-pointer mb-5 shadow-md shadow-bg3 p-6 rounded-xl flex flex-col items-center text-center hover:shadow-xl transition min-w-[220px]"
       >
-        <div className="text-bg4 mb-3">{card.icon}</div>
+        <div className="text-bg2 text-4xl mb-3">{card.icon}</div>
         <h3 className="text-xl font-bold mb-2">{card.title}</h3>
-        <p className="text-gray-600 text-sm">{card.text}</p>
+        <p className="text-gray-600 text-sm font-semibold">{card.text}</p>
       </div>
     ))}
   </div>
