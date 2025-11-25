@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 import { AuthContext } from "../../context/AuthProvider";
@@ -8,8 +8,23 @@ import Swal from 'sweetalert2'
 import { Toaster, toast } from "react-hot-toast";
 
 const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
   const { logout, user } = useContext(AuthContext);
   const { data } = useCart();
+
+  useEffect(() => {
+  const handleScroll = () => {
+    if (window.scrollY > 10) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
 
   // --------------------------
   // Function to define NavLink classes
@@ -20,8 +35,8 @@ const Navbar = () => {
   const linkClasses = ({ isActive }) =>
   `text-xl font-bold border-t-4 border-transparent pt-1 
    ${isActive 
-      ? "border-textColor text-black font-semibold"   // active
-      : "text-bgGradient1 hover:border-textColor"}`;    // inactive
+      ? `border-textColor text-bg2 font-semibold `   // active
+      : "text-bg1 hover:border-textColor"}`;    // inactive
 
 
   // --------------------------
@@ -51,7 +66,8 @@ const Navbar = () => {
     // --------------------------
     // Navbar wrapper: fixed at top with semi-transparent background
     // --------------------------
-    <div className="fixed top-0 right-0 left-0 z-10 bg-black/30">
+    <div  className={`fixed top-0 right-0 left-0 z-10 transition-all duration-300 
+  ${isScrolled ? "bg-bg4" : "bg-bg3/30"}`}>
 
       {/* Tost Container */}
       <Toaster
@@ -119,7 +135,7 @@ const Navbar = () => {
                 {user ? (
                   <button
                     onClick={handleLogout}
-                    className="btn bg-bgGradient1 text-black"
+                    className="btn bg-bgGradinet3 text-black"
                   >
                     Logout
                   </button>
@@ -153,8 +169,8 @@ const Navbar = () => {
               Logo
           -------------------------- */}
           <NavLink to="/" className="normal-case text-2xl font-bold">
-            <h2 className="font-bold text-bgGradient1">
-              Puraton<span className="text-black">Bazar</span>.com
+            <h2 className="font-bold text-bg2">
+              Puraton<span className="text-bg2">Bazar</span>.com
             </h2>
           </NavLink>
         </div>

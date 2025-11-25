@@ -9,7 +9,7 @@ const Root = () => {
         <Navbar />
         {/* Main content */}
       <main className="">
-        <Outlet /> {/* এখানে Home, About page render হবে */}
+        <Outlet /> 
       </main>
         <Footer />
     </div>

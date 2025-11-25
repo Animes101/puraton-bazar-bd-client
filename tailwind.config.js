@@ -11,12 +11,12 @@ export default {
         eduNsw: ["Edu NSW ACT Cursive", "cursive"],// Custom font name
       },
       colors:{
-        bgGradient1:'#f3dfc1',
-        bgGradient2:'	#e0c9a6',
-        bgGradinet3:'#e0c9a6',
-        textColor:'	#1a1c1a',
-        buttonBg:'#1a1c1a',
-        textWhite:'#fff'
+        bg1:'#0d0d0d',
+        bg2:'#f2f2f0',
+        bg3:'#5b6e74',
+        bg4:'	#819fa7',
+        bg5:'#f3f5f9',
+        
 
       }
     },

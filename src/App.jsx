@@ -9,7 +9,7 @@ function App() {
 
   return (
 
-    <div>    
+    <div className='bg-bg5'>    
       <AuthProvider>
         <RouterProvider router={router} /> 
       </AuthProvider> 
