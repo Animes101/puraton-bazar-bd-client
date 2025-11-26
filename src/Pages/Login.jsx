@@ -66,11 +66,11 @@ const Login = () => {
   };
 
   return (
-    <div className="hero min-h-screen bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2">
-      <div className="card border border-textColor w-[30%] bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2 shrink-0 shadow-2xl">
+    <div className="hero min-h-screen bg-bg3">
+      <div className="card border border-textColor w-[30%] bg-bg4">
         <div className="card-body">
           <form onSubmit={handleSubmit} className="fieldset space-y-2">
-            <h1 className="text-textColor text-center text-3xl font-bold">
+            <h1 className="text-white text-center text-3xl font-bold">
               Login
             </h1>
 
@@ -97,14 +97,14 @@ const Login = () => {
             />
 
             <div>
-              <a className="link link-hover text-xl text-textColor">
+              <a className="link link-hover text-xl text-red-500">
                 Forgot password?
               </a>
             </div>
 
             <button
               type="submit"
-              className="btn btn-neutral mt-4 bg-buttonBg text-textWhite text-xl w-full"
+              className="btn bg-bg3 text-white mt-4 bg-buttonBg text-textWhite text-xl w-full"
             >
               Login
             </button>
@@ -112,7 +112,7 @@ const Login = () => {
             <button
               type="button"
               onClick={handleGoogleLogin}
-              className="btn bg-buttonBg text-textWhite text-xl w-full flex items-center justify-center gap-2"
+              className="btn bg-bg3 text-white text-textWhite text-xl w-full flex items-center justify-center gap-2"
             >
               <svg
                 aria-label="Google logo"
@@ -148,7 +148,7 @@ const Login = () => {
                 className="link link-hover text-xl text-textColor"
               >
                 No account?{" "}
-                <span className="text-blue-400 font-semibold">
+                <span className="text-bg2 font-semibold">
                   Create one
                 </span>
               </Link>

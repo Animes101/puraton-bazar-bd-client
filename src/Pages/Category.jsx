@@ -56,7 +56,7 @@ const Category = () => {
 
   const handlePrev = () => {
     if (currentPage > 0) {
-      setCurrentPage(currentPage );
+      setCurrentPage(currentPage -1 );
     }
   };
 

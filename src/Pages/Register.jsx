@@ -109,15 +109,15 @@ const Register = () => {
   return (
     <div>
       <Toaster position="top-center" />
-      <div className="hero min-h-screen bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2">
-        <div className="card border border-textColor w-[30%] bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2 shrink-0 shadow-2xl">
+      <div className="hero min-h-screen bg-bg3">
+        <div className="card border border-textColor w-[30%] bg-bg4 shrink-0 shadow-2xl">
           <div className="card-body">
             <form onSubmit={handleSubmit} className="fieldset space-y-2">
-              <h1 className="text-textColor text-center text-3xl font-bold">
+              <h1 className="text-white text-center text-3xl font-bold">
                 Register
               </h1>
 
-              <label className="label text-xl text-textColor">Name</label>
+              <label className="label text-xl text-bg1">Name</label>
               <input
                 type="text"
                 name="name"
@@ -128,7 +128,7 @@ const Register = () => {
                 required
               />
 
-              <label className="label text-xl text-textColor">Email</label>
+              <label className="label text-xl text-bg1">Email</label>
               <input
                 type="email"
                 name="email"
@@ -139,7 +139,7 @@ const Register = () => {
                 required
               />
 
-              <label className="label text-xl text-textColor">Password</label>
+              <label className="label text-xl text-bg1">Password</label>
               <input
                 type="password"
                 name="password"
@@ -150,7 +150,7 @@ const Register = () => {
                 required
               />
 
-              <label className="label text-xl text-textColor">
+              <label className="label text-xl text-bg1">
                 Confirm Password
               </label>
               <input
@@ -163,15 +163,9 @@ const Register = () => {
                 required
               />
 
-              <div>
-                <a className="link link-hover text-xl text-textColor">
-                  Forgot password?
-                </a>
-              </div>
-
               <button
                 type="submit"
-                className="btn btn-neutral mt-4 bg-buttonBg text-textWhite text-xl w-full"
+                className="btn bg-bg3 text-white mt-4 bg-buttonBg text-textWhite text-xl w-full"
               >
                 Register
               </button>
@@ -180,7 +174,7 @@ const Register = () => {
               <button
                 type="button"
                 onClick={handleGoogleLogin}
-                className="btn bg-buttonBg text-textWhite text-xl w-full flex items-center justify-center gap-2"
+                className="btn bg-bg3  text-white text-xl w-full flex items-center justify-center gap-2"
               >
                 <svg
                   aria-label="Google logo"
@@ -216,7 +210,7 @@ const Register = () => {
                   className="link link-hover text-xl text-textColor"
                 >
                   Already have an account?{" "}
-                  <span className="text-blue-400 font-semibold">
+                  <span className="text-bg1 font-semibold">
                     Login here
                   </span>
                 </Link>

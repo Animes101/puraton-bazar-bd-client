@@ -67,7 +67,7 @@ const Navbar = () => {
     // Navbar wrapper: fixed at top with semi-transparent background
     // --------------------------
     <div  className={`fixed top-0 right-0 left-0 z-10 transition-all duration-300 
-  ${isScrolled ? "bg-bg4" : "bg-bg3/30"}`}>
+  ${isScrolled ? "bg-bg3" : "bg-bg3"}`}>
 
       {/* Tost Container */}
       <Toaster

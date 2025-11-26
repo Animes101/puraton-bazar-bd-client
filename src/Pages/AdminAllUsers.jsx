@@ -56,40 +56,40 @@ const AdminAllUsers = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <div>
-        <h1>Total Users: {data?.data?.length}</h1>
+        <h1 className="text-4xl font-bold text-bg1 py-5">Total Users: {data?.data?.length}</h1>
       </div>
       <div>
-        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-          <table className="table">
+        <div className="overflow-x-auto">
+          <table className="table table-zebra">
             {/* head */}
             <thead>
               <tr>
                 <th></th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Password</th>
+                <th className="text-lg font-bold text-bg1">Name</th>
+                <th className="text-lg font-bold text-bg1">Email</th>
+                <th className="text-lg font-bold text-bg1">Password</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="bg-bg4/30">
               {/* row 1 */}
               {data?.data?.map((user, index) => {
                 return (
-                  <tr key={index}>
+                  <tr key={index} className="">
                     <th>{index + 1}</th>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.password}</td>
                     <button
                       onClick={() => handleUpdate(user._id)}
-                      className="bg-bgGradinet3 btn p-2"
+                      className="bg-bg4 btn p-2"
                     >
                       {user.role === "admin" ? "Admin" : "Make Admin"}
                     </button>
                     <button
                       onClick={() => handleDelete(user._id)}
-                      className="bg-bgGradinet3 btn p-2 ml-3"
+                      className="bg-bg4 btn p-2 ml-3"
                     >
                       Delete
                     </button>

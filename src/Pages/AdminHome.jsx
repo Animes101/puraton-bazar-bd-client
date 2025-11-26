@@ -79,76 +79,75 @@ const AdminHome = () => {
   };
 
   return (
-    <div>
-      <h1>Welcome {user?.displayName}</h1>
+    <div className="pt-10 px-4 md:px-10 lg:px-20">
+  <h1 className="text-black font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
+    Welcome Back {user?.displayName?.toUpperCase()}
+  </h1>
 
-      {/* STATS */}
-      <div className="stats shadow my-4">
-        <div className="stat">
-          <div className="stat-title">Total Products</div>
-          <div className="stat-value">{states?.allProduct}</div>
-        </div>
-
-        <div className="stat">
-          <div className="stat-title">New Users</div>
-          <div className="stat-value">{states?.users}</div>
-        </div>
-
-        <div className="stat">
-          <div className="stat-title">Total Revenue</div>
-          <div className="stat-value">{states?.revenue} tk</div>
-        </div>
-
-        <div className="stat">
-          <div className="stat-title">Total Order</div>
-          <div className="stat-value">{states?.order}</div>
-        </div>
-      </div>
-
-      {/* CHART SECTION */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        {/* BAR CHART */}
-        <div style={{ width: "100%", height: 400 }}>
-          <ResponsiveContainer>
-            <BarChart data={orderState} margin={{ top: 20, right: 20, left: 5, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="category" />
-              <YAxis width={40} />
-              <Bar dataKey="quentity" shape={TriangleBar} label={{ position: "top" }}>
-                {orderState.map((_, index) => (
-                  <Cell key={index} fill={colors[index % colors.length]} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* PIE CHART */}
-        <div style={{ width: "100%", height: 400 }}>
-          <ResponsiveContainer>
-            <PieChart>
-              <Pie
-                data={pieData}
-                dataKey="value"
-                nameKey="name"
-                labelLine={false}
-                label={renderCustomizedLabel}
-                outerRadius={150}
-                fill="#8884d8"
-              >
-                {pieData.map((entry, index) => (
-                  <Cell key={index} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                ))}
-              </Pie>
-              <Legend></Legend>
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-
-      </div>
+  {/* STATS */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div className="stat shadow bg-bg2 border border-bg3 p-4 rounded">
+      <div className="stat-title text-xl md:text-2xl">Total Products</div>
+      <div className="stat-value text-2xl md:text-3xl">{states?.allProduct}</div>
     </div>
+    <div className="stat shadow bg-bg2 border border-bg3 p-4 rounded">
+      <div className="stat-title text-xl md:text-2xl">New Users</div>
+      <div className="stat-value text-2xl md:text-3xl">{states?.users}</div>
+    </div>
+    <div className="stat shadow bg-bg2 border border-bg3 p-4 rounded">
+      <div className="stat-title text-xl md:text-2xl">Total Revenue</div>
+      <div className="stat-value text-2xl md:text-3xl">{states?.revenue} tk</div>
+    </div>
+    <div className="stat shadow bg-bg2 border border-bg3 p-4 rounded">
+      <div className="stat-title text-xl md:text-2xl">Total Order</div>
+      <div className="stat-value text-2xl md:text-3xl">{states?.order}</div>
+    </div>
+  </div>
+
+  {/* CHARTS */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {/* BAR CHART */}
+    <div className="bg-bg2 border border-bg3 rounded p-4 h-80 md:h-96">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={orderState} margin={{ top: 20, right: 20, left: 5, bottom: 5 }}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="category" />
+          <YAxis width={40} />
+          <Bar dataKey="quentity" shape={TriangleBar} label={{ position: "top" }}>
+            {orderState.map((_, index) => (
+              <Cell key={index} fill={colors[index % colors.length]} />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+
+    {/* PIE CHART */}
+    <div className="bg-bg2 border border-bg3 rounded p-4 h-80 md:h-96">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          <Pie
+            data={pieData}
+            dataKey="value"
+            nameKey="name"
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius="80%"
+            fill="#8884d8"
+          >
+            {pieData.map((entry, index) => (
+              <Cell key={index} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+            ))}
+          </Pie>
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+</div>
+
   );
 };
 
 export default AdminHome;
+
