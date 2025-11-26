@@ -3,25 +3,34 @@ import Card from "../Components/Card";
 import useItem from "../hooks/useItem";
 import { useLocation } from "react-router-dom";
 import SearchBar from "../Components/SearchBar";
-const priceList = [0,5000, 10000, 15000, 20000,25000,30000,35000,40000];
+
+const priceRanges = [
+  { min: 0, max: 10000, label: "0 - 10,000" },
+  { min: 10000, max: 20000, label: "10,000 - 20,000" },
+  { min: 20000, max: 30000, label: "20,000 - 30,000" },
+  { min: 30000, max: 100000, label: "30,000 - 1,00,000" },
+];
 
 const Category = () => {
+  const [selectedPrice, setSelectedPrice] = useState({ min: 0, max: 0 });
   const [itemPerPage, setItemPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState("ALL"); 
-  const [selectedPrice, setSelectedPrice] = useState("");// Single category
-  const [search, setSearch] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [search, setSearch] = useState("");
 
   const { data, isLoading } = useItem(
     currentPage,
     itemPerPage,
     selectedCategory,
-    selectedPrice
+    search,
+    selectedPrice.min,
+    selectedPrice.max
   ); // Pass array to hook
+
+  console.log(data?.data?.length)
 
   const location = useLocation();
   const { categorie } = location.state || {};
-
 
   // 🟢 Initial category set here
   useEffect(() => {
@@ -30,7 +39,6 @@ const Category = () => {
       setCurrentPage(0);
     }
   }, [categorie]);
-
 
   const totalProduct = data?.total_product;
   const numberOfPage = Math.ceil(totalProduct / itemPerPage);
@@ -48,12 +56,12 @@ const Category = () => {
 
   const handlePrev = () => {
     if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
+      setCurrentPage(currentPage );
     }
   };
 
   const handleNext = () => {
-    if (currentPage < pages.length - 1) {
+    if (currentPage < pages.length) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -64,32 +72,28 @@ const Category = () => {
     setCurrentPage(0); // Reset page when category changes
   };
 
-  const handlePriceChange = (e) => {
-  setSelectedPrice(Number(e.target.value));
+  const handlePriceChange = (range) => {
+    setSelectedPrice(range);
+    setCurrentPage(0);
+  };
 
-};
-
-console.log(selectedPrice)
   const categoriesList = ["ALL", "Laptop", "PC", "Mobile", "DSLR"];
 
   // 🔥 Handler — reusable
   const handleSearch = (text) => {
     setSearch(text);
-
-    console.log(search);
     
   };
 
   return (
-    <div className="bg-gradient-to-r from-bgGradient1 via-bgGradient3 to-bgGradient2 my-10 container mx-auto">
+    <div className=" mt-[64px] py-10 container mx-auto ">
       <SearchBar
         value={search} // controlled value
         onChange={handleSearch} // reusable handler
         placeholder="Search product..."
       ></SearchBar>
-      <div className="flex">
-        <div className="w-[20%] p-5 bg-white rounded shadow">
-
+      <div className="flex flex-col md:flex-row border-2 border-red-300  ">
+        <div className="w-[40%] p-5 bg-bg4 rounded shadow max-h-screen">
           <h1 className="font-bold mb-4">Categories</h1>
           <ul className="pl-5">
             {categoriesList.map((cat) => (
@@ -109,33 +113,35 @@ console.log(selectedPrice)
           </ul>
 
           {/* Price Range */}
-  <h1 className="font-bold mb-4">Price Range</h1>
-  <ul className="pl-5">
-    {priceList.map((price) => (
-      <li key={price} className="mb-2">
-        <label className="flex items-center gap-2">
-          <input
-            type="radio"
-            name="price"
-            value={price}
-            checked={selectedPrice === price}
-            onChange={handlePriceChange}
-          />
-          ৳{price}
-        </label>
-      </li>
-    ))}
-  </ul>
+          <h1 className="font-bold mb-4">Price Range</h1>
+          <ul className="pl-5">
+            {priceRanges.map((range) => (
+              <li key={range.label} className="mb-2">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="price"
+                    checked={
+                      selectedPrice.min === range.min &&
+                      selectedPrice.max === range.max
+                    }
+                    onChange={() => handlePriceChange(range)}
+                  />
+                  ৳{range.label}
+                </label>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div>
+        <div className="border-2 border-green-300">
           {data?.data?.length === 0 && <h1>No Data Found</h1>}
-          { isLoading && <p>Loading .........?</p>}
+          {isLoading && <p>Loading .........?</p>}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-[80%] p-5">
-          {data?.data?.map((item) => (
-            <Card key={item.id} data={item} />
-          ))}
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5  p-5 ">
+            {data?.data?.map((item) => (
+              <Card key={item.id} data={item} />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -171,9 +177,9 @@ console.log(selectedPrice)
           value={itemPerPage}
           className="ml-3 border rounded px-2 py-1"
         >
-          <option value="5">5</option>
+          <option value="8">8</option>
           <option value="10">10</option>
-          <option value="15">15</option>
+          <option value="16">16</option>
           <option value="20">20</option>
         </select>
       </div>

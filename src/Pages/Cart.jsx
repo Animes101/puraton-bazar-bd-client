@@ -48,7 +48,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto mt-[65px]">
       <div className="flex justify-between">
         <h1>Total Cart Items: {data?.length}</h1>
         <h1>Total Price: {totalPrice}</h1>

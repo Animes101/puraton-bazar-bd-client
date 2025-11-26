@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthProvider";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useCart from "../hooks/useCart";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 
 const Details = () => {
   const { id } = useParams();
@@ -38,8 +38,8 @@ const Details = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         const cart = {
-          _id:item._id,
           email: user.email,
+          itemId: item._id,
           brand: item.brand,
           category: item.category,
           price: item.price,
@@ -47,39 +47,32 @@ const Details = () => {
           images: item.images[0],
         };
 
-        axiosSecure.post("/cart", cart)
-          .then((result) => {
+        axiosSecure.post(`/cart?itemId=${item._id}`, cart).then((result) => {
+          if (result.data.status === "error") {
+            return toast.error(`${result.data.message}`);
+          }
 
+          if (result.data.data?.insertedId) {
             refetch();
 
-            console.log(result)
-
-            if(result.data.data.insertedId){
-
-               Swal.fire({
-          title: "Add Successfully",
-          icon: "success",
-          background: "#f2f2f0",       
-          color: "#333",                
-          confirmButtonColor: "#5b6e74",
-           });
-
-
-            }else{
-              toast.error(`${result.data.data}`)
-            }
-       
-          });
+            Swal.fire({
+              title: "Add Successfully",
+              icon: "success",
+              background: "#f2f2f0",
+              color: "#333",
+              confirmButtonColor: "#5b6e74",
+            });
+          } else {
+            toast.error(`${result.data.data}`);
+          }
+        });
       }
     });
   };
 
   return (
     <div className="container mx-auto mt-[64px] h-[600px] flex justify-center items-center">
-      <Toaster
-  position="top-center"
-  reverseOrder={false}
-/>
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="card lg:card-side  shadow-md w-full bg-bg5">
         <figure>
           <img
