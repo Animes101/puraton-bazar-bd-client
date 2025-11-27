@@ -81,18 +81,18 @@ const AdminAllUsers = () => {
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{user.password}</td>
-                    <button
+                    <td><button
                       onClick={() => handleUpdate(user._id)}
-                      className="bg-bg4 btn p-2"
+                      className="bg-bg4 btn p-2 text-white"
                     >
                       {user.role === "admin" ? "Admin" : "Make Admin"}
-                    </button>
-                    <button
+                    </button></td>
+                    <td><button
                       onClick={() => handleDelete(user._id)}
-                      className="bg-bg4 btn p-2 ml-3"
+                      className="bg-bg4 text-white btn p-2 ml-3"
                     >
                       Delete
-                    </button>
+                    </button></td>
                   </tr>
                 );
               })}

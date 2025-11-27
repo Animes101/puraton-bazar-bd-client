@@ -53,12 +53,16 @@ const AdminAddItem = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
+      console.log(res1)
+
       if (res1.data.success) {
         setImageUploadLoading(false);
 
         const res2 = await axiosPublic.post(imgHostingApi, image2, {
           headers: { "Content-Type": "multipart/form-data" },
         });
+
+        console.log(res2)
 
         if (res2.data.success) {
           setImageUploadLoading(false);
@@ -127,14 +131,14 @@ const AdminAddItem = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-2  py-5 rounded-2xl bg-bg4  p-10"
+        className="flex flex-col gap-2  py-5 rounded-2xl bg-bg2  p-10"
       >
         {/* CATEGORY */}
         <select
           name="category"
           value={formData.category}
           onChange={handleChange}
-          className=" font-bold  p-2 rounded bg-transparent border"
+          className=" font-bold  p-2 rounded  border-bg4 border"
         >
           <option value="" className="">
             Select Category
@@ -145,8 +149,10 @@ const AdminAddItem = () => {
           <option value="PC">PC</option>
         </select>
 
-        {/* NAME */}
-        <label className="font-bold" htmlFor="name">
+      <div className="grid grid-cols-2 gap-2">
+          {/* NAME */}
+       <div className="flex flex-col py-3">
+         <label className="font-bold" htmlFor="name">
           Name
         </label>
         <input
@@ -154,11 +160,13 @@ const AdminAddItem = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="p-2 rounded bg-transparent border text-white"
+          className="p-2 rounded  border-bg4 border  text-bg3"
         />
+       </div>
 
         {/* BRAND */}
-        <label className="font-bold" htmlFor="brand">
+      <div className="flex flex-col py-3">
+          <label className="font-bold" htmlFor="brand">
           Brand
         </label>
         <input
@@ -166,11 +174,15 @@ const AdminAddItem = () => {
           name="brand"
           value={formData.brand}
           onChange={handleChange}
-          className="p-2 rounded bg-transparent border text-white"
+          className="p-2 rounded  border-bg4 border  text-bg3"
         />
+      </div>
+      </div>
 
-        {/* PRICE */}
-        <label className="font-bold" htmlFor="price">
+       <div className="grid grid-cols-2 gap-2">
+         {/* PRICE */}
+        <div className="flex flex-col py-2">
+          <label className="font-bold" htmlFor="price">
           Price
         </label>
         <input
@@ -178,11 +190,13 @@ const AdminAddItem = () => {
           name="price"
           value={formData.price}
           onChange={handleChange}
-          className="p-2 rounded bg-transparent border text-white"
+          className="p-2 rounded  border-bg4 border  text-bg3"
         />
+        </div>
 
         {/* CONDITION */}
-        <label className="font-bold" htmlFor="condition">
+        <div className="flex flex-col py-2">
+          <label className="font-bold" htmlFor="condition">
           Condition
         </label>
         <input
@@ -190,20 +204,25 @@ const AdminAddItem = () => {
           name="condition"
           value={formData.condition}
           onChange={handleChange}
-          className="p-2 rounded bg-transparent border text-white"
+          className="p-2 rounded  border-bg4 border  text-bg3"
         />
+        </div>
+       </div>
 
         {/* DESCRIPTION */}
         <label className="font-bold" htmlFor="description">
           Description
         </label>
 
-            <textarea value={formData.description}
-          onChange={handleChange}
-      class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      rows="4"
-      placeholder="Write your message..."
-    ></textarea>
+            <textarea
+  name="description"
+  value={formData.description}
+  onChange={handleChange}
+  className="w-full p-3 border rounded-lg focus:outline-none"
+  rows="4"
+  placeholder="Write your Description"
+/>
+
 
         {/* DATE */}
         <label className="font-bold" htmlFor="date">
@@ -214,11 +233,13 @@ const AdminAddItem = () => {
           name="date"
           value={formData.date}
           onChange={handleChange}
-          className="p-2 rounded bg-transparent border text-white"
+          className="p-2 rounded  border-bg4 border text-white"
         />
 
         {/* IMAGE INPUTS */}
-        <label htmlFor="img1">Image 1</label>
+        <div className="flex justify-center items-center" >
+          <div>
+            <label className="font-bold" htmlFor="img1">Image 1</label>
         <input
           type="file"
           name="img1"
@@ -226,8 +247,10 @@ const AdminAddItem = () => {
           onChange={handleChange}
           className="p-2 bg-bg2 inline-block"
         />
+          </div>
 
-        <label className="font-bold" htmlFor="img2">
+        <div>
+          <label className="font-bold" htmlFor="img2">
           Image 2
         </label>
         <input
@@ -237,17 +260,11 @@ const AdminAddItem = () => {
           onChange={handleChange}
           className="p-2 bg-bg2 inline-block"
         />
-
-        {/* Submit */}
-        <button
-          type="submit"
-          className="bg-bg3 text-white py-2 mt-4 rounded hover:bg-bg3/50"
-        >
-          Add Item
-        </button>
+        </div>
+        </div>
 
         {/* ✅ Preview Selected Images */}
-        <div className="mt-4 flex gap-3">
+        <div className="mt-4 flex flex-col md:flex-row gap-4 justify-center items-center">
           {formData.image1 && (
             <img
               src={URL.createObjectURL(formData.image1)}
@@ -263,6 +280,13 @@ const AdminAddItem = () => {
             />
           )}
         </div>
+        {/* Submit */}
+        <button
+          type="submit"
+          className="bg-bg3 text-white py-2 mt-4 rounded hover:bg-bg3/50"
+        >
+          Add Item
+        </button>
       </form>
     </div>
   );

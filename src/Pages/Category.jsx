@@ -7,7 +7,7 @@ import { MdNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 
 const priceRanges = [
-  { min: 0, max: "<", label: "0 - 10,000" },
+  { min: 0, max: 0     , label: "0 - 0" },
   { min: 10000, max: 20000, label: "10,000 - 20,000" },
   { min: 20000, max: 30000, label: "20,000 - 30,000" },
   { min: 30000, max: 100000, label: "30,000 - 1,00,000" },
