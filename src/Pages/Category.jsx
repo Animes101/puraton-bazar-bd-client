@@ -3,16 +3,18 @@ import Card from "../Components/Card";
 import useItem from "../hooks/useItem";
 import { useLocation } from "react-router-dom";
 import SearchBar from "../Components/SearchBar";
+import { MdNavigateNext } from "react-icons/md";
+import { GrFormPrevious } from "react-icons/gr";
 
 const priceRanges = [
-  { min: 0, max: 10000, label: "0 - 10,000" },
+  { min: 0, max: "<", label: "0 - 10,000" },
   { min: 10000, max: 20000, label: "10,000 - 20,000" },
   { min: 20000, max: 30000, label: "20,000 - 30,000" },
   { min: 30000, max: 100000, label: "30,000 - 1,00,000" },
 ];
 
 const Category = () => {
-  const [selectedPrice, setSelectedPrice] = useState({ min: 0, max: 0 });
+  const [selectedPrice, setSelectedPrice] = useState({ min: null, max: null });
   const [itemPerPage, setItemPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
@@ -25,9 +27,7 @@ const Category = () => {
     search,
     selectedPrice.min,
     selectedPrice.max
-  ); // Pass array to hook
-
-  console.log(data?.data?.length)
+  );
 
   const location = useLocation();
   const { categorie } = location.state || {};
@@ -74,6 +74,7 @@ const Category = () => {
 
   const handlePriceChange = (range) => {
     setSelectedPrice(range);
+
     setCurrentPage(0);
   };
 
@@ -92,8 +93,8 @@ const Category = () => {
         onChange={handleSearch} // reusable handler
         placeholder="Search product..."
       ></SearchBar>
-      <div className="flex flex-col md:flex-row border-2 border-red-300  ">
-        <div className="w-[40%] p-5 bg-bg4 rounded shadow max-h-screen">
+      <div className="flex flex-col md:flex-row ">
+        <div className="w-[40%] p-5 bg-bg3 rounded shadow max-h-screen text-white">
           <h1 className="font-bold mb-4">Categories</h1>
           <ul className="pl-5">
             {categoriesList.map((cat) => (
@@ -133,7 +134,7 @@ const Category = () => {
             ))}
           </ul>
         </div>
-        <div className="border-2 border-green-300">
+        <div className="">
           {data?.data?.length === 0 && <h1>No Data Found</h1>}
           {isLoading && <p>Loading .........?</p>}
 
@@ -148,9 +149,9 @@ const Category = () => {
       <div className="flex justify-center items-center mt-5 gap-3">
         <button
           onClick={handlePrev}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+          className="px-4 py-2 bg-bg3 rounded  text-white"
         >
-          Prev
+          <GrFormPrevious />
         </button>
 
         {pages.map((page, index) => (
@@ -158,7 +159,7 @@ const Category = () => {
             key={index}
             onClick={() => setCurrentPage(page)}
             className={`px-5 py-1 rounded-full ${
-              currentPage === page ? "bg-green-600 text-white" : "bg-green-300"
+              currentPage === page ? " bg-bg3 text-white" : "bg-bg4"
             }`}
           >
             {page + 1}
@@ -167,15 +168,15 @@ const Category = () => {
 
         <button
           onClick={handleNext}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+          className="px-4 py-2 bg-bg3 rounded  text-white"
         >
-          Next
+           <MdNavigateNext />
         </button>
 
         <select
           onChange={handleChange}
           value={itemPerPage}
-          className="ml-3 border rounded px-2 py-1"
+          className="ml-3 border rounded px-2 py-1 bg-bg3 text-white"
         >
           <option value="8">8</option>
           <option value="10">10</option>

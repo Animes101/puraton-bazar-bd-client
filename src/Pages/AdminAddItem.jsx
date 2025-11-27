@@ -84,18 +84,18 @@ const AdminAddItem = () => {
               showConfirmButton: false,
               timer: 1500,
             });
-            
+
             setFormData({
-    category: "",
-    name: "",
-    brand: "",
-    price: "",
-    condition: "",
-    description: "",
-    date: "",
-    image1: null,
-    image2: null,
-  })
+              category: "",
+              name: "",
+              brand: "",
+              price: "",
+              condition: "",
+              description: "",
+              date: "",
+              image1: null,
+              image2: null,
+            });
           }
         }
       }
@@ -120,21 +120,25 @@ const AdminAddItem = () => {
   }
 
   return (
-    <div>
-      <h1 className="text-center font-bold text-3xl mb-6">Add New Item</h1>
+    <div className="">
+      <h1 className="text-center font-bold text-3xl mb-6 text-bg1 py-4 uppercase">
+        Add New Product
+      </h1>
 
       <form
         onSubmit={handleSubmit}
-        className="border flex flex-col gap-3 bg-bgGradient1 p-10 rounded-2xl"
+        className="flex flex-col gap-2  py-5 rounded-2xl bg-bg4  p-10"
       >
         {/* CATEGORY */}
         <select
           name="category"
           value={formData.category}
           onChange={handleChange}
-          className="bg-bgGradinet3 text-white font-bold text-2xl p-2 rounded"
+          className=" font-bold  p-2 rounded bg-transparent border"
         >
-          <option value="">Select Category</option>
+          <option value="" className="">
+            Select Category
+          </option>
           <option value="DSLR">DSLR</option>
           <option value="Laptop">Laptop</option>
           <option value="Mobile">Mobile</option>
@@ -142,63 +146,75 @@ const AdminAddItem = () => {
         </select>
 
         {/* NAME */}
-        <label htmlFor="name">Name</label>
+        <label className="font-bold" htmlFor="name">
+          Name
+        </label>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className="p-2 rounded"
+          className="p-2 rounded bg-transparent border text-white"
         />
 
         {/* BRAND */}
-        <label htmlFor="brand">Brand</label>
+        <label className="font-bold" htmlFor="brand">
+          Brand
+        </label>
         <input
           type="text"
           name="brand"
           value={formData.brand}
           onChange={handleChange}
-          className="p-2 rounded"
+          className="p-2 rounded bg-transparent border text-white"
         />
 
         {/* PRICE */}
-        <label htmlFor="price">Price</label>
+        <label className="font-bold" htmlFor="price">
+          Price
+        </label>
         <input
           type="text"
           name="price"
           value={formData.price}
           onChange={handleChange}
-          className="p-2 rounded"
+          className="p-2 rounded bg-transparent border text-white"
         />
 
         {/* CONDITION */}
-        <label htmlFor="condition">Condition</label>
+        <label className="font-bold" htmlFor="condition">
+          Condition
+        </label>
         <input
           type="text"
           name="condition"
           value={formData.condition}
           onChange={handleChange}
-          className="p-2 rounded"
+          className="p-2 rounded bg-transparent border text-white"
         />
 
         {/* DESCRIPTION */}
-        <label htmlFor="description">Description</label>
-        <input
-          type="text"
-          name="description"
-          value={formData.description}
+        <label className="font-bold" htmlFor="description">
+          Description
+        </label>
+
+            <textarea value={formData.description}
           onChange={handleChange}
-          className="p-2 rounded"
-        />
+      class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      rows="4"
+      placeholder="Write your message..."
+    ></textarea>
 
         {/* DATE */}
-        <label htmlFor="date">Date</label>
+        <label className="font-bold" htmlFor="date">
+          Date
+        </label>
         <input
           type="date"
           name="date"
           value={formData.date}
           onChange={handleChange}
-          className="p-2 rounded"
+          className="p-2 rounded bg-transparent border text-white"
         />
 
         {/* IMAGE INPUTS */}
@@ -208,22 +224,24 @@ const AdminAddItem = () => {
           name="img1"
           accept="image/*"
           onChange={handleChange}
-          className="p-2"
+          className="p-2 bg-bg2 inline-block"
         />
 
-        <label htmlFor="img2">Image 2</label>
+        <label className="font-bold" htmlFor="img2">
+          Image 2
+        </label>
         <input
           type="file"
           name="img2"
           accept="image/*"
           onChange={handleChange}
-          className="p-2"
+          className="p-2 bg-bg2 inline-block"
         />
 
         {/* Submit */}
         <button
           type="submit"
-          className="bg-blue-600 text-white py-2 mt-4 rounded hover:bg-blue-700"
+          className="bg-bg3 text-white py-2 mt-4 rounded hover:bg-bg3/50"
         >
           Add Item
         </button>

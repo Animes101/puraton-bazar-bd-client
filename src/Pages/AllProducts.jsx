@@ -14,10 +14,6 @@ const AllProducts = () => {
     },
   });
 
-  if (isLoading) {
-    return <h1>Loaing..............</h1>;
-  }
-
   const handleDelete = (id) => {
     axiosSecure.delete(`/products/${id}`).then((result) => {
       console.log(result);
@@ -37,24 +33,21 @@ const AllProducts = () => {
 
   return (
     <div>
-      <h1>{data?.data?.length}</h1>
+      <h1 className="text-4xl font-bold text-bg3 py-4">Total Products={data?.data?.length}</h1>
       <div className="overflow-x-auto">
-        <table className="table">
+        <table className="table  table-zebra">
           {/* head */}
           <thead>
             <tr>
               <th>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
               </th>
-              <th> Image & Name</th>
-              <th>Catagory</th>
-              <th>Price</th>
+              <th className="text-3xl font-bold text-bg1"> Image & Name</th>
+              <th className="text-3xl font-bold text-bg1">Catagory</th>
+              <th className="text-3xl font-bold text-bg1">Price</th>
               <th></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-bg4/30">
             {/* row 1 */}
             {data?.data?.map((product, index) => {
               return (
@@ -83,7 +76,7 @@ const AllProducts = () => {
                   <td>
                     <button
                       onClick={() => handleDelete(product._id)}
-                      className="btn bg-bg4 p-2 btn-xs"
+                      className="btn bg-bg1 text-white p-2"
                     >
                       delete
                     </button>
@@ -92,7 +85,7 @@ const AllProducts = () => {
                   <td>
                     <Link
                       to={`/dashboard/updateItem/${product._id}`}
-                      className="btn bg-bg4 p-2 ml-3 btn-xs"
+                      className=" bg-bg3 p-2 ml-3 btn  text-white"
                     >
                       Update
                     </Link></td>

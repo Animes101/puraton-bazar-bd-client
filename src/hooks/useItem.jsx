@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from './useAxiosSecure';
 
-const useItem = (currentPage, itemPerPage, selectedCategory, min, max,search) => {
+const useItem = (currentPage, itemPerPage, selectedCategory, search, min, max) => {
   const axiosSecure = useAxiosSecure();
 
   const { data, error, isLoading } = useQuery({
