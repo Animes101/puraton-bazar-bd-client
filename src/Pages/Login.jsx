@@ -1,83 +1,113 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import { FaRegEyeSlash } from "react-icons/fa";
+import { IoMdEye } from "react-icons/io";
 
 const Login = () => {
-  const {googleLogin, loginUser}=useContext(AuthContext)
+  const { googleLogin, loginUser, forgatePassword } = useContext(AuthContext);
+  const [seePassword, setSeePassword] = useState(false);
 
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const navigate=useNavigate();
-
-  const location=useLocation()
-
-  console.log(location)
-
-  // 🔹 Controlled form state
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  // 🔹 handle input change
+  const emailRef = useRef(null);
+
+  // Input Handle
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // 🔹 handle form submit
+  // Login Submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!formData.email || !formData.password) {
-      alert("❌ Please fill in all fields!");
+      toast.error("Please fill in all fields!");
       return;
     }
 
     loginUser(formData.email, formData.password)
-    .then(result=> {
-      
-            Swal.fire({
-        position: "center",
-        icon: "success",
-        title:`${result?.user.email}`,
-        showConfirmButton: false,
-        timer: 1500
+      .then((result) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `Logged in as ${result?.user.email}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(location.state ? location.state : "/");
+      })
+      .catch(() => {
+        toast.error("Invalid email or password");
       });
-      navigate(location.state ? location.state : '/')
-    })
   };
 
-  // 🔹 handle Google login
+  // Google login
   const handleGoogleLogin = () => {
     googleLogin()
-    .then((result)=>{
-            Swal.fire({
-        position: "center",
-        icon: "success",
-        title:`${result?.user.email}`,
-        showConfirmButton: false,
-        timer: 1500
+      .then((result) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `Logged in as ${result?.user.email}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(location.state ? location.state : "/");
+      })
+      .catch(() => {
+        toast.error("Google login failed");
       });
-      navigate(location.state ? location.state : '/')
-    })
-    
-  
+  };
+
+  // Forgot Password
+  const handlePasswordChange = () => {
+    const email = emailRef.current.value;
+
+    if (!email) {
+      toast.error("Please enter your email first!");
+      return;
+    }
+
+    forgatePassword(email)
+      .then(() => {
+        toast.success(`Password reset email sent to ${email}`);
+      })
+      .catch((error) => {
+        if (error.code === "auth/user-not-found") {
+          toast.error("No user found with this email");
+        } else if (error.code === "auth/invalid-email") {
+          toast.error("Invalid email format");
+        } else {
+          toast.error("Error: " + error.code);
+        }
+      });
   };
 
   return (
-    <div className="hero min-h-screen bg-bg3">
-      <div className="card border border-textColor w-[30%] bg-bg4">
+    <div className="hero min-h-screen bg-bg3 px-3">
+      <div className="card border border-textColor w-full sm:w-[60%] md:w-[40%] lg:w-[28%] bg-bg4 mx-auto">
         <div className="card-body">
           <form onSubmit={handleSubmit} className="fieldset space-y-2">
             <h1 className="text-white text-center text-3xl font-bold">
               Login
             </h1>
 
+            {/* Email */}
             <label className="label text-xl text-textColor">Email</label>
             <input
               type="email"
               name="email"
+              ref={emailRef}
               value={formData.email}
               onChange={handleChange}
               className="input bg-transparent w-full border-textColor border p-2 text-xl outline-none"
@@ -85,40 +115,56 @@ const Login = () => {
               required
             />
 
+            {/* Password */}
             <label className="label text-xl text-textColor">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="input bg-transparent w-full border-textColor border p-2 text-xl outline-none"
-              placeholder="Password"
-              required
-            />
+            <div className="relative w-full">
+              <input
+                type={seePassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="input bg-transparent w-full border-textColor border p-2 text-xl outline-none pr-12"
+                placeholder="Password"
+                required
+              />
 
-            <div>
-              <a className="link link-hover text-xl text-red-500">
-                Forgot password?
-              </a>
+              <button
+                type="button"
+                onClick={() => setSeePassword(!seePassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-textColor text-2xl"
+              >
+                {seePassword ? <IoMdEye /> : <FaRegEyeSlash />}
+              </button>
             </div>
 
+            {/* Forgot Password */}
+            <div>
+              <span
+                onClick={handlePasswordChange}
+                className="link link-hover text-xl text-red-500 cursor-pointer"
+              >
+                Forgot password?
+              </span>
+            </div>
+
+            {/* Login Btn */}
             <button
               type="submit"
-              className="btn bg-bg3 text-white mt-4 bg-buttonBg text-textWhite text-xl w-full"
+              className="btn bg-buttonBg text-white text-xl w-full mt-4"
             >
               Login
             </button>
 
+            {/* Google Login */}
             <button
               type="button"
               onClick={handleGoogleLogin}
-              className="btn bg-bg3 text-white text-textWhite text-xl w-full flex items-center justify-center gap-2"
+              className="btn bg-bg3 text-textWhite text-xl w-full flex items-center justify-center gap-2"
             >
               <svg
                 aria-label="Google logo"
                 width="24"
                 height="24"
-                xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
               >
                 <path fill="#fff" d="m0 0H512V512H0z" />
@@ -142,6 +188,7 @@ const Login = () => {
               Login with Google
             </button>
 
+            {/* Bottom link */}
             <div className="text-center mt-3">
               <Link
                 to="/register"

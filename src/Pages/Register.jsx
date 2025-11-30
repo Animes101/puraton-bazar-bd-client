@@ -5,106 +5,116 @@ import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
-const Register = () => {
-  const { createUser, googleLogin } = useContext(AuthContext);
-  const axiosPublic = useAxiosPublic();
+const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
+const imgHostingApi = `https://api.imgbb.com/1/upload?key=${img_hosting_Key}`;
 
+const Register = () => {
+  const { createUser, googleLogin, updateProfile } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
-  // controlled state
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
+    photoUrl: null,
   });
 
-  // handle input change
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, files } = e.target;
+
+    if (files) {
+      setFormData({ ...formData, photoUrl: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
-  // handle form submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // password match check
+    // 1️⃣ Password validation
     if (formData.password !== formData.confirmPassword) {
       toast.error("❌ Password and Confirm Password do not match!");
-      return; // form submit বন্ধ হবে
+      return;
     }
 
-    createUser(formData.email, formData.password)
-      .then((result) => {
-        const userInfo = {
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        };
-        axiosPublic
-          .post("/users", userInfo)
-          .then((res) => {
-            if (res.data.data.insertedId) {
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: `${result?.user.email}`,
-                showConfirmButton: false,
-                timer: 1500,
-              });
-              navigate(location.state ? location.state : "/");
-            }
-          })
-          .catch((err) => console.error(err));
-      })
-      .catch((err) => {
-        toast.error(`${err?.message}`);
+    // 3️⃣ Upload image if selected
+    let photoURL = null;
+    if (formData.photoUrl) {
+      const imgFile = formData.photoUrl;
+      const formDataObj = new FormData();
+      formDataObj.append("image", imgFile);
+
+      const res = await axiosPublic.post(imgHostingApi, formDataObj, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
+      photoURL = res.data.data.display_url;
+    }
+
+    try {
+      // 2️⃣ Create Firebase user
+      createUser(formData.email, formData.password)
+      .then((result) => {
+        // 4️⃣ Update Firebase profile
+        updateProfile(result.user, formData.name, photoURL).then(() => {
+          // 5️⃣ Send user info to backend
+          const userInfo = {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            photoUrl: photoURL,
+          };
+
+          const backendRes = axiosPublic.post("/users", userInfo);
+
+          if (backendRes.data?.data?.insertedId) {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: `Welcome ${userInfo.name}`,
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/"); // Or use location.state
+          } else {
+            toast.error("User registration failed on backend!");
+          }
+        });
+      });
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response?.data?.message || err.message);
+    }
   };
 
-  // handle Google login
-  const handleGoogleLogin = () => {
-     googleLogin()
-     .then(result=> {
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await googleLogin();
+      const userInfo = {
+        name: result.user.displayName,
+        email: result.user.email,
+      };
 
-      const userInfo={
-        name:result.user.displayName,
-        email:result.user.email,
+      const res = await axiosPublic.post("/users", userInfo);
+
+      if (res.data.data?.insertedId) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `${result.user.email}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate(location.state ? location.state : "/");
+      } else if (res.data.status === "no") {
+        toast.error("❌ User already exists! please Login");
       }
-
-      axiosPublic.post('/users', userInfo)
-      .then(res=>{
-        console.log(res);
-
-        if(res.data.data.insertedId){
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title:`${result?.user.email}`,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          navigate(location.state ? location.state : '/')
-        }
-
-        if(res.data.status == 'no'){
-      
-
-
-          toast.error("❌ User already exists! please Login");
-          
-        }
-
-      
-      })
-    
-     })
-    .catch(err => {
-      toast.error(`${err?.message}`);
-    });
-    
-    
-  }
+    } catch (err) {
+      toast.error(err?.message);
+    }
+  };
 
   return (
     <div>
@@ -150,9 +160,7 @@ const Register = () => {
                 required
               />
 
-              <label className="label text-xl text-bg1">
-                Confirm Password
-              </label>
+              <label className="label text-xl text-bg1">Confirm Password</label>
               <input
                 type="password"
                 name="confirmPassword"
@@ -163,6 +171,13 @@ const Register = () => {
                 required
               />
 
+              <input
+                type="file"
+                onChange={handleChange}
+                name="profileImage"
+                id="profile"
+              />
+
               <button
                 type="submit"
                 className="btn bg-bg3 text-white mt-4 bg-buttonBg text-textWhite text-xl w-full"
@@ -170,37 +185,11 @@ const Register = () => {
                 Register
               </button>
 
-              {/* Google Login Button */}
               <button
                 type="button"
                 onClick={handleGoogleLogin}
-                className="btn bg-bg3  text-white text-xl w-full flex items-center justify-center gap-2"
+                className="btn bg-bg3 text-white text-xl w-full flex items-center justify-center gap-2"
               >
-                <svg
-                  aria-label="Google logo"
-                  width="24"
-                  height="24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                >
-                  <path fill="#fff" d="m0 0H512V512H0z" />
-                  <path
-                    fill="#34a853"
-                    d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-                  />
-                  <path
-                    fill="#4285f4"
-                    d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-                  />
-                  <path
-                    fill="#fbbc02"
-                    d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
-                  />
-                  <path
-                    fill="#ea4335"
-                    d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-                  />
-                </svg>
                 Login with Google
               </button>
 
@@ -210,9 +199,7 @@ const Register = () => {
                   className="link link-hover text-xl text-textColor"
                 >
                   Already have an account?{" "}
-                  <span className="text-bg1 font-semibold">
-                    Login here
-                  </span>
+                  <span className="text-bg1 font-semibold">Login here</span>
                 </Link>
               </div>
             </form>

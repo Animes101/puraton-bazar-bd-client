@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup, updateProfile  } from "firebase/auth";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -40,55 +40,54 @@ const AuthProvider = ({ children }) => {
 
   }
 
+  //forget Password
+
+  const forgatePassword=(email)=>{
+   return  sendPasswordResetEmail(auth, email)
+  }
+
   //logout user
   const logout = () => {
     return signOut(auth);
   };
 
+  //Update Profile
+
+  const updateProfile=(user,name,url)=>{
+
+     return updateProfile(user), {
+      displayName: name, photoURL: `${url}`
+     }
+    };  
+
   useEffect(() => {
-    const unScrid = onAuthStateChanged(
-      auth,
-      (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
+  const unScrid = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUser(user);
+      setLoading(false);
 
-         
-          setUser(user);
-           setLoading(false);
-          const email={email:user.email}
-
-          axiosPublic.post('/jwt', email)
-          .then(res=>{
-
-            if(res.data.token){
-
-              localStorage.setItem('ac-token', res.data.token)
-
-            }
-           
-          })
-
-          
-          // ...
-        } else {
-          // User is signed out
-          setUser(null);
-          setLoading(false);
-          localStorage.clear('ac-token')
-          // ...
-        }
-
-        return () => {
-          return unScrid();
-        };
-      },
-      []
-    );
+      const email = { email: user.email };
+      axiosPublic.post('/jwt', email)
+        .then(res => {
+          if (res.data.token) {
+            localStorage.setItem('ac-token', res.data.token);
+          }
+        });
+    } else {
+      setUser(null);
+      setLoading(false);
+      localStorage.removeItem('ac-token');
+    }
   });
+
+  // cleanup MUST be here ⤵️
+  return () => unScrid();
+}, [axiosPublic]);
+
+
   return (
     <AuthContext.Provider
-      value={{ user, loading, logout, createUser, loginUser ,googleLogin}}
+      value={{ user, loading, logout, createUser, loginUser ,googleLogin, forgatePassword, updateProfile}}
     >
       {children}
     </AuthContext.Provider>

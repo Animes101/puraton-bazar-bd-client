@@ -2,21 +2,28 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import useItem from "../hooks/useItem";
 
 const AllProducts = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const res = await axiosSecure("/products");
-      return res.data;
-    },
-  });
+  // const { data, isLoading, refetch } = useQuery({
+  //   queryKey: ["products"],
+  //   queryFn: async () => {
+  //     const res = await axiosSecure("/products");
+  //     return res.data;
+  //   },
+  // });
+
+  const {data}=useItem();
+
+  console.log(data)
+
+ 
+
 
   const handleDelete = (id) => {
     axiosSecure.delete(`/products/${id}`).then((result) => {
-      console.log(result);
 
       if (result.data.data.deletedCount > 0) {
         Swal.fire({
