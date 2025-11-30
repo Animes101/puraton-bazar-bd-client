@@ -4,12 +4,13 @@ import { AuthContext } from "../context/AuthProvider";
 import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import { updateProfile } from "firebase/auth";
 
 const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${img_hosting_Key}`;
 
 const Register = () => {
-  const { createUser, googleLogin, updateProfile } = useContext(AuthContext);
+  const { createUser, googleLogin } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
 
@@ -23,7 +24,6 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-
     if (files) {
       setFormData({ ...formData, photoUrl: files[0] });
     } else {
@@ -31,17 +31,21 @@ const Register = () => {
     }
   };
 
+  // -------------------------------
+  // REGISTER FORM SUBMIT
+  // -------------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 1️⃣ Password validation
+    // 1️⃣ Password check
     if (formData.password !== formData.confirmPassword) {
       toast.error("❌ Password and Confirm Password do not match!");
       return;
     }
 
-    // 3️⃣ Upload image if selected
+    // 2️⃣ Upload Image if exists
     let photoURL = null;
+
     if (formData.photoUrl) {
       const imgFile = formData.photoUrl;
       const formDataObj = new FormData();
@@ -50,48 +54,56 @@ const Register = () => {
       const res = await axiosPublic.post(imgHostingApi, formDataObj, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
       photoURL = res.data.data.display_url;
     }
 
     try {
-      // 2️⃣ Create Firebase user
-      createUser(formData.email, formData.password)
-      .then((result) => {
-        // 4️⃣ Update Firebase profile
-        updateProfile(result.user, formData.name, photoURL).then(() => {
-          // 5️⃣ Send user info to backend
-          const userInfo = {
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
-            photoUrl: photoURL,
-          };
+      // 3️⃣ Create Firebase User
+      const result = await createUser(formData.email, formData.password);
 
-          const backendRes = axiosPublic.post("/users", userInfo);
-
-          if (backendRes.data?.data?.insertedId) {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: `Welcome ${userInfo.name}`,
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            navigate("/"); // Or use location.state
-          } else {
-            toast.error("User registration failed on backend!");
-          }
-        });
+      // 4️⃣ Update Firebase Profile
+      await updateProfile(result.user, {
+        displayName: formData.name,
+        photoURL: photoURL,
       });
+
+      // 5️⃣ Send User to Backend
+      const userInfo = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        photoUrl: photoURL,
+      };
+
+      const backendRes = await axiosPublic.post("/users", userInfo);
+
+      if (backendRes.data.data?.insertedId) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `Welcome ${userInfo.name}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        navigate("/");
+      } else {
+        toast.error("User registration failed on backend!");
+      }
     } catch (err) {
       console.log(err);
-      toast.error(err.response?.data?.message || err.message);
+      toast.error(err.message);
     }
   };
 
+  // -------------------------------
+  // GOOGLE LOGIN
+  // -------------------------------
   const handleGoogleLogin = async () => {
     try {
       const result = await googleLogin();
+
       const userInfo = {
         name: result.user.displayName,
         email: result.user.email,
@@ -107,25 +119,25 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate(location.state ? location.state : "/");
+        navigate("/");
       } else if (res.data.status === "no") {
         toast.error("❌ User already exists! please Login");
       }
     } catch (err) {
-      toast.error(err?.message);
+      toast.error(err.message);
     }
   };
 
   return (
     <div>
       <Toaster position="top-center" />
+
       <div className="hero min-h-screen bg-bg3">
-        <div className="card border border-textColor w-[30%] bg-bg4 shrink-0 shadow-2xl">
+        <div className="card border border-textColor w-[30%] bg-bg4 shadow-2xl">
           <div className="card-body">
+
             <form onSubmit={handleSubmit} className="fieldset space-y-2">
-              <h1 className="text-white text-center text-3xl font-bold">
-                Register
-              </h1>
+              <h1 className="text-white text-center text-3xl font-bold">Register</h1>
 
               <label className="label text-xl text-bg1">Name</label>
               <input
@@ -133,8 +145,7 @@ const Register = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="input bg-transparent w-full border-textColor border p-2 text-xl outline-none"
-                placeholder="Enter Your Name"
+                className="input bg-transparent border-textColor border p-2 text-xl"
                 required
               />
 
@@ -144,8 +155,7 @@ const Register = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="input bg-transparent w-full border-textColor border p-2 text-xl outline-none"
-                placeholder="Email"
+                className="input bg-transparent border-textColor border p-2 text-xl"
                 required
               />
 
@@ -155,8 +165,7 @@ const Register = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="input bg-transparent w-full border-textColor border p-2 text-xl outline-none"
-                placeholder="Password"
+                className="input bg-transparent border-textColor border p-2 text-xl"
                 required
               />
 
@@ -166,43 +175,32 @@ const Register = () => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="input bg-transparent w-full border-textColor border p-2 text-xl outline-none"
-                placeholder="Confirm Password"
+                className="input bg-transparent border-textColor border p-2 text-xl"
                 required
               />
 
-              <input
-                type="file"
-                onChange={handleChange}
-                name="profileImage"
-                id="profile"
-              />
+              <input type="file" onChange={handleChange} />
 
-              <button
-                type="submit"
-                className="btn bg-bg3 text-white mt-4 bg-buttonBg text-textWhite text-xl w-full"
-              >
+              <button className="btn bg-buttonBg text-white text-xl w-full mt-4">
                 Register
               </button>
 
               <button
                 type="button"
                 onClick={handleGoogleLogin}
-                className="btn bg-bg3 text-white text-xl w-full flex items-center justify-center gap-2"
+                className="btn bg-bg3 text-white text-xl w-full mt-2"
               >
                 Login with Google
               </button>
 
               <div className="text-center mt-3">
-                <Link
-                  to="/login"
-                  className="link link-hover text-xl text-textColor"
-                >
-                  Already have an account?{" "}
-                  <span className="text-bg1 font-semibold">Login here</span>
+                <Link to="/login" className="text-xl text-textColor">
+                  Already have an account? <span className="font-bold">Login here</span>
                 </Link>
               </div>
+
             </form>
+
           </div>
         </div>
       </div>

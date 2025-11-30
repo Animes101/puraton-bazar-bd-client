@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup, updateProfile  } from "firebase/auth";
+import { GoogleAuthProvider, sendPasswordResetEmail, signInWithPopup,  } from "firebase/auth";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -50,15 +50,7 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     return signOut(auth);
   };
-
-  //Update Profile
-
-  const updateProfile=(user,name,url)=>{
-
-     return updateProfile(user), {
-      displayName: name, photoURL: `${url}`
-     }
-    };  
+   
 
   useEffect(() => {
   const unScrid = onAuthStateChanged(auth, (user) => {
@@ -87,7 +79,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, logout, createUser, loginUser ,googleLogin, forgatePassword, updateProfile}}
+      value={{ user, loading, logout, createUser, loginUser ,googleLogin, forgatePassword}}
     >
       {children}
     </AuthContext.Provider>
