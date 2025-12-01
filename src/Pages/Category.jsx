@@ -5,6 +5,8 @@ import { useLocation } from "react-router-dom";
 import SearchBar from "../Components/SearchBar";
 import { MdNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
+import Loading from "../Components/Loading";
+import DataNotFound from "../Components/DataNotFound";
 
 const priceRanges = [
   { min: 0, max: 0     , label: "0 - 0" },
@@ -87,14 +89,14 @@ const Category = () => {
   };
 
   return (
-    <div className=" mt-[64px] py-10 container mx-auto ">
+    <div className=" mt-[64px] py-10 container mx-auto">
       <SearchBar
         value={search} // controlled value
         onChange={handleSearch} // reusable handler
         placeholder="Search product..."
       ></SearchBar>
-      <div className="flex flex-col md:flex-row ">
-        <div className="w-[40%] p-5 bg-bg3 rounded shadow max-h-screen text-white">
+      <div className="grid grid-cols-1 md:grid-cols-3">
+        <div className=" p-5 bg-bg3 rounded shadow max-h-screen text-white h-screen">
           <h1 className="font-bold mb-4">Categories</h1>
           <ul className="pl-5">
             {categoriesList.map((cat) => (
@@ -134,9 +136,9 @@ const Category = () => {
             ))}
           </ul>
         </div>
-        <div className="">
-          {data?.data?.length === 0 && <h1>No Data Found</h1>}
-          {isLoading && <p>Loading .........?</p>}
+        <div className="col-span-2">
+          {data?.data?.length === 0 && <DataNotFound message={"No Products Found"} />}
+          {isLoading && <p><Loading /></p>}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5  p-5 ">
             {data?.data?.map((item) => (

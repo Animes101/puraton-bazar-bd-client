@@ -10,13 +10,6 @@ const Cart = () => {
   const { data, isLoading, isError, error, refetch } = useCart();
   const axiosSecure = useAxiosSecure();
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error.message}</div>;
-
-  if(data?.length === 0){
-    return <h1 className="text-3xl font-bold text-center mt-10">No Products Available ............!</h1>
-  }
-
   const totalPrice = data?.reduce((sum, item) => sum + Number(item.price), 0) || 0;
 
 
@@ -48,17 +41,17 @@ const Cart = () => {
   };
 
   return (
-    <div className="container mx-auto mt-[65px]">
-      <div className="flex justify-between">
-        <h1>Total Cart Items: {data?.length}</h1>
-        <h1>Total Price: {totalPrice}</h1>
-        <Link to={'/dashboard/paymentSSl'} state={{totalPrice,data }} className="btn btn-primary">Checkout</Link>
+    <div className="container mx-auto pt-[64px]">
+      <div className="flex justify-between py-4">
+        <h1 className="text-3xl font-bold">Total Cart Items: {data?.length}</h1>
+        <h1 className="text-3xl font-bold">Total Price: {totalPrice}</h1>
+        <Link to={'/dashboard/paymentSSl'} state={{totalPrice,data }} className="btn bg-bg3 text-white hover:bg-bg3/90">Checkout</Link>
       </div>
 
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
-          <thead>
+          <thead className="bg-bg3 text-white">
             <tr>
               <th>
                 <GoCheck className="text-2xl font-bold" />
@@ -68,6 +61,7 @@ const Cart = () => {
               <th>email</th>
               <th>category</th>
               <th>Price</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>

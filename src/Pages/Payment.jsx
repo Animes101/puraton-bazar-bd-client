@@ -16,13 +16,20 @@ const Payment = () => {
     },
   });
 
+  if(data?.length === 0){
+    return (
+       <div className=" flex justify-center items-center min-h-screen"><h1 className="text-3xl font-bold text-bg3">You havent made any payments yet.</h1></div>
+
+    )
+  }
+
 
   return (
-    <div>
-      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-        <table className="table ">
+    <div className="mt-[64px] ">
+      <div className="overflow-x-auto">
+        <table className="table table-zebra ">
           {/* head */}
-          <thead>
+          <thead className="bg-bg3 text-white">
             <tr>
               <th></th>
               <th>Name</th>
@@ -34,9 +41,8 @@ const Payment = () => {
           <tbody>
             {data?.map((item,index)=>{
 
-              console.log(item)
               return (
-                <tr className="bg-base-200">
+                <tr className="bg-bg2">
               <th>{index +1}</th>
               <td>{item.name}</td>
               <td>{item.price}</td>
@@ -55,7 +61,6 @@ const Payment = () => {
 
               )
             })}
-           
             
           </tbody>
         </table>

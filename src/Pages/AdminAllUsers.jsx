@@ -64,12 +64,14 @@ const AdminAllUsers = () => {
         <div className="overflow-x-auto">
           <table className="table table-zebra">
             {/* head */}
-            <thead>
+            <thead className="bg-bg3 text-white">
               <tr>
                 <th></th>
-                <th className="text-lg font-bold text-bg1">Name</th>
-                <th className="text-lg font-bold text-bg1">Email</th>
-                <th className="text-lg font-bold text-bg1">Password</th>
+                <th className="text-lg font-bold ">Name</th>
+                <th className="text-lg font-bold ">Email</th>
+                <th className="text-lg font-bold ">Password</th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody className="bg-bg4/30">
