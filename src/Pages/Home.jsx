@@ -68,6 +68,15 @@ const Home = () => {
   .then(res => res.data.bestProduct),
 });
 
+ const { data:latest, isLoading:latestLoaing } = useQuery({
+  queryKey: ["latestdata"],
+  queryFn: async () => axiosPublic.get("/latest-products")
+  .then(res => res.data.latestProducts),
+});
+
+console.log(latest)
+
+
   return (
     <div className="">
       <ReactHelmet pageName={"Home Page"} />
@@ -92,11 +101,24 @@ const Home = () => {
         </div>
       </div>
 
+      {/* Best Products */}
+
       <div className="container mx-auto">
         <div className="divider divider-neutral  text-lg font-bold py-10">Best Products</div>
         {isLoading && <span className="loading loading-infinity loading-xl"></span>}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-between ">
           {data?.map((item)=><Card key={item.id} data={item} />)}
+
+        </div>
+      </div>
+
+      {/* Latest Products */}
+
+      <div className="container mx-auto">
+        <div className="divider divider-neutral  text-lg font-bold py-10">Latest Products</div>
+        {isLoading && <span className="loading loading-infinity loading-xl"></span>}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-between ">
+          {latest?.map((item)=><Card key={item.id} data={item} />)}
 
         </div>
       </div>

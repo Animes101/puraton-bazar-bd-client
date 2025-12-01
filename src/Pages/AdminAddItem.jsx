@@ -21,6 +21,7 @@ const AdminAddItem = () => {
     date: "",
     image1: null,
     image2: null,
+    isBest: Boolean,
   });
 
   // ✅ Handle input change
@@ -43,6 +44,8 @@ const AdminAddItem = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(formData)
+
     try {
       setImageUploadLoading(true);
 
@@ -53,7 +56,6 @@ const AdminAddItem = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log(res1)
 
       if (res1.data.success) {
         setImageUploadLoading(false);
@@ -62,7 +64,7 @@ const AdminAddItem = () => {
           headers: { "Content-Type": "multipart/form-data" },
         });
 
-        console.log(res2)
+        console.log(res2);
 
         if (res2.data.success) {
           setImageUploadLoading(false);
@@ -76,6 +78,7 @@ const AdminAddItem = () => {
             description: formData.description,
             images: [res1.data.data.display_url, res2.data.data.display_url],
             postedAt: formData.date,
+            isBest:formData.isBest,
           };
 
           const result = await axiosSecure.post("/products", newItem);
@@ -149,80 +152,94 @@ const AdminAddItem = () => {
           <option value="PC">PC</option>
         </select>
 
-      <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           {/* NAME */}
-       <div className="flex flex-col py-3">
-         <label className="font-bold" htmlFor="name">
-          Name
-        </label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className="p-2 rounded  border-bg4 border  text-bg3"
-        />
-       </div>
+          <div className="flex flex-col py-3">
+            <label className="font-bold" htmlFor="name">
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="p-2 rounded  border-bg4 border  text-bg3"
+            />
+          </div>
 
-        {/* BRAND */}
-      <div className="flex flex-col py-3">
-          <label className="font-bold" htmlFor="brand">
-          Brand
-        </label>
-        <input
-          type="text"
-          name="brand"
-          value={formData.brand}
-          onChange={handleChange}
-          className="p-2 rounded  border-bg4 border  text-bg3"
-        />
-      </div>
-      </div>
-
-       <div className="grid grid-cols-2 gap-2">
-         {/* PRICE */}
-        <div className="flex flex-col py-2">
-          <label className="font-bold" htmlFor="price">
-          Price
-        </label>
-        <input
-          type="text"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          className="p-2 rounded  border-bg4 border  text-bg3"
-        />
+          {/* BRAND */}
+          <div className="flex flex-col py-3">
+            <label className="font-bold" htmlFor="brand">
+              Brand
+            </label>
+            <input
+              type="text"
+              name="brand"
+              value={formData.brand}
+              onChange={handleChange}
+              className="p-2 rounded  border-bg4 border  text-bg3"
+            />
+          </div>
         </div>
 
-        {/* CONDITION */}
-        <div className="flex flex-col py-2">
-          <label className="font-bold" htmlFor="condition">
-          Condition
-        </label>
-        <input
-          type="text"
-          name="condition"
-          value={formData.condition}
-          onChange={handleChange}
-          className="p-2 rounded  border-bg4 border  text-bg3"
-        />
+        <div className="grid grid-cols-2 gap-2">
+          {/* PRICE */}
+          <div className="flex flex-col py-2">
+            <label className="font-bold" htmlFor="price">
+              Price
+            </label>
+            <input
+              type="text"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              className="p-2 rounded  border-bg4 border  text-bg3"
+            />
+          </div>
+
+          {/* CONDITION */}
+          <div className="flex flex-col py-2">
+            <label className="font-bold" htmlFor="condition">
+              Condition
+            </label>
+            <input
+              type="text"
+              name="condition"
+              value={formData.condition}
+              onChange={handleChange}
+              className="p-2 rounded  border-bg4 border  text-bg3"
+            />
+          </div>
         </div>
-       </div>
 
         {/* DESCRIPTION */}
         <label className="font-bold" htmlFor="description">
           Description
         </label>
 
-            <textarea
-  name="description"
-  value={formData.description}
-  onChange={handleChange}
-  className="w-full p-3 border rounded-lg focus:outline-none"
-  rows="4"
-  placeholder="Write your Description"
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          className="w-full p-3 border rounded-lg focus:outline-none"
+          rows="4"
+          placeholder="Write your Description"
+        />
+
+        {/* BEST */}
+        <div className="py-4">
+          <label className="font-bold" htmlFor="isBest">
+           Best yes / No
+        </label>
+        <input onChange={handleChange}
+  className="ml-5 scale-150 accent-bg3"
+  type="checkbox"
+  name="isBest"
+  id="isBest"
 />
 
+        </div>
+        
 
         {/* DATE */}
         <label className="font-bold" htmlFor="date">
@@ -237,30 +254,32 @@ const AdminAddItem = () => {
         />
 
         {/* IMAGE INPUTS */}
-        <div className="flex justify-center items-center" >
+        <div className="flex justify-center items-center">
           <div>
-            <label className="font-bold" htmlFor="img1">Image 1</label>
-        <input
-          type="file"
-          name="img1"
-          accept="image/*"
-          onChange={handleChange}
-          className="p-2 bg-bg2 inline-block"
-        />
+            <label className="font-bold" htmlFor="img1">
+              Image 1
+            </label>
+            <input
+              type="file"
+              name="img1"
+              accept="image/*"
+              onChange={handleChange}
+              className="p-2 bg-bg2 inline-block"
+            />
           </div>
 
-        <div>
-          <label className="font-bold" htmlFor="img2">
-          Image 2
-        </label>
-        <input
-          type="file"
-          name="img2"
-          accept="image/*"
-          onChange={handleChange}
-          className="p-2 bg-bg2 inline-block"
-        />
-        </div>
+          <div>
+            <label className="font-bold" htmlFor="img2">
+              Image 2
+            </label>
+            <input
+              type="file"
+              name="img2"
+              accept="image/*"
+              onChange={handleChange}
+              className="p-2 bg-bg2 inline-block"
+            />
+          </div>
         </div>
 
         {/* ✅ Preview Selected Images */}

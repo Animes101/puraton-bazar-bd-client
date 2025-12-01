@@ -7,19 +7,15 @@ import useItem from "../hooks/useItem";
 const AllProducts = () => {
   const axiosSecure = useAxiosSecure();
 
-  // const { data, isLoading, refetch } = useQuery({
-  //   queryKey: ["products"],
-  //   queryFn: async () => {
-  //     const res = await axiosSecure("/products");
-  //     return res.data;
-  //   },
-  // });
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["products"],
+    queryFn: async () => {
+      const res = await axiosSecure("/products");
+      return res.data;
+    },
+  });
 
-  const {data}=useItem();
 
-  console.log(data)
-
- 
 
 
   const handleDelete = (id) => {
