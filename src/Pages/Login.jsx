@@ -150,7 +150,7 @@ const Login = () => {
             {/* Login Btn */}
             <button
               type="submit"
-              className="btn bg-buttonBg text-white text-xl w-full mt-4"
+              className="btn bg-bg3 text-white text-xl w-full mt-4"
             >
               Login
             </button>
@@ -159,9 +159,9 @@ const Login = () => {
             <button
               type="button"
               onClick={handleGoogleLogin}
-              className="btn bg-bg3 text-textWhite text-xl w-full flex items-center justify-center gap-2"
+              className="btn bg-bg3 text-bg5 text-xl w-full flex items-center justify-center gap-2"
             >
-              <svg
+              <svg className="rounded"
                 aria-label="Google logo"
                 width="24"
                 height="24"

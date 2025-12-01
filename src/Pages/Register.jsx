@@ -6,6 +6,7 @@ import { Toaster, toast } from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { updateProfile } from "firebase/auth";
 
+// ImageBB API key
 const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${img_hosting_Key}`;
 
@@ -22,6 +23,9 @@ const Register = () => {
     photoUrl: null,
   });
 
+  // -------------------------------
+  // Handle input changes
+  // -------------------------------
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (files) {
@@ -32,7 +36,7 @@ const Register = () => {
   };
 
   // -------------------------------
-  // REGISTER FORM SUBMIT
+  // Handle form submission
   // -------------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,18 +47,15 @@ const Register = () => {
       return;
     }
 
-    // 2️⃣ Upload Image if exists
+    // 2️⃣ Upload profile image if exists
     let photoURL = null;
-
     if (formData.photoUrl) {
-      const imgFile = formData.photoUrl;
       const formDataObj = new FormData();
-      formDataObj.append("image", imgFile);
+      formDataObj.append("image", formData.photoUrl);
 
       const res = await axiosPublic.post(imgHostingApi, formDataObj, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
       photoURL = res.data.data.display_url;
     }
 
@@ -68,7 +69,7 @@ const Register = () => {
         photoURL: photoURL,
       });
 
-      // 5️⃣ Send User to Backend
+      // 5️⃣ Send user info to backend
       const userInfo = {
         name: formData.name,
         email: formData.email,
@@ -86,7 +87,6 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-
         navigate("/");
       } else {
         toast.error("User registration failed on backend!");
@@ -98,7 +98,7 @@ const Register = () => {
   };
 
   // -------------------------------
-  // GOOGLE LOGIN
+  // Handle Google Login
   // -------------------------------
   const handleGoogleLogin = async () => {
     try {
@@ -121,7 +121,7 @@ const Register = () => {
         });
         navigate("/");
       } else if (res.data.status === "no") {
-        toast.error("❌ User already exists! please Login");
+        toast.error("❌ User already exists! Please login.");
       }
     } catch (err) {
       toast.error(err.message);
@@ -132,70 +132,95 @@ const Register = () => {
     <div>
       <Toaster position="top-center" />
 
-      <div className="hero min-h-screen bg-bg3">
-        <div className="card border border-textColor w-[30%] bg-bg4 shadow-2xl">
+      <div className="hero min-h-screen bg-bg3 flex justify-center items-center px-4">
+        {/* Card Container */}
+        <div className="card border border-textColor w-full max-w-md bg-bg4 shadow-2xl">
           <div className="card-body">
 
-            <form onSubmit={handleSubmit} className="fieldset space-y-2">
-              <h1 className="text-white text-center text-3xl font-bold">Register</h1>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <h1 className="text-white text-center text-3xl font-bold mb-4">Register</h1>
 
-              <label className="label text-xl text-bg1">Name</label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="input bg-transparent border-textColor border p-2 text-xl"
-                required
-              />
+              {/* Name */}
+              <div>
+                <label className="label text-xl text-bg1">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="input w-full bg-transparent border-textColor border p-2 text-xl rounded"
+                  required
+                />
+              </div>
 
-              <label className="label text-xl text-bg1">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="input bg-transparent border-textColor border p-2 text-xl"
-                required
-              />
+              {/* Email */}
+              <div>
+                <label className="label text-xl text-bg1">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="input w-full bg-transparent border-textColor border p-2 text-xl rounded"
+                  required
+                />
+              </div>
 
-              <label className="label text-xl text-bg1">Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="input bg-transparent border-textColor border p-2 text-xl"
-                required
-              />
+              {/* Password */}
+              <div>
+                <label className="label text-xl text-bg1">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="input w-full bg-transparent border-textColor border p-2 text-xl rounded"
+                  required
+                />
+              </div>
 
-              <label className="label text-xl text-bg1">Confirm Password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                className="input bg-transparent border-textColor border p-2 text-xl"
-                required
-              />
+              {/* Confirm Password */}
+              <div>
+                <label className="label text-xl text-bg1">Confirm Password</label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className="input w-full bg-transparent border-textColor border p-2 text-xl rounded"
+                  required
+                />
+              </div>
 
-              <input type="file" onChange={handleChange} />
+              {/* Profile Image */}
+              <div>
+                <label className="label text-xl text-bg1">Profile Image</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className="file-input w-full border-textColor border rounded"
+                />
+              </div>
 
-              <button className="btn bg-buttonBg text-white text-xl w-full mt-4">
+              {/* Register Button */}
+              <button className="btn bg-bg3 text-bg5 text-xl w-full mt-2 rounded">
                 Register
               </button>
 
+              {/* Google Login */}
               <button
                 type="button"
                 onClick={handleGoogleLogin}
-                className="btn bg-bg3 text-white text-xl w-full mt-2"
+                className="btn bg-bg3 text-white text-xl w-full mt-2 rounded"
               >
                 Login with Google
               </button>
 
+              {/* Link to Login */}
               <div className="text-center mt-3">
                 <Link to="/login" className="text-xl text-textColor">
-                  Already have an account? <span className="font-bold">Login here</span>
+                  Already have an account? <span className="font-bold text-bg5">Login here</span>
                 </Link>
               </div>
 
