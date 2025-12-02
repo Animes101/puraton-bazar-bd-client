@@ -65,7 +65,7 @@ const Category = () => {
   };
 
   const handleNext = () => {
-    if (currentPage < pages.length) {
+    if (currentPage < pages.length - 1) {
       setCurrentPage(currentPage + 1);
     }
   };
