@@ -21,6 +21,7 @@ import PaymentSSL from "../Pages/paymentSSl";
 import UserProfile from "../Pages/UserProfile";
 import AdminHome from "../Pages/AdminHome";
 import AdminProfile from "../Pages/AdminProfile";
+import AdminPaymentHistory from "../Pages/AdminPaymentHistory";
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,8 @@ const router = createBrowserRouter([
            {path: "/dashboard/updateItem/:id", element:<AdminRoute><AdminUpdateProduct /></AdminRoute>},
            {path:"/dashboard/paymentSSl", element:<Privet><PaymentSSL /></Privet>},
            {path:'/dashboard/adminHome', element:<AdminRoute> <AdminHome /></AdminRoute>},
-           {path:'/dashboard/admin/profile', element:<AdminRoute>  <AdminProfile /> </AdminRoute>}
+           {path:'/dashboard/admin/profile', element:<AdminRoute>  <AdminProfile /> </AdminRoute>},
+           {path:'/dashboard/admin/paymentHistory', element:<AdminRoute>  <AdminPaymentHistory /> </AdminRoute>}
         ]
       
       },

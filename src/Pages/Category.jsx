@@ -50,6 +50,8 @@ const Category = () => {
     pages.push(i);
   }
 
+
+
   const handleChange = (e) => {
     const value = parseInt(e.target.value);
     setItemPerPage(value);
