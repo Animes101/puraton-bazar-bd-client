@@ -211,7 +211,7 @@ const Navbar = () => {
             <div className="avatar">
               <div className="w-10 rounded-full ring-2 ring-bg5">
                 <img
-                  src={user?.photoURL || "https://i.ibb.co/YbVjtMX/default-avatar.png"}
+                  src={user?.photoURL}
                   alt="User Avatar"
                 />
               </div>

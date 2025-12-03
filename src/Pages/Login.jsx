@@ -141,7 +141,7 @@ const Login = () => {
             <div>
               <span
                 onClick={handlePasswordChange}
-                className="link link-hover text-xl text-red-500 cursor-pointer"
+                className="link link-hover text-xl text-red-500 cursor-pointer hover:text-black"
               >
                 Forgot password?
               </span>

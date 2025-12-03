@@ -15,7 +15,7 @@ const Dashboard = () => {
   return (
     <div className='grid grid-cols-4 gap-10 mt-[64px]' >
 
-      <div className='col-span-1 bg-bg3 h-screen text-white'>
+      <div className='col-span-1 bg-bg3 h-screen text-white border border-green-500'>
       {admin ?   <ul className='flex flex-col justify-around h-[400px] text-textColor font-bold  items-center '>
           <li>
             <Link to='/dashboard/adminHome'>Admin Home</Link>

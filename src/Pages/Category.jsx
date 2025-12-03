@@ -9,7 +9,7 @@ import Loading from "../Components/Loading";
 import DataNotFound from "../Components/DataNotFound";
 
 const priceRanges = [
-  { min: 0, max: 0     , label: "0 - 0" },
+  { min: 0, max: 0, label: "0 - 0" },
   { min: 10000, max: 20000, label: "10,000 - 20,000" },
   { min: 20000, max: 30000, label: "20,000 - 30,000" },
   { min: 30000, max: 100000, label: "30,000 - 1,00,000" },
@@ -17,10 +17,12 @@ const priceRanges = [
 
 const Category = () => {
   const [selectedPrice, setSelectedPrice] = useState({ min: null, max: null });
-  const [itemPerPage, setItemPerPage] = useState(10);
+  // const [itemPerPage, setItemPerPage] = useState(80);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [search, setSearch] = useState("");
+
+  const itemPerPage = 8;
 
   const { data, isLoading } = useItem(
     currentPage,
@@ -50,17 +52,9 @@ const Category = () => {
     pages.push(i);
   }
 
-
-
-  const handleChange = (e) => {
-    const value = parseInt(e.target.value);
-    setItemPerPage(value);
-    setCurrentPage(0);
-  };
-
   const handlePrev = () => {
     if (currentPage > 0) {
-      setCurrentPage(currentPage -1 );
+      setCurrentPage(currentPage - 1);
     }
   };
 
@@ -87,18 +81,19 @@ const Category = () => {
   // 🔥 Handler — reusable
   const handleSearch = (text) => {
     setSearch(text);
-    
   };
 
   return (
-    <div className=" mt-[64px] py-10 container mx-auto">
-      <SearchBar
-        value={search} // controlled value
-        onChange={handleSearch} // reusable handler
-        placeholder="Search product..."
-      ></SearchBar>
+    <div className=" mt-[64px] container mx-auto">
+      <div className=" sticky top-16 z-20 bg-white">
+        <SearchBar
+          value={search} // controlled value
+          onChange={handleSearch} // reusable handler
+          placeholder="Search product..."
+        ></SearchBar>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-3">
-        <div className=" p-5 bg-bg3 rounded shadow max-h-screen text-white h-screen">
+        <div className=" p-5 bg-bg3 rounded shadow max-h-screen text-white h-screen sticky top-[105px]">
           <h1 className="font-bold mb-4">Categories</h1>
           <ul className="pl-5">
             {categoriesList.map((cat) => (
@@ -139,54 +134,49 @@ const Category = () => {
           </ul>
         </div>
         <div className="col-span-2">
-          {data?.data?.length === 0 && <DataNotFound message={"No Products Found"} />}
-          {isLoading && <p><Loading /></p>}
+          {data?.data?.length === 0 && (
+            <DataNotFound message={"No Products Found"} />
+          )}
+          {isLoading && (
+            <p>
+              <Loading />
+            </p>
+          )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5  p-5 ">
             {data?.data?.map((item) => (
               <Card key={item.id} data={item} />
             ))}
           </div>
+
+          <div className={` flex justify-center items-center my-5 gap-3 ${totalProduct <8  && 'hidden'} `}>
+            <button
+              onClick={handlePrev}
+              className="px-4 py-2 bg-bg3 rounded  text-white"
+            >
+              <GrFormPrevious />
+            </button>
+
+            {pages.map((page, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(page)}
+                className={`px-5 py-1 rounded-full ${
+                  currentPage === page ? " bg-bg3 text-white" : "bg-bg4"
+                }`}
+              >
+                {page + 1}
+              </button>
+            ))}
+
+            <button
+              onClick={handleNext}
+              className="px-4 py-2 bg-bg3 rounded  text-white"
+            >
+              <MdNavigateNext />
+            </button>
+          </div>
         </div>
-      </div>
-
-      <div className="flex justify-center items-center mt-5 gap-3">
-        <button
-          onClick={handlePrev}
-          className="px-4 py-2 bg-bg3 rounded  text-white"
-        >
-          <GrFormPrevious />
-        </button>
-
-        {pages.map((page, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentPage(page)}
-            className={`px-5 py-1 rounded-full ${
-              currentPage === page ? " bg-bg3 text-white" : "bg-bg4"
-            }`}
-          >
-            {page + 1}
-          </button>
-        ))}
-
-        <button
-          onClick={handleNext}
-          className="px-4 py-2 bg-bg3 rounded  text-white"
-        >
-           <MdNavigateNext />
-        </button>
-
-        <select
-          onChange={handleChange}
-          value={itemPerPage}
-          className="ml-3 border rounded px-2 py-1 bg-bg3 text-white"
-        >
-          <option value="8">8</option>
-          <option value="10">10</option>
-          <option value="16">16</option>
-          <option value="20">20</option>
-        </select>
       </div>
     </div>
   );
