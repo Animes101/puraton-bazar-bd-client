@@ -7,7 +7,7 @@ const Card = ({ data }) => {
   
   return (
     <div>
-      <div className="card shadow-md bg-bg2">
+      <div className="card hover:shadow-md shadow-bg4 bg-bg2 border border-bg4">
         <figure className=" relative">
           <img className="h-[300px] w-full transition-transform duration-300 cursor-zoom-in hover:scale-110"
             src={data.images[0]}

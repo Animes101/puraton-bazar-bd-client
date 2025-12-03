@@ -116,10 +116,10 @@ const AllProducts = () => {
   const itemPerPage = 10;
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["products", currentPage],
+    queryKey: ["products"],
     queryFn: async () => {
       const res = await axiosSecure(
-        `/products`
+        `/products?page=${currentPage}&limit=${itemPerPage}`
       );
       return res.data;
     },
@@ -127,8 +127,10 @@ const AllProducts = () => {
 
 
   console.log(data)
+
+  const totalProducts=data?.total_product;
  
-  const numberOfPages = Math.ceil(12 / itemPerPage);
+  const numberOfPages = Math.ceil(totalProducts / itemPerPage);
   const pages = [...Array(numberOfPages).keys()];
 
   const handleDelete = (id) => {

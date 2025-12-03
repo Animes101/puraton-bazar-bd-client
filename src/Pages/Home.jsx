@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactHelmet from "../Components/Layout/ReactHelmet";
 import Banner from "../Components/Banner";
 import Card from "../Components/Card";
@@ -66,6 +66,8 @@ const infoData = [
 
 const Home = () => {
   const axiosPublic = useAxiosPublic();
+  const [isShowAll, setIsShowAll]=useState(false);
+    const [isShowAllBest, setIsShowAllBest]=useState(false);
 
   const { data, isLoading } = useQuery({
     queryKey: ["bestProducts"],
@@ -89,22 +91,22 @@ const Home = () => {
 
       <Banner />
 
-      <div className="container mx-auto">
-        <div className="my-14">
-          <div className="divider divider-neutral  text-lg font-bold my-10">
+      <div className="container mx-auto py-10">
+        <div className="">
+          <div className="divider divider-neutral  text-3xl uppercase font-bold my-10">
             Categories
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 py-5">
             {categories.map((cat, index) => (
               <Link
                 state={{ categorie: cat.name }}
                 to={`/category`}
                 key={index}
-                className="p-6 bg-bg4 rounded-xl shadow hover:shadow-xl flex flex-col items-center justify-center transition cursor-pointer"
+                className="p-6 bg-bg2 border border-bg4 rounded-xl shadow hover:shadow-xl flex flex-col items-center justify-center transition cursor-pointer"
               >
-                <div className="text-bg2 mb-3">{cat.icon}</div>
-                <h2 className="text-lg font-semibold">{cat.name}</h2>
+                <div className="tex-4xl text-bg3 mb-3">{cat.icon}</div>
+                <h2 className="text-lg uppercase  font-semibold">{cat.name}</h2>
               </Link>
             ))}
           </div>
@@ -113,8 +115,8 @@ const Home = () => {
 
       {/* Best Products */}
 
-      <div className="container mx-auto">
-        <div className="divider divider-neutral  text-lg font-bold py-10">
+      <div className="container mx-auto py-10">
+        <div className="divider divider-neutral  text-3xl uppercase font-bold py-10">
           Best Products
         </div>
         {isLoading && (
@@ -123,17 +125,20 @@ const Home = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-between ">
-          {data?.map((item) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-between py-5 ">
+          {data?.slice(0, isShowAllBest ? data.length :3 ).map((item) => (
             <Card key={item.id} data={item} />
           ))}
+        </div>
+        <div className="flex justify-center items-center">
+          <button onClick={()=> setIsShowAllBest(!isShowAllBest)} className="btn bg-bg3 uppercase p-2 text-white">{isShowAllBest ? 'Show Less': 'Show ALL'}</button>
         </div>
       </div>
 
       {/* Latest Products */}
 
-      <div className="container mx-auto">
-        <div className="divider divider-neutral  text-lg font-bold py-10">
+      <div className="container mx-auto py-10">
+        <div className="divider divider-neutral  text-3xl uppercase font-bold py-10">
           Latest Products
         </div>
         {latestLoaing && (
@@ -142,26 +147,29 @@ const Home = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-between ">
-          {latest?.map((item) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-between py-5">
+          {latest?.slice(0, isShowAll ?  6 : latest?.length).map((item) => (
             <Card key={item.id} data={item} />
           ))}
+        </div>
+        <div className="flex justify-center items-center">
+          <button onClick={()=> setIsShowAll(!isShowAll)} className="btn bg-bg3 uppercase p-2 text-white">{isShowAll ? 'Show All': 'Show Less'}</button>
         </div>
       </div>
 
       <div className="container mx-auto py-10">
-        <div className="divider divider-neutral  text-lg font-bold">
+        <div className="divider divider-neutral  text-3xl uppercase font-bold">
           Why Choose Us
         </div>
 
         <Marquee speed={80} pauseOnHover={true} gradient={false}>
-          <div className="max-w-6xl mx-auto mt-16 px-4 flex gap-6">
+          <div className="max-w-6xl mx-auto mt-16 px-4 flex gap-6 ">
             {infoData.map((card) => (
               <div
                 key={card.id}
-                className="bg-bg4 cursor-pointer mb-5 shadow-md p-6 rounded-xl flex flex-col items-center text-center hover:shadow-xl transition min-w-[220px]"
+                className="bg-bg2 border border-bg4 cursor-pointer mb-5 shadow-md p-6 rounded-xl flex flex-col items-center text-center hover:shadow-xl transition min-w-[220px]"
               >
-                <div className="text-bg2 text-4xl mb-3">{card.icon}</div>
+                <div className="text-bg3 text-4xl mb-3">{card.icon}</div>
                 <h3 className="text-xl font-bold mb-2">{card.title}</h3>
                 <p className="text-gray-600 text-sm font-semibold">
                   {card.text}

@@ -197,7 +197,7 @@ const Navbar = () => {
             <button className="relative inline-flex">
               <CiShoppingCart size={30} className="text-bgGradient1 font-bold" />
               <span className="
-                absolute -top-3 -right-2 bg-bgGradient1 text-black 
+                absolute -top-3 -right-2 bg-bgGradient1 text-white 
                 text-xs font-bold w-5 h-5 flex items-center justify-center 
                 rounded-full shadow
               ">
@@ -209,7 +209,7 @@ const Navbar = () => {
           {/* Avatar */}
           {user && (
             <div className="avatar">
-              <div className="w-10 rounded-full ring ring-bgGradient2 ring-offset-base-100 ring-offset-2">
+              <div className="w-10 rounded-full ring-2 ring-bg5">
                 <img
                   src={user?.photoURL || "https://i.ibb.co/YbVjtMX/default-avatar.png"}
                   alt="User Avatar"
@@ -222,13 +222,13 @@ const Navbar = () => {
           {user ? (
             <button
               onClick={handleLogout}
-              className="px-4 py-2 rounded-lg text-xl bg-bgGradient1"
+              className="px-4 py-2 rounded-lg text-xl bg-bg2"
             >
               Logout
             </button>
           ) : (
             <Link to="/login">
-              <button className="px-4 py-2 rounded-lg text-xl bg-bgGradient1">
+              <button className="px-4 py-2 rounded-lg text-xl bg-bg2">
                 Login
               </button>
             </Link>
