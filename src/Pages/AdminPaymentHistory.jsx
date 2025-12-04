@@ -2,6 +2,8 @@ import React from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const AdminPaymentHistory = () => {
   const axiosSecure = useAxiosSecure();
@@ -9,15 +11,16 @@ const AdminPaymentHistory = () => {
   const [currentPage, setCurrentPage]=useState(0);
     const itemPerpage = 10;
 
-  
 
-  const { data = [], isLoading } = useQuery({
+  const { data = [], isLoading, refetch } = useQuery({
     queryKey: ["paymentAll", currentPage,],
     queryFn: async () => {
       const res = await axiosSecure.get(`/payment-all?page=${currentPage}&skip=${itemPerpage}`);
       return res.data || [];
     },
   });
+
+  console.log(data.data)
 
 
   const totalPage=data.totalPayment;
@@ -47,6 +50,39 @@ const AdminPaymentHistory = () => {
     
   }
 
+ const handleAprove = (_id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to approve this order?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#5b6e74",
+    cancelButtonColor: "#0d0d0d",
+    background: "#f2f2f0",
+    confirmButtonText: "Yes, Approve it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      
+      axiosSecure.patch(`/payment-status/${_id}`)
+        .then((res) => {
+          if (res.data.result.modifiedCount > 0) {
+            refetch();
+
+            Swal.fire({
+              title: "Approved!",
+              text: "Order has been approved successfully.",
+              icon: "success",
+              confirmButtonColor: "#5b6e74",
+              background: "#f2f2f0",
+            });
+          }
+        })
+        .catch((err) => toast.error(`${err.message}`));
+    }
+  });
+};
+
+
 
   if (isLoading) {
     return (
@@ -61,8 +97,8 @@ const AdminPaymentHistory = () => {
       <h2 className="text-3xl font-bold mb-5">Admin Payment History</h2>
 
       <div className="overflow-x-auto">
-        <table className="table w-full border rounded-lg">
-          <thead className="bg-gray-200 font-bold text-base">
+        <table className="table table-zebra w-full border rounded-lg">
+          <thead className="bg-bg3 font-bold text-white">
             <tr>
               <th>#</th>
               <th>User</th>
@@ -70,11 +106,11 @@ const AdminPaymentHistory = () => {
               <th>Products</th>
               <th>Amount</th>
               <th>Transaction ID</th>
-              <th>Date</th>
+              <th>Status</th>
             </tr>
           </thead>
 
-          <tbody>
+          <tbody className="bg-bg4/30">
             {data?.data?.map((item, index) => {
               const products =
                 Array.isArray(item.id) &&
@@ -105,7 +141,7 @@ const AdminPaymentHistory = () => {
                   <td className="text-blue-600 font-semibold">
                     {item.tran_id}
                   </td>
-                  <td>{new Date(item.date).toLocaleDateString()}</td>
+                  <td><button onClick={()=>handleAprove(item._id)}  className={`btn p-2 bg-bg3 ${ item.successStatus ? 'text-white': 'text-red-500'}`}>{item.successStatus == true ? 'Aprove': 'Pending'}</button></td>
                 </tr>
               );
             })}

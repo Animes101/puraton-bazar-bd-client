@@ -72,8 +72,7 @@ const Details = () => {
 
   return (
     <div className="container mx-auto mt-[64px] h-[600px] flex justify-center items-center">
-      <Toaster position="top-center" reverseOrder={false} />
-      <div className="card lg:card-side  shadow-md w-full bg-bg5">
+      <div className="card lg:card-side  shadow-md w-full bg-bg2">
         <figure>
           <img
             src={data.images[0]}

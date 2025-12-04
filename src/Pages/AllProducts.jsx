@@ -31,32 +31,36 @@ const numberOfPages = Math.ceil(totalProducts / itemPerPage) || 1;
 const pages = [...Array(numberOfPages).keys()];
 
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.delete(`/products/${id}`).then((res) => {
-          if (res.data.data.deletedCount > 0) {
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: `Deleted successfully`,
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            refetch();
-          }
-        });
-      }
-    });
-  };
+ const handleDelete = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "This action cannot be undone.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#5b6e74",
+    cancelButtonColor: "#0d0d0d",
+    background: "#f2f2f0",
+    confirmButtonText: "Yes, Delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axiosSecure.delete(`/products/${id}`).then((res) => {
+        if (res.data.data.deletedCount > 0) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Product deleted successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+            background: "#f2f2f0",
+          });
+
+          refetch();
+        }
+      });
+    }
+  });
+};
+
 
   if (isLoading) {
     return (

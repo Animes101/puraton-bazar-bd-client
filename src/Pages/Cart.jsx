@@ -7,38 +7,43 @@ import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { data, isLoading, isError, error, refetch } = useCart();
+  const { data, isLoading, isError, refetch } = useCart();
   const axiosSecure = useAxiosSecure();
 
   const totalPrice = data?.reduce((sum, item) => sum + Number(item.price), 0) || 0;
 
 
   const handleRemoveCart = (id) => {
-    // Logic to remove item from cart
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure
-          .delete(`/cart/${id}`)
-          .then((data) => {                                 
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#5b6e74", 
+    cancelButtonColor: "#0d0d0d",
+    background: "#f2f2f0",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
 
-            if(data.data.data.deletedCount>0){{
-              refetch();
-              Swal.fire("Deleted!", "Your file has been deleted.", "success");
-            }
-          }}
-          )
-          .catch((error) => console.error("Error deleting cart item:", error));
-      }
-    });
-  };
+      axiosSecure.delete(`/cart/${id}`)
+        .then((res) => {
+          if (res.data?.data?.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Item removed from cart.",
+              icon: "success",
+              confirmButtonColor: "#5b6e74",
+              background: "#f2f2f0",
+            });
+          }
+        })
+        .catch((err) => console.error("Error deleting cart item:", err));
+    }
+  });
+};
+
 
   return (
     <div className="container mx-auto pt-[64px]">

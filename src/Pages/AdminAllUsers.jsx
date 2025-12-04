@@ -1,116 +1,3 @@
-// import React, { useState } from "react";
-// import { useQuery } from "@tanstack/react-query";
-// import useAxiosSecure from "../hooks/useAxiosSecure";
-// import Swal from "sweetalert2";
-
-// const AdminAllUsers = () => {
-//   const axiosSecure = useAxiosSecure();
-//   const [currentPage, setCurrentPage]=useState(0)
-
-//   const itemPerPage=10;
-
-//   const { data, refetch } = useQuery({
-//     queryKey: ["users"],
-//     queryFn: async () => {
-//       const res = await axiosSecure(`/users?page=${currentPage}&limit=${itemPerPage}`);
-//       return res.data;
-//     },
-//   });
-
-//   console.log(data);
-
-//   const handleUpdate=id=>{
-
-//     axiosSecure.patch(`/users/${id}`)
-//     .then(res=>{
-//       console.log(res);
-//         if(res.data.data.modifiedCount>0){
-//             Swal.fire("Success!", "User role has been updated.", "success");
-//             refetch();
-//         }
-//       })
-
-    
-//   }
-
-//   const handleDelete = (id) => {
-//     Swal.fire({
-//       title: "Are you sure?",
-//       text: "You won't be able to revert this!",
-//       icon: "warning",
-//       showCancelButton: true,
-//       confirmButtonColor: "#3085d6",
-//       cancelButtonColor: "#d33",
-//       confirmButtonText: "Yes, delete it!",
-//     }).then((result) => {
-//       if (result.isConfirmed) {
-
-//         axiosSecure.delete(`/users/${id}`)
-//         .then(res=>{
-//           console.log(res);
-//             if(res.data.data.deletedCount>0){
-//                 Swal.fire("Deleted!", "User has been deleted.", "success");
-//                 refetch();
-//             }
-//           })
-//       }
-//     });
-//   };
-
-//   return (
-//     <div className="">
-//       <div>
-//         <h1 className="text-4xl font-bold text-bg1 py-5">Total Users: {data?.data?.length}</h1>
-//       </div>
-//       <div>
-//         <div className="overflow-x-auto">
-//           <table className="table table-zebra">
-//             {/* head */}
-//             <thead className="bg-bg3 text-white">
-//               <tr>
-//                 <th></th>
-//                 <th className="text-lg font-bold ">Name</th>
-//                 <th className="text-lg font-bold ">Email</th>
-//                 <th className="text-lg font-bold ">Password</th>
-//                 <th></th>
-//                 <th></th>
-//               </tr>
-//             </thead>
-//             <tbody className="bg-bg4/30">
-//               {/* row 1 */}
-//               {data?.data?.map((user, index) => {
-//                 return (
-//                   <tr key={index} className="">
-//                     <th>{index + 1}</th>
-//                     <td>{user.name}</td>
-//                     <td>{user.email}</td>
-//                     <td>{user.password}</td>
-//                     <td><button
-//                       onClick={() => handleUpdate(user._id)}
-//                       className="bg-bg4 btn p-2 text-white"
-//                     >
-//                       {user.role === "admin" ? "Admin" : "Make Admin"}
-//                     </button></td>
-//                     <td><button
-//                       onClick={() => handleDelete(user._id)}
-//                       className="bg-bg4 text-white btn p-2 ml-3"
-//                     >
-//                       Delete
-//                     </button></td>
-//                   </tr>
-//                 );
-//               })}
-//             </tbody>
-//           </table>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AdminAllUsers;
-
-
 
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -139,7 +26,8 @@ const AdminAllUsers = () => {
 
   // -------------- Update Role -----------------
   const handleUpdate = (id) => {
-    axiosSecure.patch(`/users/${id}`).then((res) => {
+    axiosSecure.patch(`/users/${id}`)
+    .then((res) => {
       if (res.data.data.modifiedCount > 0) {
         Swal.fire("Success!", "User role has been updated.", "success");
         refetch();

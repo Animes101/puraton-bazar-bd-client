@@ -11,7 +11,10 @@ function App() {
   return (
 
     <div className='bg-bg5'>  
-    <Toaster />  
+  <Toaster
+  position="top-center"
+  reverseOrder={false}
+/>
       <AuthProvider>
         <RouterProvider router={router} /> 
       </AuthProvider> 
