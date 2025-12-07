@@ -13,8 +13,6 @@ const PaymentSSL = () => {
   const orderItem = location.state?.data || [];
   const { user } = useContext(AuthContext);
 
-  console.log(orderItem);
-
   // Controlled Form States
   const [formData, setFormData] = useState({
     name: user?.displayName || "",
@@ -51,6 +49,8 @@ const PaymentSSL = () => {
 
     axiosSecure.post('/order', order)
     .then(data=> {
+
+      console.log(data)
       
       window.location.replace(data.data.url
 

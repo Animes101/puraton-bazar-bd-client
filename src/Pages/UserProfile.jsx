@@ -108,7 +108,7 @@ const UserProfile = () => {
 
             <div className="menu bg-base-200 min-h-[calc(100vh-64px)] mt-[64px] bg-bg2 w-80 p-5 space-y-4">
 
-              <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
+              <h2 className="text-xl font-bold mb-4">Update Profile</h2>
 
               <label className="font-semibold mt-2">Name</label>
               <input

@@ -17,11 +17,14 @@ import AllProducts from "../Pages/AllProducts";
 import AdminRoute from "../Pages/AdminRoute";
 import AdminAddItem from "../Pages/AdminAddItem";
 import AdminUpdateProduct from "../Pages/AdminUpdateProduct";
-import PaymentSSL from "../Pages/paymentSSl";
 import UserProfile from "../Pages/UserProfile";
 import AdminHome from "../Pages/AdminHome";
 import AdminProfile from "../Pages/AdminProfile";
 import AdminPaymentHistory from "../Pages/AdminPaymentHistory";
+import PaymentSuccess from "../Components/PaymentSuccess";
+import PaymentFailed from "../Components/PaymentFaield";
+import PaymentSSL from "../Pages/PaymentSSL";
+
 
 const router = createBrowserRouter([
   {
@@ -51,7 +54,7 @@ const router = createBrowserRouter([
       
       },
       { path: "/cart", element: <Privet><Cart /> </Privet>},
-      {path:'/category/:id', element:<Privet><Details /></Privet>}
+      {path:'/category/:id', element:<Privet><Details /></Privet>},
     ],
     
   },
@@ -64,9 +67,12 @@ const router = createBrowserRouter([
     element:<Register />
 
   },
+  { path: "/payment-success", element: <Privet><PaymentSuccess /></Privet> },
+  { path: "/payment-fail", element: <Privet><PaymentFailed /></Privet> },
   {
     path: "*",
     element: <NotFound404 />,
+
   },
 ]);
 
