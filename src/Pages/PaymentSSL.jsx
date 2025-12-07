@@ -59,7 +59,7 @@ const PaymentSSL = () => {
     .catch(err=>{
       if(err.response.status === 400){
 
-        toast.error("Payment Failed. Please Feel Your Address. ")
+        toast.error("Payment Failed. Please Feel Your Address.....")
 
       };
     })
