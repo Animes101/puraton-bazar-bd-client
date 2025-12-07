@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import toast, { Toaster } from 'react-hot-toast';
 
 const PaymentSSL = () => {
   const location = useLocation();
@@ -36,7 +37,6 @@ const PaymentSSL = () => {
     e.preventDefault();
 
     // এখানে SSLCommerz payment এর API কল যাবে
-
     const order={
 
         orderName: orderItem.map((item)=> item.name),
@@ -56,19 +56,26 @@ const PaymentSSL = () => {
 
       )
     } )
+    .catch(err=>{
+      if(err.response.status === 400){
+
+        toast.error("Payment Failed. Please Feel Your Address. ")
+
+      };
+    })
 
     
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10">
+    <div className="max-w-xl mx-auto mt-10 ">
       <h1 className="text-2xl font-bold mb-5">Order now</h1>
 
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col space-y-4 bg-bgGradinet3 p-10 rounded-xl shadow"
+        className="flex flex-col space-y-4 bg-bg2 p-10 rounded-xl shadow  border border-bg4"
       >
-        <label>Name</label>
+        <label className="text-bg3 font-bold">Name</label>
         <input
           value={formData.name}
           onChange={handleChange}
@@ -77,7 +84,7 @@ const PaymentSSL = () => {
           className="input input-bordered w-full p-3"
         />
 
-        <label>Email</label>
+        <label className="text-bg3 font-bold">Email</label>
         <input
           value={formData.email}
           onChange={handleChange}
@@ -86,16 +93,17 @@ const PaymentSSL = () => {
           className="input input-bordered w-full p-3"
         />
 
-        <label>Address</label>
+        <label className="text-bg3 font-bold">Address</label>
         <input
           value={formData.address}
           onChange={handleChange}
           type="text"
           name="address"
+          placeholder="Enter Your Addres"
           className="input input-bordered w-full p-3"
         />
 
-        <label>Price</label>
+        <label className="text-bg3 font-bold">Price</label>
         <input
           value={formData.price}
           onChange={handleChange}
@@ -105,7 +113,7 @@ const PaymentSSL = () => {
           readOnly
         />
 
-        <button className="btn bg-bgGradient1 text-black">Buy</button>
+        <button className="btn bg-bgGradient1 bg-bg3 text-white">Buy</button>
       </form>
     </div>
   );

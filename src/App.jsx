@@ -10,8 +10,8 @@ function App() {
 
   return (
 
-    <div className='bg-bg5'>  
-  <Toaster
+    <div className='bg-bg5'> 
+    <Toaster
   position="top-center"
   reverseOrder={false}
 />

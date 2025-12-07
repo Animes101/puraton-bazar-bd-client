@@ -1,5 +1,5 @@
 
-import { Link, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 import useAdmin from '../hooks/useAdmin';
 
 
@@ -35,6 +35,15 @@ const Dashboard = () => {
           <li>
             <Link to='/dashboard/admin/profile'>Admin Profile</Link>
           </li>
+
+           <hr className="w-[60%] mx-auto text-white"></hr>
+      <ul>
+        {/* Main links */}
+              <li><NavLink to="/" className="text-white">Home</NavLink></li>
+              <li><NavLink to="/category" className="text-white">Category</NavLink></li>
+              <li><NavLink to="/contact" className="text-white">Contact</NavLink></li>
+              <li><NavLink to="/dashboard" className="text-white">Dashboard</NavLink></li>
+      </ul>
         </ul> : 
         
           <ul className='flex flex-col justify-around h-[400px] text-textColor font-bold  items-center'>
@@ -47,7 +56,16 @@ const Dashboard = () => {
           <li>
             <Link to='/dashboard/profile'>User Profile</Link>
           </li>
+           <hr className="w-[60%] mx-auto text-white"></hr>
+      <ul className='space-y-5 flex flex-col items-center justify-center'>
+        {/* Main links */}
+              <li><NavLink to="/" className="text-white">Home</NavLink></li>
+              <li><NavLink to="/category" className="text-white">Category</NavLink></li>
+              <li><NavLink to="/contact" className="text-white">Contact</NavLink></li>
+      </ul>
+          
         </ul>
+       
         }
 
       </div>
