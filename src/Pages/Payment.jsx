@@ -23,6 +23,8 @@ const Payment = () => {
     )
   }
 
+  console.log(data)
+
 
   return (
     <div className="mt-[64px] ">
@@ -35,6 +37,7 @@ const Payment = () => {
               <th>Name</th>
               <th>Price</th>
               <th>Status</th>
+              <th>Delivery </th>
               <th>productName</th>
             </tr>
           </thead>
@@ -47,6 +50,7 @@ const Payment = () => {
               <td>{item.name}</td>
               <td>{item.price}</td>
               <td>{item.PaidStatus ? 'payment success': 'Not Payment'}</td>
+              <td>{item.successStatus ? 'Delevered': 'Pending'}</td>
               <td>
               <ul className="list-disc pl-5">
                 {item.orderName.map((name, i) => (

@@ -53,7 +53,7 @@ const AdminPaymentHistory = () => {
  const handleAprove = (_id) => {
   Swal.fire({
     title: "Are you sure?",
-    text: "Do you want to approve this order?",
+    text: "Do you want to Aprove this order?",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#5b6e74",
@@ -69,8 +69,43 @@ const AdminPaymentHistory = () => {
             refetch();
 
             Swal.fire({
-              title: "Approved!",
-              text: "Order has been approved successfully.",
+              title: "Approved",
+              text: "Order has been Approved successfully.",
+              icon: "success",
+              confirmButtonColor: "#5b6e74",
+              background: "#f2f2f0",
+            });
+          }
+        })
+        .catch((err) => toast.error(`${err.message}`));
+    }
+  });
+};
+
+ const handleCancel = (_id) => {
+
+  
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "Do you want to Cancel this order?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#5b6e74",
+    cancelButtonColor: "#0d0d0d",
+    background: "#f2f2f0",
+    confirmButtonText: "Yes, Approve it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      
+      axiosSecure.patch(`/payment-cancel/${_id}`)
+        .then((res) => {
+          if (res.data.result.modifiedCount > 0) {
+            refetch();
+
+            Swal.fire({
+              title: "Cancelled!",
+              text: "Order has been cancelled successfully.",
               icon: "success",
               confirmButtonColor: "#5b6e74",
               background: "#f2f2f0",
@@ -141,7 +176,7 @@ const AdminPaymentHistory = () => {
                   <td className="text-blue-600 font-semibold">
                     {item.tran_id}
                   </td>
-                  <td><button onClick={()=>handleAprove(item._id)}  className={`btn p-2 bg-bg3 ${ item.successStatus ? 'text-white': 'text-red-500'}`}>{item.successStatus == true ? 'Aprove': 'Pending'}</button></td>
+                  <td><button onClick={()=> item.successStatus ? handleCancel(item._id): handleAprove(item._id)}  className={`btn p-2 bg-bg3 ${ item.successStatus ? 'text-white': 'text-red-500'}`}>{item.successStatus == true ? 'Aprove': 'Pending'}</button></td>
                 </tr>
               );
             })}
