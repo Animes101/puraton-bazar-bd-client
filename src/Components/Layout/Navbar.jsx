@@ -35,8 +35,8 @@ const Navbar = () => {
   const linkClasses = ({ isActive }) =>
   `text-xl font-bold border-t-4 border-transparent pt-1 
    ${isActive 
-      ? `border-textColor text-bg2 font-semibold `   // active
-      : "text-bg1 hover:border-textColor"}`;    // inactive
+      ? `border-textColor text-red-500 font-semibold border-b-2 border-b-red-500 `   // active
+      : "text-white hover:border-textColor "}`;    // inactive
 
 
   // --------------------------
@@ -119,7 +119,7 @@ const Navbar = () => {
               <li className="lg:hidden">
                 <NavLink to="/cart" className={linkClasses}>
                   <button className="btn">
-                    <FaCartPlus />
+                    <FaCartPlus className="text-red-500" />
                     <div className="badge badge-sm">{data?.length}</div>
                   </button>
                 </NavLink>
@@ -165,7 +165,7 @@ const Navbar = () => {
           -------------------------- */}
           <NavLink to="/" className="normal-case text-2xl font-bold">
             <h2 className="font-bold text-bg2">
-              Puraton<span className="text-bg2">Bazar</span>.com
+              Puraton<span className="text-red-500">Bazar</span>.com
             </h2>
           </NavLink>
         </div>
@@ -190,7 +190,7 @@ const Navbar = () => {
           {/* Cart */}
           <NavLink to="/cart">
             <button className="relative inline-flex">
-              <CiShoppingCart size={30} className="text-bgGradient1 font-bold" />
+              <CiShoppingCart size={30} className="text-red-500 text-3xl font-bold" />
               <span className="
                 absolute -top-3 -right-2 bg-bgGradient1 text-white 
                 text-xs font-bold w-5 h-5 flex items-center justify-center 
@@ -217,13 +217,13 @@ const Navbar = () => {
           {user ? (
             <button
               onClick={handleLogout}
-              className="px-4 py-2 rounded-lg text-xl bg-bg2"
+              className="px-4 py-2 rounded-lg text-xl bg-red-500 text-white hover:bg-red-400"
             >
               Logout
             </button>
           ) : (
             <Link to="/login">
-              <button className="px-4 py-2 rounded-lg text-xl bg-bg2">
+              <button className="px-4 py-2 rounded-lg text-xl bg-red-500 text-white hover:bg-red-400">
                 Login
               </button>
             </Link>
