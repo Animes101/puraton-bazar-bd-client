@@ -24,7 +24,7 @@ import AdminPaymentHistory from "../Pages/AdminPaymentHistory";
 import PaymentSuccess from "../Components/PaymentSuccess";
 import PaymentFailed from "../Components/PaymentFaield";
 import PaymentSSL from "../Pages/PaymentSSL";
-
+import DashboardLanding from "../Components/DashboardLanding";
 
 const router = createBrowserRouter([
   {
@@ -32,48 +32,48 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/category", element: <Category /> },
-      { path: "/contact", element: <Contact /> },
-      { 
-        path: "/dashboard",
-        element: <Privet><Dashboard /></Privet>,
-        children:[
-          { path: "/dashboard/home", element: <UserHome /> },
-          { path: "/dashboard/payment", element: <Payment /> },
-          { path: "/dashboard/home", element: <UserHome /> },
-          { path: "/dashboard/profile", element: <UserProfile /> },
-          { path: "/dashboard/all-users", element: <AdminRoute><AdminAllUsers /></AdminRoute> },
-          {path: "/dashboard/products", element:<AdminRoute><AllProducts /></AdminRoute>},
-           {path: "/dashboard/addItem", element:<AdminRoute><AdminAddItem /></AdminRoute>},
-           {path: "/dashboard/updateItem/:id", element:<AdminRoute><AdminUpdateProduct /></AdminRoute>},
-           {path:"/dashboard/paymentSSl", element:<Privet><PaymentSSL /></Privet>},
-           {path:'/dashboard/adminHome', element:<AdminRoute> <AdminHome /></AdminRoute>},
-           {path:'/dashboard/admin/profile', element:<AdminRoute>  <AdminProfile /> </AdminRoute>},
-           {path:'/dashboard/admin/paymentHistory', element:<AdminRoute>  <AdminPaymentHistory /> </AdminRoute>}
-        ]
-      
-      },
-      { path: "/cart", element: <Privet><Cart /> </Privet>},
-      {path:'/category/:id', element:<Privet><Details /></Privet>},
-    ],
-    
-  },
-  {
-    path:'/login',
-    element: <Login />
-  },
-  {
-    path:'/register',
-    element:<Register />
+      { path: "category", element: <Category /> },
+      { path: "contact", element: <Contact /> },
 
+      {
+        path: "dashboard",
+        element: (
+          <Privet>
+            <Dashboard />
+          </Privet>
+        ),
+        children: [
+          // ⭐ Default Dashboard Route: User/Admin auto detect inside Dashboard.jsx
+          { index: true, element: <DashboardLanding /> },
+
+          // 🟢 User Routes
+          { path: "home", element: <UserHome /> },
+          { path: "payment", element: <Payment /> },
+          { path: "profile", element: <UserProfile /> },
+          { path: "paymentSSL", element: <Privet><PaymentSSL /></Privet> },
+
+          // 🔴 Admin Routes
+          { path: "adminHome", element: <AdminRoute><AdminHome /></AdminRoute> },
+          { path: "all-users", element: <AdminRoute><AdminAllUsers /></AdminRoute> },
+          { path: "products", element: <AdminRoute><AllProducts /></AdminRoute> },
+          { path: "addItem", element: <AdminRoute><AdminAddItem /></AdminRoute> },
+          { path: "updateItem/:id", element: <AdminRoute><AdminUpdateProduct /></AdminRoute> },
+          { path: "admin/profile", element: <AdminRoute><AdminProfile /></AdminRoute> },
+          { path: "admin/paymentHistory", element: <AdminRoute><AdminPaymentHistory /></AdminRoute> },
+        ],
+      },
+
+      { path: "cart", element: <Privet><Cart /></Privet> },
+      { path: "category/:id", element: <Privet><Details /></Privet> },
+    ],
   },
+
+  // Others
+  { path: "/login", element: <Login /> },
+  { path: "/register", element: <Register /> },
   { path: "/payment-success", element: <Privet><PaymentSuccess /></Privet> },
   { path: "/payment-fail", element: <Privet><PaymentFailed /></Privet> },
-  {
-    path: "*",
-    element: <NotFound404 />,
-
-  },
+  { path: "*", element: <NotFound404 /> },
 ]);
 
 export default router;

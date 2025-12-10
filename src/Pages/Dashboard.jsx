@@ -71,7 +71,7 @@ const Dashboard = () => {
 
                   <li>
                     <NavLink
-                      to="/dashboard/home"
+                      to="/dashboard"
                       className={({ isActive }) =>
                         isActive ? "text-red-400" : "text-white"
                       }
@@ -128,7 +128,7 @@ const Dashboard = () => {
 
             <li>
               <NavLink
-                to="/dashboard/adminHome"
+                to="/dashboard"
                 className={({ isActive }) =>
                   isActive ? "text-red-400" : "text-white"
                 }

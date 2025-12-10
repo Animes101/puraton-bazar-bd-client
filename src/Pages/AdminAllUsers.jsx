@@ -20,13 +20,25 @@ const AdminAllUsers = () => {
     },
   });
 
+  console.log(data)
+
   const totalUsers = data?.totalUsers || 0;  
   const numberOfPages = Math.ceil(totalUsers / itemPerPage);
   const pages = [...Array(numberOfPages).keys()];
 
   // -------------- Update Role -----------------
-  const handleUpdate = (id) => {
-    axiosSecure.patch(`/users/${id}`)
+  const handleMakeAdmin = (id) => {
+    axiosSecure.patch(`/make-admin/${id}`)
+    .then((res) => {
+      if (res.data.data.modifiedCount > 0) {
+        Swal.fire("Success!", "User role has been updated.", "success");
+        refetch();
+      }
+    });
+  };
+
+  const handleMakeUser = (id) => {
+    axiosSecure.patch(`/make-user/${id}`)
     .then((res) => {
       if (res.data.data.modifiedCount > 0) {
         Swal.fire("Success!", "User role has been updated.", "success");
@@ -96,7 +108,7 @@ const AdminAllUsers = () => {
                 <td>{user.password}</td>
                 <td>
                   <button
-                    onClick={() => handleUpdate(user._id)}
+                    onClick={() => user.role === 'admin' ? handleMakeUser(user._id) : handleMakeAdmin(user._id)}
                     className="bg-bg4 btn p-2 text-white"
                   >
                     {user.role === "admin" ? "Admin" : "Make Admin"}
