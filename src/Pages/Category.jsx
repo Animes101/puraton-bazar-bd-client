@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import SearchBar from "../Components/SearchBar";
 import { MdNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
+import { HiMenu } from "react-icons/hi"; // 🔥 Drawer Icon
 import Loading from "../Components/Loading";
 import DataNotFound from "../Components/DataNotFound";
 
@@ -17,7 +18,6 @@ const priceRanges = [
 
 const Category = () => {
   const [selectedPrice, setSelectedPrice] = useState({ min: null, max: null });
-  // const [itemPerPage, setItemPerPage] = useState(80);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [search, setSearch] = useState("");
@@ -36,7 +36,6 @@ const Category = () => {
   const location = useLocation();
   const { categorie } = location.state || {};
 
-  // 🟢 Initial category set here
   useEffect(() => {
     if (categorie) {
       setSelectedCategory(categorie);
@@ -44,61 +43,112 @@ const Category = () => {
     }
   }, [categorie]);
 
-  const totalProduct = data?.total_product;
+  const totalProduct = data?.total_product || 0;
   const numberOfPage = Math.ceil(totalProduct / itemPerPage);
 
-  const pages = [];
-  for (let i = 0; i < numberOfPage; i++) {
-    pages.push(i);
-  }
+  const pages = Array.from({ length: numberOfPage }, (_, i) => i);
 
   const handlePrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
   };
 
   const handleNext = () => {
-    if (currentPage < pages.length - 1) {
-      setCurrentPage(currentPage + 1);
-    }
+    if (currentPage < pages.length - 1) setCurrentPage(currentPage + 1);
   };
 
-  // Radio button handler
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
-    setCurrentPage(0); // Reset page when category changes
+    setCurrentPage(0);
   };
 
   const handlePriceChange = (range) => {
     setSelectedPrice(range);
-
     setCurrentPage(0);
   };
 
   const categoriesList = ["ALL", "Laptop", "PC", "Mobile", "DSLR"];
-
-  // 🔥 Handler — reusable
-  const handleSearch = (text) => {
-    setSearch(text);
-  };
+  const handleSearch = (text) => setSearch(text);
 
   return (
-    <div className=" mt-[64px] container mx-auto">
-      <div className=" sticky top-16 z-20 bg-white">
+    <div className="mt-[64px] container mx-auto">
+
+      {/* 🔍 Sticky Search */}
+      <div className="sticky top-16 z-20 bg-white">
         <SearchBar
-          value={search} // controlled value
-          onChange={handleSearch} // reusable handler
+          value={search}
+          onChange={handleSearch}
           placeholder="Search product..."
-        ></SearchBar>
+        />
       </div>
+
+      {/* ==================== 📱 Mobile Drawer ==================== */}
+      <div className="drawer md:hidden z-20">
+        <input id="drawer-filter" type="checkbox" className="drawer-toggle" />
+
+        <div className="drawer-content p-3">
+          <label
+            htmlFor="drawer-filter"
+            className="text-3xl text-bg3 cursor-pointer"
+          >
+            <HiMenu /> {/* 🔥 React Icon */}
+          </label>
+        </div>
+
+        <div className="drawer-side">
+          <label htmlFor="drawer-filter" className="drawer-overlay"></label>
+
+          <div className="w-80 bg-bg3 p-5 text-white menu   min-h-[calc(100vh-64px)] mt-[64px]">
+            {/* Filter Content */}
+            <h1 className="font-bold mb-10 text-red-500 text-xl ">Categories</h1>
+            <ul className="pl-3">
+              {categoriesList.map((cat) => (
+                <li key={cat}>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="category_m"
+                      value={cat}
+                      checked={selectedCategory === cat}
+                      onChange={handleCategoryChange}
+                    />
+                    {cat}
+                  </label>
+                </li>
+              ))}
+            </ul>
+
+            <h1 className="font-bold mt-6 mb-10 text-red-500 text-xl ">Price Range</h1>
+            <ul className="pl-3">
+              {priceRanges.map((range) => (
+                <li key={range.label}>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="price_m"
+                      checked={
+                        selectedPrice.min === range.min &&
+                        selectedPrice.max === range.max
+                      }
+                      onChange={() => handlePriceChange(range)}
+                    />
+                    ৳{range.label}
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* ==================== 💻 Desktop Sidebar ==================== */}
       <div className="grid grid-cols-1 md:grid-cols-3">
-        <div className=" p-5 bg-bg3 rounded shadow max-h-screen text-white h-screen sticky top-[105px]">
-          <h1 className="font-bold mb-4">Categories</h1>
-          <ul className="pl-5">
+
+        <div className="hidden md:block bg-bg3 text-white p-5 rounded shadow h-screen sticky top-[105px]">
+          <h1 className="font-bold mb-6 text-red-500 text-xl">Categories</h1>
+          <ul className="pl-3">
             {categoriesList.map((cat) => (
-              <li key={cat} className="mb-2">
-                <label className="flex items-center gap-2">
+              <li key={cat}>
+                <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
                     name="category"
@@ -112,12 +162,11 @@ const Category = () => {
             ))}
           </ul>
 
-          {/* Price Range */}
-          <h1 className="font-bold mb-4">Price Range</h1>
-          <ul className="pl-5">
+          <h1 className="font-bold mt-6 mb-6 text-red-500 text-xl ">Price Range</h1>
+          <ul className="pl-3">
             {priceRanges.map((range) => (
-              <li key={range.label} className="mb-2">
-                <label className="flex items-center gap-2">
+              <li key={range.label}>
+                <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="radio"
                     name="price"
@@ -133,49 +182,42 @@ const Category = () => {
             ))}
           </ul>
         </div>
-        <div className="col-span-2">
-          {data?.data?.length === 0 && (
-            <DataNotFound message={"No Products Found"} />
-          )}
-          {isLoading && (
-            <p>
-              <Loading />
-            </p>
-          )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5  p-5 ">
+        {/* ==================== 🚀 Product Content ==================== */}
+        <div className="col-span-2">
+
+          {isLoading && <Loading />}
+          {data?.data?.length === 0 && <DataNotFound message="No Products Found" />}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5">
             {data?.data?.map((item) => (
               <Card key={item.id} data={item} />
             ))}
           </div>
 
-          <div className={` flex justify-center items-center my-5 gap-3 ${totalProduct <8  && 'hidden'} `}>
-            <button
-              onClick={handlePrev}
-              className="px-4 py-2 bg-bg3 rounded  text-white"
-            >
+          {/* Pagination */}
+          <div className={`flex justify-center items-center my-5 gap-3 ${totalProduct < 8 && "hidden"}`}>
+            <button onClick={handlePrev} className="px-4 py-2 bg-bg3 text-white rounded">
               <GrFormPrevious />
             </button>
 
-            {pages.map((page, index) => (
+            {pages.map((page) => (
               <button
-                key={index}
+                key={page}
                 onClick={() => setCurrentPage(page)}
                 className={`px-5 py-1 rounded-full ${
-                  currentPage === page ? " bg-bg3 text-white" : "bg-bg4"
+                  currentPage === page ? "bg-bg3 text-white" : "bg-bg4"
                 }`}
               >
                 {page + 1}
               </button>
             ))}
 
-            <button
-              onClick={handleNext}
-              className="px-4 py-2 bg-bg3 rounded  text-white"
-            >
+            <button onClick={handleNext} className="px-4 py-2 bg-bg3 text-white rounded">
               <MdNavigateNext />
             </button>
           </div>
+
         </div>
       </div>
     </div>

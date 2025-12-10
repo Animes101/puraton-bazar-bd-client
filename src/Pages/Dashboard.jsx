@@ -7,217 +7,208 @@ import { HiChevronDoubleRight } from "react-icons/hi";
 
 const Dashboard = () => {
   const { isAdmin } = useAdmin();
-
   const admin = isAdmin;
 
   return (
     <div className="md:grid grid-cols-4 gap-10 mt-[64px]">
-      {/* Drawer */}
+
+      {/* ===========================
+            📱 MOBILE DRAWER START
+      ============================*/}
       <div className="drawer md:hidden">
         <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
+
+        {/* Drawer toggle button */}
         <div className="drawer-content">
-          {/* Page content here */}
-          <label
-            htmlFor="my-drawer-1"
-            className="btn drawer-button bg-transparent"
-          >
+          <label htmlFor="my-drawer-1" className="btn drawer-button bg-transparent">
             <HiChevronDoubleRight className="text-3xl" />
           </label>
         </div>
+
+        {/* Drawer sidebar */}
         <div className="drawer-side">
-          <label
-            htmlFor="my-drawer-1"
-            aria-label="close sidebar"
-            className="drawer-overlay"
-          ></label>
-          <ul className="menu bg-bg3 w-80 p-4  min-h-[calc(100vh-64px)] mt-[64px]">
-            {/* Sidebar content here */}
+          <label htmlFor="my-drawer-1" className="drawer-overlay"></label>
 
-            <div className="col-span-1 bg-bg3 h-screen text-white">
-        {admin ? (
-          <ul className="flex flex-col justify-around h-[400px] text-textColor font-bold  items-center ">
-            <li>
-              <Link to="/dashboard/adminHome">
-                <FaHome /> Admin Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashboard/all-users">All Users</Link>
-            </li>
-            <li>
-              <Link to="/dashboard/addItem">Add Items</Link>
-            </li>
-            <li>
-              <Link to="/dashboard/products">All Products</Link>
-            </li>
-            <li>
-              <Link to="/dashboard/admin/paymentHistory">Payment Status</Link>
-            </li>
-            <li>
-              <Link to="/dashboard/admin/profile">Admin Profile</Link>
-            </li>
+          <ul className="menu bg-bg3 w-80 p-4 min-h-[calc(100vh-64px)] mt-[64px] text-white">
+            {/* Drawer Menu Content */}
+            <div className="col-span-1">
 
-            <hr className="w-[60%] mx-auto text-white"></hr>
-            <ul>
-              {/* Main links */}
-              <li>
-                <NavLink to="/" className="text-white">
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/category" className="text-white">
-                  Category
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" className="text-white">
-                  Contact
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard" className="text-white">
-                  Dashboard
-                </NavLink>
-              </li>
-            </ul>
-          </ul>
-        ) : (
-          <ul className="flex flex-col justify-around h-[400px] text-textColor font-bold  items-center">
-            <li>
-              <Link to="/dashboard/home">
-                Home <FaHome className="inline-block text-xl" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashboard/Payment">
-                Payment <FaHistory className="inline-block text-xl" />
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashboard/profile">
-                Profile <CgProfile className="inline-block text-xl" />
-              </Link>
-            </li>
-            <hr className="w-[60%] mx-auto text-white"></hr>
-            <ul className="space-y-5 flex flex-col items-center justify-center">
-              {/* Main links */}
-              <li>
-                <NavLink to="/" className="text-white">
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/category" className="text-white">
-                  Category
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" className="text-white">
-                  Contact
-                </NavLink>
-              </li>
-            </ul>
-          </ul>
-        )}
-      </div>
-            
-              
+              {admin ? (
+                // ================= Admin Menu Mobile =================
+                <ul className="flex flex-col justify-around h-[400px] font-bold items-center">
+
+                  {/* Active = works automatically with NavLink */}
+                  <li>
+                    <NavLink
+                      to="/dashboard/adminHome"
+                      className={({ isActive }) =>
+                        isActive ? "text-red-400" : "text-white"
+                      }
+                    >
+                      <FaHome className="inline-block" /> Admin Home
+                    </NavLink>
+                  </li>
+
+                  <li><NavLink to="/dashboard/all-users">All Users</NavLink></li>
+                  <li><NavLink to="/dashboard/addItem">Add Items</NavLink></li>
+                  <li><NavLink to="/dashboard/products">All Products</NavLink></li>
+                  <li><NavLink to="/dashboard/admin/paymentHistory">Payment Status</NavLink></li>
+                  <li><NavLink to="/dashboard/admin/profile">Admin Profile</NavLink></li>
+
+                  <hr className="w-[60%] mx-auto" />
+
+                  {/* Main Menu */}
+                  <ul>
+                    <li><NavLink to="/">Home</NavLink></li>
+                    <li><NavLink to="/category">Category</NavLink></li>
+                    <li><NavLink to="/contact">Contact</NavLink></li>
+                    <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+                  </ul>
+                </ul>
+              ) : (
+                // ================= User Menu Mobile =================
+                <ul className="flex flex-col justify-around h-[400px] font-bold items-center">
+
+                  <li>
+                    <NavLink
+                      to="/dashboard/home"
+                      className={({ isActive }) =>
+                        isActive ? "text-red-400" : "text-white"
+                      }
+                    >
+                      Home <FaHome className="inline-block text-xl" />
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink
+                      to="/dashboard/Payment"
+                      className={({ isActive }) =>
+                        isActive ? "text-red-400" : "text-white"
+                      }
+                    >
+                      Payment <FaHistory className="inline-block text-xl" />
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink
+                      to="/dashboard/profile"
+                      className={({ isActive }) =>
+                        isActive ? "text-red-400" : "text-white"
+                      }
+                    >
+                      Profile <CgProfile className="inline-block text-xl" />
+                    </NavLink>
+                  </li>
+
+                  <hr className="w-[60%] mx-auto" />
+
+                  {/* Main Menu */}
+                  <ul className="space-y-5 flex flex-col items-center">
+                    <li><NavLink to="/">Home</NavLink></li>
+                    <li><NavLink to="/category">Category</NavLink></li>
+                    <li><NavLink to="/contact">Contact</NavLink></li>
+                  </ul>
+
+                </ul>
+              )}
+            </div>
           </ul>
         </div>
       </div>
 
-      <div className="col-span-1 bg-bg3 h-screen text-white  hidden md:block ">
+      {/* ===========================
+              🖥 DESKTOP SIDEBAR
+      ============================*/}
+      <div className="col-span-1 bg-bg3 h-screen text-white hidden md:block">
         {admin ? (
-          <ul className="flex flex-col justify-around h-[400px] text-textColor font-bold  items-center ">
+          // ================= Admin Menu Desktop =================
+          <ul className="flex flex-col justify-around h-[400px] font-bold items-center">
+
             <li>
-              <Link to="/dashboard/adminHome">
-                <FaHome /> Admin Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashboard/all-users">All Users</Link>
-            </li>
-            <li>
-              <Link to="/dashboard/addItem">Add Items</Link>
-            </li>
-            <li>
-              <Link to="/dashboard/products">All Products</Link>
-            </li>
-            <li>
-              <Link to="/dashboard/admin/paymentHistory">Payment Status</Link>
-            </li>
-            <li>
-              <Link to="/dashboard/admin/profile">Admin Profile</Link>
+              <NavLink
+                to="/dashboard/adminHome"
+                className={({ isActive }) =>
+                  isActive ? "text-red-400" : "text-white"
+                }
+              >
+                <FaHome className="inline-block" /> Admin Home
+              </NavLink>
             </li>
 
-            <hr className="w-[60%] mx-auto text-white"></hr>
+            <li><NavLink to="/dashboard/all-users">All Users</NavLink></li>
+            <li><NavLink to="/dashboard/addItem">Add Items</NavLink></li>
+            <li><NavLink to="/dashboard/products">All Products</NavLink></li>
+            <li><NavLink to="/dashboard/admin/paymentHistory">Payment Status</NavLink></li>
+            <li><NavLink to="/dashboard/admin/profile">Admin Profile</NavLink></li>
+
+            <hr className="w-[60%] mx-auto" />
+
+            {/* Main Menu */}
             <ul>
-              {/* Main links */}
-              <li>
-                <NavLink to="/" className="text-white">
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/category" className="text-white">
-                  Category
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" className="text-white">
-                  Contact
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard" className="text-white">
-                  Dashboard
-                </NavLink>
-              </li>
+              <li><NavLink to="/">Home</NavLink></li>
+              <li><NavLink to="/category">Category</NavLink></li>
+              <li><NavLink to="/contact">Contact</NavLink></li>
+              <li><NavLink to="/dashboard">Dashboard</NavLink></li>
             </ul>
           </ul>
         ) : (
-          <ul className="flex flex-col justify-around h-[400px] text-textColor font-bold  items-center">
+          // ================= User Menu Desktop =================
+          <ul className="flex flex-col justify-around h-[400px] font-bold items-center">
+
             <li>
-              <Link to="/dashboard/home">
+              <NavLink
+                to="/dashboard/home"
+                className={({ isActive }) =>
+                  isActive ? "text-red-400" : "text-white"
+                }
+              >
                 Home <FaHome className="inline-block text-xl" />
-              </Link>
+              </NavLink>
             </li>
+
             <li>
-              <Link to="/dashboard/Payment">
+              <NavLink
+                to="/dashboard/Payment"
+                className={({ isActive }) =>
+                  isActive ? "text-red-400" : "text-white"
+                }
+              >
                 Payment <FaHistory className="inline-block text-xl" />
-              </Link>
+              </NavLink>
             </li>
+
             <li>
-              <Link to="/dashboard/profile">
+              <NavLink
+                to="/dashboard/profile"
+                className={({ isActive }) =>
+                  isActive ? "text-red-400" : "text-white"
+                }
+              >
                 Profile <CgProfile className="inline-block text-xl" />
-              </Link>
+              </NavLink>
             </li>
-            <hr className="w-[60%] mx-auto text-white"></hr>
-            <ul className="space-y-5 flex flex-col items-center justify-center">
-              {/* Main links */}
-              <li>
-                <NavLink to="/" className="text-white">
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/category" className="text-white">
-                  Category
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" className="text-white">
-                  Contact
-                </NavLink>
-              </li>
+
+            <hr className="w-[60%] mx-auto" />
+
+            <ul className="space-y-5 text-center">
+              <li><NavLink to="/">Home</NavLink></li>
+              <li><NavLink to="/category">Category</NavLink></li>
+              <li><NavLink to="/contact">Contact</NavLink></li>
             </ul>
+
           </ul>
         )}
       </div>
+
+      {/* ===========================
+             CONTENT SECTION
+      ============================*/}
       <div className="col-span-3 w-[90%]">
         <Outlet />
       </div>
+
     </div>
   );
 };

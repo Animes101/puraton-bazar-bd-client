@@ -9,7 +9,7 @@ const SearchBar = ({ value, onChange, placeholder = "Search..." }) => {
 
       <input
         type="text"
-        className="flex-1 ml-2  border-b border-bg3 bg-transparent  uppercase focus:outline-none"
+        className="flex-1 ml-2  border-b border-b-red-500 bg-transparent  uppercase focus:outline-none"
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)} // 👈 Handler call

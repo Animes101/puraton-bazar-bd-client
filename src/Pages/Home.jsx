@@ -4,6 +4,13 @@ import Banner from "../Components/Banner";
 import Card from "../Components/Card";
 import Marquee from "react-fast-marquee";
 
+// Swiper imports
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 import { FaTruckFast } from "react-icons/fa6";
 import { FaMedal } from "react-icons/fa";
 import { BiSupport } from "react-icons/bi";
@@ -12,12 +19,15 @@ import {
   MdLaptopMac,
   MdCameraAlt,
   MdPayment,
-  MdShoppingBag,
 } from "react-icons/md";
+
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
+// ------------------------
+// Categories Data
+// ------------------------
 const categories = [
   {
     name: "Mobile",
@@ -37,6 +47,9 @@ const categories = [
   },
 ];
 
+// ------------------------
+// Why Choose Us Section Data
+// ------------------------
 const infoData = [
   {
     id: 1,
@@ -64,17 +77,51 @@ const infoData = [
   },
 ];
 
+// ------------------------
+// Static Reviews Data
+// ------------------------
+const reviews = [
+  {
+    id: 1,
+    name: "Rahim Uddin",
+    rating: 4,
+    review: "Product quality is excellent! Fast delivery, highly recommended.",
+  },
+  {
+    id: 2,
+    name: "Jannat Ara",
+    rating: 4,
+    review: "Good product and service. Packaging was perfect.",
+  },
+  {
+    id: 3,
+    name: "Sajid Hasan",
+    rating: 5,
+    review: "Best online shop! Very trusted.",
+  },
+];
+
 const Home = () => {
   const axiosPublic = useAxiosPublic();
-  const [isShowAll, setIsShowAll]=useState(true);
-    const [isShowAllBest, setIsShowAllBest]=useState(false);
 
+  // State for Latest Products "Show All / Show Less"
+  const [isShowAll, setIsShowAll] = useState(true);
+
+  // State for Best Products "Show All / Show Less"
+  const [isShowAllBest, setIsShowAllBest] = useState(false);
+
+  // ------------------------
+  // Fetching Best Products
+  // ------------------------
   const { data, isLoading } = useQuery({
     queryKey: ["bestProducts"],
     queryFn: async () =>
       axiosPublic.get("/best-product").then((res) => res.data.bestProduct),
   });
 
+  // ------------------------
+  // Fetching Latest Products
+  // ------------------------
   const { data: latest, isLoading: latestLoaing } = useQuery({
     queryKey: ["latestdata"],
     queryFn: async () =>
@@ -83,17 +130,20 @@ const Home = () => {
         .then((res) => res.data.latestProducts),
   });
 
-  console.log(latest);
-
   return (
-    <div className="">
+    <div>
+      {/* Helmet (SEO title) */}
       <ReactHelmet pageName={"Home Page"} />
 
+      {/* Banner Section */}
       <Banner />
 
+      {/* ------------------------ */}
+      {/* Categories Section */}
+      {/* ------------------------ */}
       <div className="container mx-auto py-10">
-        <div className="">
-          <div className="divider divider-neutral  text-3xl uppercase font-bold my-10">
+        <div>
+          <div className="divider divider-neutral text-3xl uppercase font-bold my-10">
             Categories
           </div>
 
@@ -105,65 +155,122 @@ const Home = () => {
                 key={index}
                 className="p-6 bg-bg2 border border-bg4 rounded-xl shadow hover:shadow-xl flex flex-col items-center justify-center transition cursor-pointer"
               >
-                <div className="tex-4xl text-red-500 mb-3">{cat.icon}</div>
-                <h2 className="text-lg uppercase  font-semibold">{cat.name}</h2>
+                <div className="text-red-500 mb-3">{cat.icon}</div>
+                <h2 className="text-lg uppercase font-semibold">{cat.name}</h2>
               </Link>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Best Products */}
-
+      {/* ------------------------ */}
+      {/* Best Products Section */}
+      {/* ------------------------ */}
       <div className="container mx-auto py-10">
-        <div className="divider divider-neutral  text-3xl uppercase font-bold py-10">
+        <div className="divider divider-neutral text-3xl uppercase font-bold py-10">
           Best Products
         </div>
+
+        {/* Loading spinner */}
         {isLoading && (
           <div className="text-center">
             <span className="loading loading-infinity loading-xl mx-auto"></span>
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-between py-5 ">
-          {data?.slice(0, isShowAllBest ? data.length :3 ).map((item) => (
+        {/* Best Product Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-5">
+          {data?.slice(0, isShowAllBest ? data.length : 3).map((item) => (
             <Card key={item.id} data={item} />
           ))}
         </div>
-        <div className="flex justify-center items-center">
-          <button onClick={()=> setIsShowAllBest(!isShowAllBest)} className="btn bg-bg3 hover:bg-bg3/80 uppercase p-2 text-white">{isShowAllBest ? 'Show Less': 'Show ALL'}</button>
+
+        {/* Show All / Show Less button */}
+        <div className="flex justify-center">
+          <button
+            onClick={() => setIsShowAllBest(!isShowAllBest)}
+            className="btn bg-bg3 hover:bg-bg3/80 uppercase p-2 text-white"
+          >
+            {isShowAllBest ? "Show Less" : "Show All"}
+          </button>
         </div>
       </div>
 
-      {/* Latest Products */}
-
+      {/* ------------------------ */}
+      {/* Latest Products Section */}
+      {/* ------------------------ */}
       <div className="container mx-auto py-10">
-        <div className="divider divider-neutral  text-3xl uppercase font-bold py-10">
+        <div className="divider divider-neutral text-3xl uppercase font-bold py-10">
           Latest Products
         </div>
+
         {latestLoaing && (
           <div className="text-center">
             <span className="loading loading-infinity loading-xl mx-auto"></span>
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-between py-5">
-          {latest?.slice(0, isShowAll ?  6 : latest?.length).map((item) => (
+        {/* Latest Product Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-5">
+          {latest?.slice(0, isShowAll ? 6 : latest?.length).map((item) => (
             <Card key={item.id} data={item} />
           ))}
         </div>
-        <div className="flex justify-center items-center">
-          <button onClick={()=> setIsShowAll(!isShowAll)} className="btn bg-bg3 hover:bg-bg3/80 uppercase p-2 text-white">{isShowAll ? 'Show All': 'Show Less'}</button>
+
+        {/* Toggle button */}
+        <div className="flex justify-center">
+          <button
+            onClick={() => setIsShowAll(!isShowAll)}
+            className="btn bg-bg3 hover:bg-bg3/80 uppercase p-2 text-white"
+          >
+            {isShowAll ? "Show All" : "Show Less"}
+          </button>
         </div>
       </div>
 
+      {/* ------------------------ */}
+      {/* Customer Review Section */}
+      {/* ------------------------ */}
+      <div className="container mx-auto py-16 space-y-16">
+        <div className="divider divider-neutral text-3xl uppercase font-bold mb-10">
+          Customer Reviews
+        </div>
+
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={20}
+          slidesPerView={1}
+          navigation={true}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000 }}
+          className="pb-10"
+        >
+          {reviews.map((item) => (
+            <SwiperSlide key={item.id}>
+              <div className="bg-bg2 border border-bg4 shadow p-8 rounded-xl max-w-6xl mx-auto text-center">
+                <h3 className="text-xl font-bold mb-2">{item.name}</h3>
+
+                <p className="text-red-500 text-lg mb-3">
+                  {"⭐".repeat(item.rating)}
+                </p>
+
+                <p className="text-gray-600 font-medium">{item.review}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+      {/* ------------------------ */}
+      {/* Why Choose Us Section */}
+      {/* ------------------------ */}
       <div className="container mx-auto py-10">
-        <div className="divider divider-neutral  text-3xl uppercase font-bold">
+        <div className="divider divider-neutral text-3xl uppercase font-bold">
           Why Choose Us
         </div>
 
         <Marquee speed={80} pauseOnHover={true} gradient={false}>
-          <div className="max-w-6xl mx-auto mt-16 px-4 flex gap-6 ">
+          <div className="max-w-6xl mx-auto mt-16 px-4 flex gap-6">
             {infoData.map((card) => (
               <div
                 key={card.id}

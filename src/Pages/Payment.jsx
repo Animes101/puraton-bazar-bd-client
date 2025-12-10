@@ -49,8 +49,8 @@ const Payment = () => {
               <th>{index +1}</th>
               <td>{item.name}</td>
               <td>{item.price}</td>
-              <td>{item.PaidStatus ? 'payment success': 'Not Payment'}</td>
-              <td>{item.successStatus ? 'Delevered': 'Pending'}</td>
+              <td className={item.PaidStatus ? 'text-bg3' : 'text-red-500'}>{item.PaidStatus ? 'payment success': 'Not Payment'}</td>
+              <td className={item.successStatus ? 'text-bg3' : 'text-red-500'}>{item.successStatus ? 'Delevered': 'Pending'}</td>
               <td>
               <ul className="list-disc pl-5">
                 {item.orderName.map((name, i) => (
