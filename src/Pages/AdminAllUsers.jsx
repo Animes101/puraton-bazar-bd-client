@@ -6,9 +6,10 @@ import Swal from "sweetalert2";
 
 const AdminAllUsers = () => {
   const axiosSecure = useAxiosSecure();
-
   const [currentPage, setCurrentPage] = useState(0);
   const itemPerPage = 10;
+
+  // -------------- Fetch Users -----------------
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["users", currentPage],
@@ -19,8 +20,6 @@ const AdminAllUsers = () => {
       return res.data;
     },
   });
-
-  console.log(data)
 
   const totalUsers = data?.totalUsers || 0;  
   const numberOfPages = Math.ceil(totalUsers / itemPerPage);
