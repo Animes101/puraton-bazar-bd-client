@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { MdNavigateNext } from "react-icons/md";
+import { GrFormPrevious } from "react-icons/gr";
 
 const AdminPaymentHistory = () => {
   const axiosSecure = useAxiosSecure();
@@ -191,7 +193,7 @@ const AdminPaymentHistory = () => {
       </div>
 
       <div className="flex justify-center items-center mt-5 gap-3">
-        <button className="px-4 py-2 bg-bg3 rounded  text-white" onClick={handlePrev}>Prev</button>
+        <button className="px-4 py-2 bg-bg3 rounded  text-white" onClick={handlePrev}><GrFormPrevious /></button>
        {pages.map((item, index)=>{
         return(
             <button  className={`px-5 py-1 rounded-full ${
@@ -199,7 +201,7 @@ const AdminPaymentHistory = () => {
             }`} key={index} onClick={()=> setCurrentPage(item)}>{item}</button>
         )
        })}
-       <button className="px-4 py-2 bg-bg3 rounded  text-white" onClick={handleNext}>next</button>
+       <button className="px-4 py-2 bg-bg3 rounded  text-white" onClick={handleNext}><MdNavigateNext /></button>
       </div>
     </div>
   );

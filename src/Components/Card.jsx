@@ -13,7 +13,7 @@ const Card = ({ data }) => {
             src={data.images[0]}
             alt={data.brand}
           />
-          <h2 className=" absolute top-0 left-0   text-red-500 font-bold p-4">{data.isBest && 'Best'}</h2>
+          <h2 className=" absolute top-0 left-0   text-btnBg font-bold p-4">{data.isBest && 'Best'}</h2>
         </figure>
         <div className="card-body">
           <h2 className="card-title text-2xl font-bold">{data.brand}</h2>
@@ -21,10 +21,10 @@ const Card = ({ data }) => {
             {data.description.slice(0, 30)}........
           </p>
           <div className="card-actions justify-end">
-            <button className="font-bold text-red-500 text-xl">price:{data.price}<span className="font-bold text-3xl text-bg3">৳</span></button>
+            <button className="font-bold text-bg3 text-xl">price:  <span className="font-bold text-2xl text-btnBg">{data.price}৳</span></button>
           </div>
           <div className="card-actions justify-end">
-            <Link to={`/category/${data._id}`} state={`/category/${data.id}`} className="btn  bg-bg3 hover:bg-bg3/80 text-bg2">View Details</Link>
+            <Link to={`/category/${data._id}`} state={`/category/${data.id}`} className="btn  bg-bg3 hover:bg-bg3/80 text-white font-bold textxl">View Details</Link>
           </div>
         </div>
       </div>

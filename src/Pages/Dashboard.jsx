@@ -22,7 +22,7 @@ const Dashboard = () => {
         {/* Drawer Button */}
         <div className="drawer-content">
           <label htmlFor="my-drawer-1" className="btn drawer-button bg-transparent">
-            <HiChevronDoubleRight className="text-3xl" />
+            <HiChevronDoubleRight className="text-3xl text-bg3" />
           </label>
         </div>
 

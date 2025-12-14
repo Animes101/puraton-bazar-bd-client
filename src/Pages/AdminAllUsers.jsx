@@ -1,12 +1,16 @@
-
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { deleteUser } from "firebase/auth";
+import { AuthContext } from "../context/AuthProvider";
+import { MdNavigateNext } from "react-icons/md";
+import { GrFormPrevious } from "react-icons/gr";
 
 const AdminAllUsers = () => {
   const axiosSecure = useAxiosSecure();
   const [currentPage, setCurrentPage] = useState(0);
+  const { user } = useContext(AuthContext);
   const itemPerPage = 10;
 
   // -------------- Fetch Users -----------------
@@ -21,52 +25,101 @@ const AdminAllUsers = () => {
     },
   });
 
-  const totalUsers = data?.totalUsers || 0;  
+  const totalUsers = data?.totalUsers || 0;
   const numberOfPages = Math.ceil(totalUsers / itemPerPage);
   const pages = [...Array(numberOfPages).keys()];
 
   // -------------- Update Role -----------------
   const handleMakeAdmin = (id) => {
-    axiosSecure.patch(`/make-admin/${id}`)
-    .then((res) => {
+    axiosSecure.patch(`/make-admin/${id}`).then((res) => {
       if (res.data.data.modifiedCount > 0) {
-        Swal.fire("Success!", "User role has been updated.", "success");
+        Swal.fire({
+          title: "Success!",
+          text: "User role has been updated.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2000,
+          background: "#f2f2f0",
+          color: "#5b6e74",
+          iconColor: "#F1C40F",
+        });
+
         refetch();
       }
     });
   };
 
   const handleMakeUser = (id) => {
-    axiosSecure.patch(`/make-user/${id}`)
-    .then((res) => {
+    axiosSecure.patch(`/make-user/${id}`).then((res) => {
       if (res.data.data.modifiedCount > 0) {
-        Swal.fire("Success!", "User role has been updated.", "success");
+        Swal.fire({
+          title: "Role Updated!",
+          text: "User role has been updated.",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 2000,
+          background: "#f2f2f0",
+          color: "#5b6e74",
+          iconColor: "#F1C40F",
+        });
+
         refetch();
       }
     });
   };
 
   // -------------- Delete User -----------------
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.delete(`/users/${id}`).then((res) => {
-          if (res.data.data.deletedCount > 0) {
-            Swal.fire("Deleted!", "User has been deleted.", "success");
-            refetch();
-          }
+const handleDelete = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "This action cannot be undone!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#5b6e74",  // ✅ updated color
+    cancelButtonColor: "#0d0d0d",   // ✅ updated color
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "Cancel",
+    background: "#f2f2f0",          // ✅ updated background
+    color: "#5b6e74",                // ✅ text color
+    iconColor: "#F1C40F",            // ✅ warning icon color
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axiosSecure.delete(`/users/${id}`).then((res) => {
+        if (res.data.data.deletedCount > 0) {
+          // ✅ Success alert with same color theme
+          Swal.fire({
+            title: "Deleted Successfully!",
+            text: "The user has been removed from the system.",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 2000,
+            background: "#f2f2f0",   // light background
+            color: "#5b6e74",        // text color
+            iconColor: "#F1C40F",    // success icon color
+            timerProgressBar: true,
+          });
+
+          refetch();
+        }
+      }).catch((err) => {
+        // ❌ Error alert with same color theme
+        Swal.fire({
+          title: "Error!",
+          text: `Failed to delete user. ${err.message}`,
+          icon: "error",
+          showConfirmButton: false,
+          timer: 2500,
+          background: "#fbeaea",   // light red background
+          color: "#742626",         // text color
+          iconColor: "#E74C3C",     // error icon color
+          timerProgressBar: true,
         });
-      }
-    });
-  };
+      });
+    }
+  });
+};
+
+
 
   // -------------- Loader -----------------
   if (isLoading) {
@@ -107,8 +160,14 @@ const AdminAllUsers = () => {
                 <td>{user.password}</td>
                 <td>
                   <button
-                    onClick={() => user.role === 'admin' ? handleMakeUser(user._id) : handleMakeAdmin(user._id)}
-                    className="bg-bg4 btn p-2 text-white"
+                    onClick={() =>
+                      user.role === "admin"
+                        ? handleMakeUser(user._id)
+                        : handleMakeAdmin(user._id)
+                    }
+                    className={`bg-bg4 btn p-2  font-bold ${
+                      user.role === "admin" ? "text-btnBg " : "text-white"
+                    }`}
                   >
                     {user.role === "admin" ? "Admin" : "Make Admin"}
                   </button>
@@ -116,7 +175,7 @@ const AdminAllUsers = () => {
                 <td>
                   <button
                     onClick={() => handleDelete(user._id)}
-                    className="bg-bg4 text-white btn p-2 ml-3"
+                    className="bg-btnBg text-white btn p-2 ml-3"
                   >
                     Delete
                   </button>
@@ -142,7 +201,7 @@ const AdminAllUsers = () => {
           disabled={currentPage === 0}
           className="px-4 py-2 bg-bg3 rounded text-white disabled:opacity-40"
         >
-          Prev
+          <GrFormPrevious />
         </button>
 
         {/* Page Buttons */}
@@ -151,9 +210,7 @@ const AdminAllUsers = () => {
             key={page}
             onClick={() => setCurrentPage(page)}
             className={`px-5 py-1 rounded-full ${
-              currentPage === page
-                ? "bg-bg3 text-white"
-                : "bg-bg4 text-black"
+              currentPage === page ? "bg-bg3 text-white" : "bg-bg4 text-black"
             }`}
           >
             {page + 1}
@@ -163,13 +220,12 @@ const AdminAllUsers = () => {
         {/* Next */}
         <button
           onClick={() =>
-            currentPage < numberOfPages - 1 &&
-            setCurrentPage(currentPage + 1)
+            currentPage < numberOfPages - 1 && setCurrentPage(currentPage + 1)
           }
           disabled={currentPage === numberOfPages - 1}
           className="px-4 py-2 bg-bg3 rounded text-white disabled:opacity-40"
         >
-          Next
+          <MdNavigateNext />
         </button>
       </div>
     </div>

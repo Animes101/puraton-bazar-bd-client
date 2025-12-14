@@ -99,7 +99,7 @@ const Category = () => {
 
           <div className="w-80 bg-bg3 p-5 text-white menu   min-h-[calc(100vh-64px)] mt-[64px]">
             {/* Filter Content */}
-            <h1 className="font-bold mb-10 text-red-500 text-xl ">Categories</h1>
+            <h1 className="font-bold mb-10 text-btnBg  underline text-xl ">Categories</h1>
             <ul className="pl-3">
               {categoriesList.map((cat) => (
                 <li key={cat}>
@@ -117,7 +117,7 @@ const Category = () => {
               ))}
             </ul>
 
-            <h1 className="font-bold mt-6 mb-10 text-red-500 text-xl ">Price Range</h1>
+            <h1 className="font-bold mt-6 mb-10 text-btnBg  underline  text-xl ">Price Range</h1>
             <ul className="pl-3">
               {priceRanges.map((range) => (
                 <li key={range.label}>
@@ -144,7 +144,7 @@ const Category = () => {
       <div className="grid grid-cols-1 md:grid-cols-3">
 
         <div className="hidden md:block bg-bg3 text-white p-5 rounded shadow h-screen sticky top-[105px]">
-          <h1 className="font-bold mb-6 text-red-500 text-xl">Categories</h1>
+          <h1 className="font-bold mb-6  text-btnBg underline text-xl">Categories</h1>
           <ul className="pl-3">
             {categoriesList.map((cat) => (
               <li key={cat}>
@@ -162,7 +162,7 @@ const Category = () => {
             ))}
           </ul>
 
-          <h1 className="font-bold mt-6 mb-6 text-red-500 text-xl ">Price Range</h1>
+          <h1 className="font-bold mt-6 mb-6  text-btnBg underline text-xl ">Price Range</h1>
           <ul className="pl-3">
             {priceRanges.map((range) => (
               <li key={range.label}>

@@ -4,6 +4,8 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import { MdNavigateNext } from "react-icons/md";
+import { GrFormPrevious } from "react-icons/gr";
 
 
 const AllProducts = () => {
@@ -148,7 +150,7 @@ const pages = [...Array(numberOfPages).keys()];
           disabled={currentPage === 0}
           className="px-4 py-2 bg-bg3 rounded text-white disabled:opacity-40"
         >
-          Prev
+          <GrFormPrevious />
         </button>
 
         {pages.map((page) => (
@@ -171,7 +173,7 @@ const pages = [...Array(numberOfPages).keys()];
           disabled={currentPage === numberOfPages - 1}
           className="px-4 py-2 bg-bg3 rounded text-white disabled:opacity-40"
         >
-          Next
+          <MdNavigateNext />
         </button>
       </div>
     </div>

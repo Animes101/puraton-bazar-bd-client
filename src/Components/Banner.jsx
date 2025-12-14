@@ -151,26 +151,21 @@ const Banner = () => {
             {/* Centered Text Overlay */}
             <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-center text-center text-white px-5 space-y-10">
 
-              {/* Slide Title */}
-              <h1 className="text-4xl md:text-5xl font-bold mb-3 text-red-500">
-                {item.title}
-              </h1>
-
               {/* Rotating Text Animation */}
-              <span className="rotate-text text-4xl md:text-6xl font-semibold">
+              <span className="rotate-text text-btnBg text-4xl md:text-6xl font-semibold">
                 <span>{item.title}</span>
                 <span className="font-bold italic px-2">Go Now ▶︎▶︎</span>
               </span>
 
               {/* Description */}
-              <p className="text-lg md:text-xl mb-5 max-w-xl text-bg2">
+              <p className="text-lg md:text-xl mb-5 max-w-xl text-btnBg/80">
                 {item.desc}
               </p>
 
               {/* Button */}
               <Link
                 to={"/category"}
-                className="bg-red-500 hover:bg-red-400 px-6 py-3 rounded-md font-semibold"
+                className="bg-btnBg hover:bg-btnBg/80 px-6 py-3 rounded-md font-semibold"
               >
                 {item.btn}
               </Link>

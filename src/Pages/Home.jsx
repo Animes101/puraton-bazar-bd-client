@@ -155,7 +155,7 @@ const Home = () => {
                 key={index}
                 className="p-6 bg-bg2 border border-bg4 rounded-xl shadow hover:shadow-xl flex flex-col items-center justify-center transition cursor-pointer"
               >
-                <div className="text-red-500 mb-3">{cat.icon}</div>
+                <div className="text-btnBg mb-3">{cat.icon}</div>
                 <h2 className="text-lg uppercase font-semibold">{cat.name}</h2>
               </Link>
             ))}
@@ -276,7 +276,7 @@ const Home = () => {
                 key={card.id}
                 className="bg-bg2 border border-bg4 cursor-pointer mb-5 shadow-md p-6 rounded-xl flex flex-col items-center text-center hover:shadow-xl transition min-w-[220px]"
               >
-                <div className="text-red-500 text-4xl mb-3">{card.icon}</div>
+                <div className="text-btnBg text-4xl mb-3">{card.icon}</div>
                 <h3 className="text-xl font-bold mb-2">{card.title}</h3>
                 <p className="text-gray-600 text-sm font-semibold">
                   {card.text}

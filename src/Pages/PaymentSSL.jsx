@@ -49,19 +49,16 @@ const PaymentSSL = () => {
 
     axiosSecure.post('/order', order)
     .then(data=> {
-
-      console.log(data)
       
       window.location.replace(data.data.url
 
       )
     } )
     .catch(err=>{
-      if(err.response.status === 400){
+      console.log(err.message)
+        toast.error(`Payment Failed ${err}`)
 
-        toast.error("Payment Failed. Please Feel Your Address.....")
-
-      };
+    
     })
 
     

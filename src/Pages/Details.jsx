@@ -71,8 +71,8 @@ const Details = () => {
   };
 
   return (
-    <div className="container mx-auto mt-[64px] h-[600px] flex justify-center items-center">
-      <div className="card lg:card-side  shadow-md w-full bg-bg2">
+    <div className="container mx-auto mt-[64px] h-full  md:h-[600px] flex justify-center items-center">
+      <div className="card lg:card-side shadow-md w-full bg-bg2">
         <figure>
           <img
             src={data.images[0]}
@@ -80,7 +80,7 @@ const Details = () => {
             className="w-full h-64 object-cover"
           />
         </figure>
-        <div className="card-body">
+        <div className="card-body space-y-4 space-x-3">
           <h2 className="card-title text-4xl font-bold">{data?.name}</h2>
           <h2 className="card-title text-2xl">{data?.brand}</h2>
           <h2 className="card-title text-2xl">{data?.condition}</h2>
@@ -90,7 +90,7 @@ const Details = () => {
           <div className="card-actions justify-end">
             <button
               onClick={() => handleAddToCart(data)}
-              className="btn bg-bg4 font-bold  text-bg2 hover:bg-bg4/80 p-2"
+              className="btn bg-bg3 font-bold  text-bg2 hover:bg-bg3/80 p-2"
             >
               Add to Cart
             </button>

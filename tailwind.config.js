@@ -16,6 +16,7 @@ export default {
         bg3:'#5b6e74',
         bg4:'	#819fa7',
         bg5:'#f3f5f9',
+        btnBg:'#F1C40F'
         
 
       }

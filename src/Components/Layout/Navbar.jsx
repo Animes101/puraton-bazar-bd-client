@@ -35,7 +35,7 @@ const Navbar = () => {
   const linkClasses = ({ isActive }) =>
   `text-xl font-bold border-t-4 border-transparent pt-1 
    ${isActive 
-      ? `border-textColor text-red-500 font-semibold border-b-2 border-b-red-500 `   // active
+      ? `border-textColor text-btnBg font-semibold border-b-2 border-b-btnBg `   // active
       : "text-white hover:border-textColor "}`;    // inactive
 
 
@@ -119,7 +119,7 @@ const Navbar = () => {
               <li className="lg:hidden">
                 <NavLink to="/cart" className={linkClasses}>
                   <button className="btn">
-                    <FaCartPlus className="text-red-500" />
+                    <FaCartPlus className="text-btnBg" />
                     <div className="badge badge-sm">{data?.length}</div>
                   </button>
                 </NavLink>
@@ -130,12 +130,12 @@ const Navbar = () => {
                 {user ? (
                   <button
                     onClick={handleLogout}
-                    className="btn bg-bgGradinet3 text-black"
+                    className="btn bg-btnBg text-white text-xl font-bold"
                   >
                     Logout
                   </button>
                 ) : (
-                  <Link className="btn w-full bg-bgGradient1 text-black" to="/login">
+                  <Link className="btn w-full bg-btnBg text-white text-xl font-bold" to="/login">
                     <button>Login</button>
                   </Link>
                 )}
@@ -165,7 +165,7 @@ const Navbar = () => {
           -------------------------- */}
           <NavLink to="/" className="normal-case text-2xl font-bold">
             <h2 className="font-bold text-bg2">
-              Puraton<span className="text-red-500">Bazar</span>.com
+              Puraton<span className="text-btnBg">Bazar</span>.com
             </h2>
           </NavLink>
         </div>
@@ -190,7 +190,7 @@ const Navbar = () => {
           {/* Cart */}
           <NavLink to="/cart">
             <button className="relative inline-flex">
-              <CiShoppingCart size={30} className="text-red-500 text-3xl font-bold" />
+              <CiShoppingCart size={30} className="text-btnBg text-3xl font-bold" />
               <span className="
                 absolute -top-3 -right-2 bg-bgGradient1 text-white 
                 text-xs font-bold w-5 h-5 flex items-center justify-center 
@@ -217,13 +217,13 @@ const Navbar = () => {
           {user ? (
             <button
               onClick={handleLogout}
-              className="px-4 py-2 rounded-lg text-xl bg-red-500 text-white hover:bg-red-400"
+              className="px-4 py-2 rounded-lg text-xl bg-btnBg text-white hover:bg-btnBg/80"
             >
               Logout
             </button>
           ) : (
             <Link to="/login">
-              <button className="px-4 py-2 rounded-lg text-xl bg-red-500 text-white hover:bg-red-400">
+              <button className="px-4 py-2 rounded-lg text-xl bg-btnBg text-white hover:bg-btnBg/80">
                 Login
               </button>
             </Link>
