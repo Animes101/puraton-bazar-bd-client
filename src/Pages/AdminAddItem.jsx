@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 
 const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${img_hosting_Key}`;
@@ -44,8 +46,6 @@ const AdminAddItem = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData)
-
     try {
       setImageUploadLoading(true);
 
@@ -85,11 +85,14 @@ const AdminAddItem = () => {
 
           if (result.data.data.insertedId) {
             Swal.fire({
-              position: "center-end",
+              position: "center",
               icon: "success",
-              title: "Your work has been saved",
+              title: "New Product Added Successfully",
               showConfirmButton: false,
               timer: 1500,
+              iconColor:'#F1C40F',
+              color:'#5b6e74',
+              background:'#f2f2f0'
             });
 
             setFormData({
@@ -111,20 +114,6 @@ const AdminAddItem = () => {
       setImageUploadLoading(false);
     }
   };
-
-  // ✅ Loading Screen
-  if (imgUploadLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-3xl font-bold text-blue-600 animate-pulse">
-          Uploading Images...
-        </h1>
-        <p className="mt-2 text-gray-500">
-          Please wait, it may take a few seconds.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="">
@@ -301,11 +290,19 @@ const AdminAddItem = () => {
         </div>
         {/* Submit */}
         <button
-          type="submit"
-          className="bg-bg3 text-white py-2 mt-4 rounded hover:bg-bg3/50"
-        >
-          Add Item
-        </button>
+            type="submit"
+            className="bg-bg3 text-white py-2 mt-4 rounded flex items-center justify-center gap-2 hover:bg-bg3/50"
+            disabled={imgUploadLoading} // disable button while loading
+          >
+            {imgUploadLoading ? (
+              <>
+                <AiOutlineLoading3Quarters className="animate-spin w-5 h-5" />
+                Uploading...
+              </>
+            ) : (
+              "Add Item"
+            )}
+          </button>
       </form>
     </div>
   );

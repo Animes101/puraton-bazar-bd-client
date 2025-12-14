@@ -19,7 +19,7 @@ const Cart = () => {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#5b6e74",
-      cancelButtonColor: "#0d0d0d",
+      cancelButtonColor: "#F1C40F",
       background: "#f2f2f0",
       confirmButtonText: "Yes, Remove",
       cancelButtonText: "Cancel",

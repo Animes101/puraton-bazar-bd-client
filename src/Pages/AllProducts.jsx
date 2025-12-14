@@ -13,8 +13,6 @@ const AllProducts = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const itemPerPage = 10;
 
-  console.log(currentPage , itemPerPage)
-
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["products", currentPage , itemPerPage],
     queryFn: async () => {
@@ -24,9 +22,6 @@ const AllProducts = () => {
       return res.data;
     },
   });
-
-
-  console.log(data)
 
  const totalProducts = data?.total_product || 0;
 const numberOfPages = Math.ceil(totalProducts / itemPerPage) || 1;
@@ -40,20 +35,24 @@ const pages = [...Array(numberOfPages).keys()];
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#5b6e74",
-    cancelButtonColor: "#0d0d0d",
+    cancelButtonColor: "#F1C40F",
     background: "#f2f2f0",
     confirmButtonText: "Yes, Delete it!",
+    iconColor:'#F1C40F',
+    color:'#5b6e74'
+
   }).then((result) => {
     if (result.isConfirmed) {
       axiosSecure.delete(`/products/${id}`).then((res) => {
         if (res.data.data.deletedCount > 0) {
           Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "success",
             title: "Product deleted successfully!",
             showConfirmButton: false,
             timer: 1500,
             background: "#f2f2f0",
+            iconColor: "#F1C40F",
           });
 
           refetch();
@@ -80,12 +79,12 @@ const pages = [...Array(numberOfPages).keys()];
 
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">
-          <thead className="bg-bg3">
+          <thead className="bg-bg3 text-white">
             <tr>
               <th>#</th>
-              <th className="text-lg font-bold text-bg1">Image & Name</th>
-              <th className="text-lg font-bold text-bg1">Category</th>
-              <th className="text-lg font-bold text-bg1">Price</th>
+              <th className="text-lg font-bold">Image & Name</th>
+              <th className="text-lg font-bold">Category</th>
+              <th className="text-lg font-bold">Price</th>
               <th>Delete</th>
               <th>Update</th>
             </tr>
@@ -118,7 +117,7 @@ const pages = [...Array(numberOfPages).keys()];
                 <td>
                   <button
                     onClick={() => handleDelete(product._id)}
-                    className="btn bg-bg1 text-white p-2"
+                    className="btn bg-btnBg text-white p-2"
                   >
                     Delete
                   </button>

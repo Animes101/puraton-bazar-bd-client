@@ -12,8 +12,6 @@ const AdminPaymentHistory = () => {
   
   const [currentPage, setCurrentPage]=useState(0);
     const itemPerpage = 10;
-
-
   const { data = [], isLoading, refetch } = useQuery({
     queryKey: ["paymentAll", currentPage,],
     queryFn: async () => {
@@ -21,10 +19,6 @@ const AdminPaymentHistory = () => {
       return res.data || [];
     },
   });
-
-  console.log(data.data)
-
-
   const totalPage=data.totalPayment;
   const numberOfPages=Math.ceil(totalPage / itemPerpage);
   const pages=[];
@@ -59,9 +53,11 @@ const AdminPaymentHistory = () => {
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#5b6e74",
-    cancelButtonColor: "#0d0d0d",
+    cancelButtonColor: "#F1C40F",
     background: "#f2f2f0",
     confirmButtonText: "Yes, Approve it!",
+    iconColor:'#F1C40F',
+    color:'#5b6e74',
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -76,6 +72,9 @@ const AdminPaymentHistory = () => {
               icon: "success",
               confirmButtonColor: "#5b6e74",
               background: "#f2f2f0",
+              iconColor:'#F1C40F',
+              color:'#5b6e74',
+
             });
           }
         })
@@ -85,18 +84,17 @@ const AdminPaymentHistory = () => {
 };
 
  const handleCancel = (_id) => {
-
-  
-
   Swal.fire({
     title: "Are you sure?",
     text: "Do you want to Cancel this order?",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#5b6e74",
-    cancelButtonColor: "#0d0d0d",
+    cancelButtonColor: "#F1C40F",
     background: "#f2f2f0",
     confirmButtonText: "Yes, Approve it!",
+    iconColor:'#F1C40F',
+    color:'#5b6e74',
   }).then((result) => {
     if (result.isConfirmed) {
       
@@ -175,10 +173,10 @@ const AdminPaymentHistory = () => {
                   </td>
 
                   <td>৳ {item.price}</td>
-                  <td className="text-blue-600 font-semibold">
+                  <td className="text-btnBg font-semibold">
                     {item.tran_id}
                   </td>
-                  <td><button onClick={()=> item.successStatus ? handleCancel(item._id): handleAprove(item._id)}  className={`btn p-2 bg-bg3 ${ item.successStatus ? 'text-white': 'text-red-500'}`}>{item.successStatus == true ? 'Aprove': 'Pending'}</button></td>
+                  <td><button onClick={()=> item.successStatus ? handleCancel(item._id): handleAprove(item._id)}  className={`btn p-2 bg-bg3 ${ item.successStatus ? 'text-white': 'text-btnBg'}`}>{item.successStatus == true ? 'Aprove': 'Pending'}</button></td>
                 </tr>
               );
             })}

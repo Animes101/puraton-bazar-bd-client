@@ -75,8 +75,8 @@ const handleDelete = (id) => {
     text: "This action cannot be undone!",
     icon: "warning",
     showCancelButton: true,
-    confirmButtonColor: "#5b6e74",  // ✅ updated color
-    cancelButtonColor: "#0d0d0d",   // ✅ updated color
+    confirmButtonColor: "#5b6e74",  
+    cancelButtonColor: "#F1C40F",   
     confirmButtonText: "Yes, delete it!",
     cancelButtonText: "Cancel",
     background: "#f2f2f0",          // ✅ updated background
@@ -109,9 +109,9 @@ const handleDelete = (id) => {
           icon: "error",
           showConfirmButton: false,
           timer: 2500,
-          background: "#fbeaea",   // light red background
-          color: "#742626",         // text color
-          iconColor: "#E74C3C",     // error icon color
+          background: "#f2f2f0",   // light red background
+          color: "#5b6e74",         // text color
+          iconColor: "#F1C40F",     // error icon color
           timerProgressBar: true,
         });
       });
