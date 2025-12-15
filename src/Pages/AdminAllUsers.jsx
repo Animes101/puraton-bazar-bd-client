@@ -6,6 +6,7 @@ import { deleteUser } from "firebase/auth";
 import { AuthContext } from "../context/AuthProvider";
 import { MdNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const AdminAllUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -132,6 +133,8 @@ const handleDelete = (id) => {
 
   return (
     <div className="">
+      {/* Helmet (SEO title) */}
+      <ReactHelmet pageName={"Admin All Users"} />
       <div>
         <h1 className="text-4xl font-bold text-bg1 py-5">
           Total Users: {totalUsers}

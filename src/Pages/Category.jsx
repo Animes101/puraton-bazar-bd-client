@@ -8,6 +8,7 @@ import { GrFormPrevious } from "react-icons/gr";
 import { HiMenu } from "react-icons/hi"; // 🔥 Drawer Icon
 import Loading from "../Components/Loading";
 import DataNotFound from "../Components/DataNotFound";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const priceRanges = [
   { min: 0, max: 0, label: "0 - 0" },
@@ -71,6 +72,8 @@ const Category = () => {
 
   return (
     <div className="mt-[64px] container mx-auto">
+      {/* Helmet (SEO title) */}
+      <ReactHelmet pageName={"Category page"} />
 
       {/* 🔍 Sticky Search */}
       <div className="sticky top-16 z-20 bg-white">

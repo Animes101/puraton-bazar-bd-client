@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useState } from "react";
 import { MdNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 
 const AllProducts = () => {
@@ -73,6 +74,8 @@ const pages = [...Array(numberOfPages).keys()];
 
   return (
     <div>
+      {/* Helmet (SEO title) */}
+      <ReactHelmet pageName={"Admin All Products"} />
       <h1 className="text-4xl font-bold text-bg3 py-4">
         Total Products: {totalProducts}
       </h1>
@@ -143,6 +146,7 @@ const pages = [...Array(numberOfPages).keys()];
       </div>
 
       {/* Pagination */}
+      
       <div className="flex justify-center items-center mt-5 gap-3">
         <button
           onClick={() => currentPage > 0 && setCurrentPage(currentPage - 1)}

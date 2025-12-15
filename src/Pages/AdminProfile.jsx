@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const AdminProfile = () => {
   const { user } = useContext(AuthContext);
@@ -17,6 +18,8 @@ const AdminProfile = () => {
 
   return (
     <div className="container mx-auto mt-[64px] min-h-[calc(100vh-276px)] px-5 flex justify-center items-center">
+      {/* Helmet (SEO title) */}
+      <ReactHelmet pageName={"AdminProfile"} />
       <div className="bg-bg2 shadow-lg rounded-2xl p-8 w-full max-w-2xl">
 
         {/* Header */}

@@ -287,6 +287,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${img_hosting_Key}`;
@@ -426,6 +427,8 @@ const AdminUpdateProduct = () => {
 
   return (
     <div>
+      {/* Helmet (SEO title) */}
+      <ReactHelmet pageName={"Admin Update Product"} />
       <h1 className="text-center font-bold text-3xl mb-6 text-bg1 py-4 uppercase">
         Update Product
       </h1>

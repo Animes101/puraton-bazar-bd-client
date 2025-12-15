@@ -15,6 +15,7 @@ import {
   Pie,
   Legend,
 } from "recharts";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "red", "pink"];
 const PIE_COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -81,6 +82,8 @@ const AdminHome = () => {
 
   return (
     <div className="pt-10 px-4 md:px-10 lg:px-20">
+      {/* Helmet (SEO title) */}
+      <ReactHelmet pageName={"Admin Home Page"} />
       <h1 className="text-black font-bold text-2xl md:text-4xl lg:text-5xl mb-6">
         Welcome Back{" "}
         <span className="text-bg3 text-3xl md:text-4xl lg:text-5xl">

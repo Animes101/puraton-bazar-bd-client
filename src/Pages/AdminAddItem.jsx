@@ -3,6 +3,7 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 
 const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
@@ -117,6 +118,8 @@ const AdminAddItem = () => {
 
   return (
     <div className="">
+      {/* Helmet (SEO title) */}
+      <ReactHelmet pageName={"Admin Add Item Page"} />
       <h1 className="text-center font-bold text-3xl mb-6 text-bg1 py-4 uppercase">
         Add New Product
       </h1>

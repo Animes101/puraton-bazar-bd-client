@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { MdNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const AdminPaymentHistory = () => {
   const axiosSecure = useAxiosSecure();
@@ -129,6 +130,8 @@ const AdminPaymentHistory = () => {
 
   return (
     <div className="p-5">
+      {/* Helmet (SEO title) */}
+      <ReactHelmet pageName={"Admin Payment History"} />
       <h2 className="text-3xl font-bold mb-5">Admin Payment History</h2>
 
       <div className="overflow-x-auto">
