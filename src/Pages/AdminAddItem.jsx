@@ -65,7 +65,7 @@ const AdminAddItem = () => {
           headers: { "Content-Type": "multipart/form-data" },
         });
 
-        console.log(res2);
+  
 
         if (res2.data.success) {
           setImageUploadLoading(false);

@@ -56,19 +56,16 @@ const PaymentSSL = () => {
       )
     } )
     .catch(err=>{
-      console.log(err.message)
-        toast.error(`Payment Failed ${err}`)
+        toast.error(`Payment Failed ${err.message}`)
 
     
     })
-
-    
   };
 
   return (
     <div className="max-w-xl mx-auto mt-10 ">
       <ReactHelmet pageName="Payment SSL" />
-      <h1 className="text-2xl font-bold mb-5">Order now</h1>
+      <h1 className="text-2xl font-bold mb-5">Order Now</h1>
 
       <form
         onSubmit={handleSubmit}

@@ -17,7 +17,7 @@ const Payment = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["payment", user?.email, currentPage],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/paymentHistory/${user?.email}?skip=${currentPage} & limit=${10}`);
+      const res = await axiosSecure.get(`/paymentHistory/${user?.email}?skip=${currentPage}&limit=${10}`);
       return res.data;
     },
   });
@@ -50,9 +50,6 @@ const Payment = () => {
     }
 
   }
-
-
-  console.log(pages)
 
 
   // 🔵 Loading state
@@ -96,21 +93,20 @@ const Payment = () => {
             </tr>
           </thead>
 
-          <tbody className="bg-bg4">
+          <tbody className="bg-btnBg/80">
             {data.data.map((item, index) => (
               <tr key={index} className="bg-bg2">
                 <th>{ index +1}</th>
-                <td>{item.name}</td>
-                <td className="font-semibold text-blue-600">{item.price} ৳</td>
+                <td className="text-xl font-bold text-bg3">{item.name}</td>
+                <td className="font-bold text-xl text-bg3 ">{item.price.toLocaleString()} ৳</td>
 
-                <td className={item.PaidStatus ? "text-green-500 font-bold" : "text-red-500 font-bold"}>
+                <td className={item.PaidStatus ? "text-bg3 font-bold" : "text-btnBg font-bold"}>
                   {item.PaidStatus ? "Payment Success" : "Not Paid"}
                 </td>
 
-                <td className={item.successStatus ? "text-green-500 font-bold" : "text-yellow-500 font-bold"}>
+                <td className={item.successStatus ? "text-bg3 font-bold" : "text-btnBg font-bold"}>
                   {item.successStatus ? "Delivered" : "Pending"}
                 </td>
-
                 <td>
                   <ul className="list-disc pl-5">
                     {item.orderName.map((name, i) => (

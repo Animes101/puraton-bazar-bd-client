@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoMdEye } from "react-icons/io";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const Login = () => {
   const { googleLogin, loginUser, forgatePassword } = useContext(AuthContext);
@@ -95,6 +96,7 @@ const Login = () => {
 
   return (
     <div className="hero min-h-screen bg-bg3 px-3">
+      <ReactHelmet pageName={'login'} />
       <div className="card border border-textColor w-full sm:w-[60%] md:w-[40%] lg:w-[28%] bg-bg4 mx-auto">
         <div className="card-body">
           <form onSubmit={handleSubmit} className="fieldset space-y-2">

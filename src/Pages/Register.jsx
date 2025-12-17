@@ -93,7 +93,6 @@ const Register = () => {
         toast.error("User registration failed on backend!");
       }
     } catch (err) {
-      console.log(err);
       toast.error(err.message);
     }
   };

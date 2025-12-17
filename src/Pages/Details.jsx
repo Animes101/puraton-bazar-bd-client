@@ -6,6 +6,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useCart from "../hooks/useCart";
 import toast, { Toaster } from "react-hot-toast";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const Details = () => {
   const { id } = useParams();
@@ -76,6 +77,7 @@ const Details = () => {
 
   return (
     <div className="container mx-auto mt-[64px] h-full  md:h-[600px] flex justify-center items-center">
+      <ReactHelmet pageName={'details'} />
       <div className="card lg:card-side shadow-md w-full bg-bg2">
         <figure>
           <img

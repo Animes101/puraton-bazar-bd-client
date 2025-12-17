@@ -1,23 +1,50 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import ReactHelmet from '../Components/Layout/ReactHelmet'
+import React from "react";
+import { Link } from "react-router-dom";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
+import { FaHome, FaShoppingBag } from "react-icons/fa";
 
 const NotFound404 = () => {
   return (
-      <section className="flex items-center h-full p-16 dark:bg-gray-50 dark:text-gray-800">
-        <ReactHelmet pageName={'404'} />
-        <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
-          <div className="max-w-md text-center">
-            <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-400">
-              <span className="sr-only">Error</span>404
-            </h2>
-            <p className="text-2xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-            <p className="mt-4 mb-8 dark:text-gray-600">But dont worry, you can find plenty of other things on our homepage.</p>
-            <Link to={'/'} rel="noopener noreferrer" className="px-8 py-3 font-semibold rounded dark:bg-violet-600 dark:text-gray-50">Back to homepage</Link>
-          </div>
-        </div>
-      </section>
-  )
-}
+    <section className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <ReactHelmet pageName={"404 | PurtonBazar"} />
 
-export default NotFound404
+      <div className="max-w-2xl text-center">
+        {/* 404 Text */}
+        <h1 className="text-[120px] md:text-[160px] font-extrabold text-bg3 leading-none">
+          404
+        </h1>
+
+        {/* Message */}
+        <h2 className="mt-4 text-2xl md:text-3xl font-bold text-gray-800">
+          Page Not Found
+        </h2>
+
+        <p className="mt-3 text-gray-600 text-base md:text-lg">
+          Oops! The page you are looking for doesn’t exist or has been moved.
+          But don’t worry — PurtonBazar has plenty of amazing products waiting for you.
+        </p>
+
+        {/* Buttons */}
+        <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <Link
+            to="/"
+            className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-bg3 text-white font-semibold hover:opacity-90 transition"
+          >
+            <FaHome />
+            Back to Home
+          </Link>
+
+          <Link
+            to="/category"
+            className="flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-bg3 text-bg3 font-semibold hover:bg-bg3 hover:text-white transition"
+          >
+            <FaShoppingBag />
+            Continue Shopping
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default NotFound404;
