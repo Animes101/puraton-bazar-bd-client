@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast, { Toaster } from 'react-hot-toast';
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const PaymentSSL = () => {
   const location = useLocation();
@@ -66,6 +67,7 @@ const PaymentSSL = () => {
 
   return (
     <div className="max-w-xl mx-auto mt-10 ">
+      <ReactHelmet pageName="Payment SSL" />
       <h1 className="text-2xl font-bold mb-5">Order now</h1>
 
       <form

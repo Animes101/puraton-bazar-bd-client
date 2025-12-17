@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { Toaster, toast } from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { updateProfile } from "firebase/auth";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 // ImageBB API key
 const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
@@ -131,6 +132,7 @@ const Register = () => {
   return (
     <div>
       <Toaster position="top-center" />
+      <ReactHelmet pageName="Register" />
 
       <div className="hero min-h-screen bg-bg3 flex justify-center items-center px-4">
         {/* Card Container */}

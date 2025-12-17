@@ -5,6 +5,7 @@ import { FaHome, FaHistory, FaUsers } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { HiChevronDoubleRight } from "react-icons/hi";
 import { IoIosAddCircle } from "react-icons/io";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const Dashboard = () => {
   const { isAdmin } = useAdmin();
@@ -12,6 +13,7 @@ const Dashboard = () => {
 
   return (
     <div className="md:grid grid-cols-4 gap-10 mt-[64px]">
+      <ReactHelmet pageName="Dashboard" />
 
       {/* ===========================
             📱 MOBILE DRAWER START

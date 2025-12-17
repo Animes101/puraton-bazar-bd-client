@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import Swal from "sweetalert2";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 const UserProfile = () => {
   const { user } = useContext(AuthContext);
@@ -79,6 +80,7 @@ const UserProfile = () => {
 
   return (
     <div className="container mx-auto mt-[64px] min-h-[calc(100vh-276px)] px-5 flex justify-center items-center">
+      <ReactHelmet pageName="Dashboard || User Profile" />
       <div className="bg-bg2 shadow-md p-8 rounded-2xl w-full max-w-md text-center border border-bg4">
 
         {/* Profile Image Preview */}

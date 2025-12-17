@@ -19,6 +19,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import ReactHelmet from "../Components/Layout/ReactHelmet";
 
 // Soft Modern Color Palette ❤️
 const COLORS = ["#D3B323", "#5B6E74", "#FFFFFF", "#76b7b2", "#59a14f"];
@@ -47,6 +48,7 @@ const UserHome = () => {
 
   return (
     <div className="p-5">
+      <ReactHelmet pageName="Dashboard || User Home" />
 
       {/* ===========================
               Welcome Text Updated
