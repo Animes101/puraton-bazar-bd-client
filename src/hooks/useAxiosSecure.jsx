@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://puratonbazarserver.vercel.app",
 });
 
 const useAxiosSecure = () => {
