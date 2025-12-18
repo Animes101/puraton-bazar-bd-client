@@ -32,7 +32,7 @@ const useAxiosSecure = () => {
       if(error.response && (error.response.status === 401 || error.response.status === 403)){
         //handle unauthorized access
         // e.g., logout user, redirect to login page, etc.
-        console.log("Unauthorized access - logging out user.");
+        console.log("Unauthorized access - logging out user. some Issu Width Token");
 
         logout();
 
