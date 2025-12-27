@@ -25,7 +25,7 @@ const AdminAddItem = () => {
     date: "",
     image1: null,
     image2: null,
-    isBest: Boolean,
+    isBest: null,
   });
 
   // ✅ Handle input change
