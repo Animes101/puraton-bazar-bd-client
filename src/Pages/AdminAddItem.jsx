@@ -245,7 +245,7 @@ const AdminAddItem = () => {
           name="date"
           value={formData.date}
           onChange={handleChange}
-          className="p-2 rounded  border-bg4 border text-white"
+          className="p-2 rounded  border-bg4 border"
         />
 
         {/* IMAGE INPUTS */}
