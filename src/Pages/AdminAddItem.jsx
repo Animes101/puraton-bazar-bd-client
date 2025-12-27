@@ -8,6 +8,8 @@ import toast from 'react-hot-toast';
 
 
 const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
+
+console.log(img_hosting_Key)
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${img_hosting_Key}`;
 
 const AdminAddItem = () => {
@@ -112,7 +114,7 @@ const AdminAddItem = () => {
         }
       }
     } catch (error) {
-      toast.error("Image upload failed:", error);
+      toast.error("Image upload failed:", error.message);
       setImageUploadLoading(false);
     }
   };
