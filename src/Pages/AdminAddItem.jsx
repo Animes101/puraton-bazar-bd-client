@@ -4,6 +4,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import ReactHelmet from "../Components/Layout/ReactHelmet";
+import toast from 'react-hot-toast';
 
 
 const img_hosting_Key = import.meta.env.VITE_IMAGEBB_API_KEY;
@@ -111,7 +112,7 @@ const AdminAddItem = () => {
         }
       }
     } catch (error) {
-      console.error("Image upload failed:", error);
+      toast.error("Image upload failed:", error);
       setImageUploadLoading(false);
     }
   };
